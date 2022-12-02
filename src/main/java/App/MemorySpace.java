@@ -19,6 +19,11 @@ public class MemorySpace {
         initializeMemory();
     }
 
+    public MemorySpace(ArrayList<Integer> memory) {
+        this.memory = memory;
+        scope = memory.size();
+    }
+
     private void initializeMemory() {
         for (int i = 0; i < scope; i++) {
             memory.add(0);
