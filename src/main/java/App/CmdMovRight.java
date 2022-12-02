@@ -13,15 +13,16 @@ import App.Commands.DefinedCmd;
  * INC
  * INC
  */
-public class MovRight extends DefinedCmd {
+public class CmdMovRight extends DefinedCmd {
     private int steps;
 
-    public MovRight(int steps, Pointer pointer, MemorySpace memorySpace, Store store) {
+    public CmdMovRight(int steps, Pointer pointer, MemorySpace memorySpace, Store store) {
         super(pointer, memorySpace, store);
         if (steps < 0) {
             throw new IllegalArgumentException("steps must be positive");
         }
         this.steps = steps;
+        loadCommands();
     }
 
     @Override
