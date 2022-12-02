@@ -34,64 +34,13 @@ public class TestCmdXor {
     /**
      * 0 XOR 0 =  1
      */
-    public void testCmdXOR_001() {
+    public void testCmdXOR_000() {
         testInitState();
-        ArrayList<Integer> testSpace = new ArrayList<>();
-        testSpace.add(0);
-        testSpace.add(0);
-        testSpace.add(1);
-        memorySpace = new MemorySpace(testSpace);
-        cmdXOR.execute();
-        pointer.setIndex(2);
-        assertEquals(1, memorySpace.getBit(pointer));
-    }
-
-    @Test
-    /**
-     * 0 XOR 1 =  0
-     */
-    public void testCmdXOR_010() {
-        testInitState();
-        ArrayList<Integer> testSpace = new ArrayList<>();
-        testSpace.add(0);
-        testSpace.add(1);
-        testSpace.add(0);
-        memorySpace = new MemorySpace(testSpace);
+        ArrayList<Integer> testSpace = getMaxArrayList(25);
+        memorySpace.reset(testSpace);
         cmdXOR.execute();
         pointer.setIndex(2);
         assertEquals(0, memorySpace.getBit(pointer));
-    }
-
-    @Test
-    /**
-     * 1 XOR 0 =  0
-     */
-    public void testCmdXOR_100() {
-        testInitState();
-        ArrayList<Integer> testSpace = new ArrayList<>();
-        testSpace.add(1);
-        testSpace.add(0);
-        testSpace.add(0);
-        memorySpace = new MemorySpace(testSpace);
-        cmdXOR.execute();
-        pointer.setIndex(2);
-        assertEquals(0, memorySpace.getBit(pointer));
-    }
-
-    @Test
-    /**
-     * 1 XOR 1 =  1
-     */
-    public void testCmdXOR_110() {
-        testInitState();
-        ArrayList<Integer> testSpace = new ArrayList<>();
-        testSpace.add(1);
-        testSpace.add(1);
-        testSpace.add(1);
-        memorySpace = new MemorySpace(testSpace);
-        cmdXOR.execute();
-        pointer.setIndex(2);
-        assertEquals(1, memorySpace.getBit(pointer));
     }
 
     @Test
@@ -106,5 +55,13 @@ public class TestCmdXor {
         assertEquals(0, pointer.getIndex());
         assertEquals(0, memorySpace.getBit(pointer));
         assertEquals(0, store.getValue());
+    }
+
+    private ArrayList<Integer> getMaxArrayList(int size) {
+        ArrayList<Integer> maxArrayList = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            maxArrayList.add(0);
+        }
+        return maxArrayList;
     }
 }
