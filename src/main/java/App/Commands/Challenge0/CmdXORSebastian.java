@@ -48,6 +48,13 @@ public class CmdXORSebastian extends DefinedCmd {
      * 22. INC
      * 23. INV
      * 24. INC
+     * 25. INC
+     * 26. INC
+     * 27. INC
+     * 28. INC
+     * 29. INC
+     * 30. INC
+     * 31. INV
      */
     @Override
     protected void loadCommands() {
@@ -76,5 +83,12 @@ public class CmdXORSebastian extends DefinedCmd {
         cmdList.add(cmdHelper.getCmdINC());
         cmdList.add(cmdHelper.getCmdINV());
         cmdList.add(cmdHelper.getCmdINC());
+        cmdList.add(cmdHelper.getCmdINC());
+        cmdList.add(cmdHelper.getCmdINC());
+        cmdList.add(cmdHelper.getCmdINC());
+        cmdList.add(cmdHelper.getCmdINC());
+        cmdList.add(cmdHelper.getCmdINC());
+        cmdList.add(cmdHelper.getCmdINC());
+        cmdList.add(cmdHelper.getCmdINV());
     }
 }

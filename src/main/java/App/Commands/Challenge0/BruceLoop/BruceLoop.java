@@ -22,9 +22,13 @@ public class BruceLoop {
     private CmdHelper cmdHelper;
 
     public static void main(String[] args) {
-        //finished: 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 (2147483647)
-        BruceLoop bruceLoop = new BruceLoop(16);
-        bruceLoop.startForLoop();
+        //finished: 3， 4， 5， 6， 7， 8， 9， 10， 11， 12， 13， 14， 15， 16
+        for (int i = 3; i < 28; i++) {
+            BruceLoop bruceLoop = new BruceLoop(i);
+            bruceLoop.startForLoop();
+            System.out.println("finished: " + i);
+        }
+        //BruceLoop bruceLoop = new BruceLoop(4);
     }
 
     enum INIT_STATE {
@@ -102,14 +106,14 @@ public class BruceLoop {
                 nextCombination();
             }
             loadCommandsBasedOnCombinationArray();
-            if (!test001() || !test010() || !test100() || !test111()) {
+            if (!test000() || !test011() || !test101() || !test110()) {
                 continue;
             } else {
-                System.out.println("Found a solution!");
                 for (int j = 0; j < _max_commands_used; j++) {
                     System.out.println(result.get(j).commandName());
                 }
-                break;
+                System.out.println("Found a solution!");
+                return;
             }
         }
         System.out.println("Finished Not find a solution! looptimes: " + loopTimes);
@@ -147,28 +151,28 @@ public class BruceLoop {
         return result;
     }
 
-    private boolean test001() {
+    private boolean test000() {
         resetState(INIT_STATE.T00);
         new CurrDefinedCmd(pointer, memorySpace, store).execute();
-        return memorySpace.getBitForTestOnly(2) == 1;
+        return memorySpace.getBitForTestOnly(2) == 0;
     }
 
-    private boolean test010() {
+    private boolean test011() {
         resetState(INIT_STATE.T01);
         new CurrDefinedCmd(pointer, memorySpace, store).execute();
-        return memorySpace.getBitForTestOnly(2) == 0;
+        return memorySpace.getBitForTestOnly(2) == 1;
     }
 
-    private boolean test100() {
+    private boolean test101() {
         resetState(INIT_STATE.T10);
         new CurrDefinedCmd(pointer, memorySpace, store).execute();
-        return memorySpace.getBitForTestOnly(2) == 0;
+        return memorySpace.getBitForTestOnly(2) == 1;
     }
 
-    private boolean test111() {
+    private boolean test110() {
         resetState(INIT_STATE.T11);
         new CurrDefinedCmd(pointer, memorySpace, store).execute();
-        return memorySpace.getBitForTestOnly(2) == 1;
+        return memorySpace.getBitForTestOnly(2) == 0;
     }
 
     private class CurrDefinedCmd extends DefinedCmd {

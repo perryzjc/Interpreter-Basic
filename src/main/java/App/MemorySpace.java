@@ -32,16 +32,31 @@ public class MemorySpace {
         }
     }
 
+    /**
+     * if index is negative number, it reads the memory reversely, like python
+     */
     public int getBit(Pointer ptr) {
-        return memory.get(ptr.getIndex());
+        int index = ptr.getIndex();
+        if (index < 0) {
+            index = scope + index;
+        }
+        return memory.get(index);
     }
 
     public int getBitForTestOnly(int index) {
         return memory.get(index);
     }
 
+    /**
+     * if index is negative number, it reads the memory reversely, like python
+     */
     public int setBit(Pointer ptr, int bit) {
-        return memory.set(ptr.getIndex(), bit);
+        int index = ptr.getIndex();
+        if (index < 0) {
+            index = scope + index;
+        }
+        memory.set(index, bit);
+        return bit;
     }
 
     public int getScope() {

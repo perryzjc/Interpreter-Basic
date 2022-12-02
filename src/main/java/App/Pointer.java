@@ -2,6 +2,8 @@ package App;
 
 /**
  * On startup, ADDR = 0x0000
+ * Since the tape is circular, when moving left at ADDR = 0x0000, it will move to the end of the tape
+ * like how python index works
  */
 public class Pointer {
     private int index;

@@ -37,6 +37,53 @@ public class TestCmdXor {
     public void testCmdXOR_000() {
         testInitState();
         ArrayList<Integer> testSpace = getMaxArrayList(25);
+        testSpace.set(0, 0);
+        testSpace.set(1, 0);
+        memorySpace.reset(testSpace);
+        cmdXOR.execute();
+        pointer.setIndex(2);
+        assertEquals(0, memorySpace.getBit(pointer));
+    }
+
+    @Test
+    /**
+     * 0 XOR 1 =  0
+     */
+    public void testCmdXOR_011() {
+        testInitState();
+        ArrayList<Integer> testSpace = getMaxArrayList(25);
+        testSpace.set(0, 0);
+        testSpace.set(1, 1);
+        memorySpace.reset(testSpace);
+        cmdXOR.execute();
+        pointer.setIndex(2);
+        assertEquals(1, memorySpace.getBit(pointer));
+    }
+
+    @Test
+    /**
+     * 1 XOR 0 =  0
+     */
+    public void testCmdXOR_101() {
+        testInitState();
+        ArrayList<Integer> testSpace = getMaxArrayList(25);
+        testSpace.set(0, 1);
+        testSpace.set(1, 0);
+        memorySpace.reset(testSpace);
+        cmdXOR.execute();
+        pointer.setIndex(2);
+        assertEquals(1, memorySpace.getBit(pointer));
+    }
+
+    @Test
+    /**
+     * 1 XOR 1 =  1
+     */
+    public void testCmdXOR_110() {
+        testInitState();
+        ArrayList<Integer> testSpace = getMaxArrayList(25);
+        testSpace.set(0, 1);
+        testSpace.set(1, 1);
         memorySpace.reset(testSpace);
         cmdXOR.execute();
         pointer.setIndex(2);

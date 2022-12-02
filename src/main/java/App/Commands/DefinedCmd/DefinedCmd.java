@@ -42,6 +42,10 @@ public abstract class DefinedCmd extends Command {
         return result.toString();
     }
 
+    public ArrayList<Command> getCmdList() {
+        return cmdList;
+    }
+
     /**
      * load the basic commands into the commands arraylist
      */
