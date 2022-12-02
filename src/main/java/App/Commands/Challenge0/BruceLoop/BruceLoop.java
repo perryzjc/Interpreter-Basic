@@ -94,7 +94,7 @@ public class BruceLoop {
     }
 
     public void startForLoop() {
-        long loopTimes = (int) Math.pow(NUM_OPTIONS_CMD, _max_commands_used);
+        long loopTimes = (long) Math.pow(NUM_OPTIONS_CMD, _max_commands_used);
         for (long i = 0; i < loopTimes; i++) {
            // System.out.println("Loop " + i);
             initResult();
