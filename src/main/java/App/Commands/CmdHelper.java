@@ -17,25 +17,38 @@ public class CmdHelper {
     private MemorySpace memorySpace;
     private Store store;
 
+    /**
+     * singleton pattern
+     * make the test more efficient
+     */
+    private static CmdINC cmdINC;
+    private static CmdCDEC cmdCDEC;
+    private static CmdINV cmdINV;
+    private static CmdLOAD cmdLOAD;
+
     public CmdHelper(Pointer pointer, MemorySpace memorySpace, Store store) {
         this.pointer = pointer;
         this.memorySpace = memorySpace;
         this.store = store;
+        cmdINC = new CmdINC(pointer, memorySpace, store);
+        cmdCDEC = new CmdCDEC(pointer, memorySpace, store);
+        cmdINV = new CmdINV(pointer, memorySpace, store);
+        cmdLOAD = new CmdLOAD(pointer, memorySpace, store);
     }
 
     public CmdINC getCmdINC() {
-        return new CmdINC(pointer, memorySpace, store);
+        return cmdINC;
     }
 
     public CmdINV getCmdINV() {
-        return new CmdINV(pointer, memorySpace, store);
+        return cmdINV;
     }
 
     public CmdLOAD getCmdLOAD() {
-        return new CmdLOAD(pointer, memorySpace, store);
+        return cmdLOAD;
     }
 
     public CmdCDEC getCmdCDEC() {
-        return new CmdCDEC(pointer, memorySpace, store);
+        return cmdCDEC;
     }
 }
