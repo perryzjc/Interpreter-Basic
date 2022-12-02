@@ -19,4 +19,9 @@ public class CmdCDEC extends Command {
             pointer.setIndex(index - 1);
         }
     }
+
+    @Override
+    public String commandName() {
+        return "CDEC";
+    }
 }

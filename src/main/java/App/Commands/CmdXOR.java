@@ -89,4 +89,14 @@ public class CmdXOR extends Command {
         cmdList.add(cmdHelper.getCmdINV());
         cmdList.add(cmdHelper.getCmdINC());
     }
+
+    @Override
+    public String commandName() {
+        StringBuilder result = new StringBuilder();
+        for (Command cmd : cmdList) {
+            result.append(cmd.commandName());
+            result.append("\n");
+        }
+        return result.toString();
+    }
 }

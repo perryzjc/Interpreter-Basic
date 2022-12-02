@@ -16,4 +16,9 @@ public class CmdLOAD extends Command {
     public void execute() {
         store.setValue(memorySpace.getBit(pointer));
     }
+
+    @Override
+    public String commandName() {
+        return "LOAD";
+    }
 }

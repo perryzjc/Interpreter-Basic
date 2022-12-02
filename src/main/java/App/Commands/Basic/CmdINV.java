@@ -17,4 +17,9 @@ public class CmdINV extends Command {
         int currBit = memorySpace.getBit(pointer);
         memorySpace.setBit(pointer, 1 - currBit);
     }
+
+    @Override
+    public String commandName() {
+        return "INV";
+    }
 }

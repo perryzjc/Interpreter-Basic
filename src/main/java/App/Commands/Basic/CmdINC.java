@@ -17,4 +17,9 @@ public class CmdINC extends Command {
         int index = pointer.getIndex();
         pointer.setIndex(index + 1);
     }
+
+    @Override
+    public String commandName() {
+        return "INC";
+    }
 }
