@@ -54,10 +54,10 @@ public class BruceLoop {
     }
 
     private void loadUsableCmd() {
-        usableCommands.add(cmdHelper.getCmdINC());
-        usableCommands.add(cmdHelper.getCmdINV());
-        usableCommands.add(cmdHelper.getCmdLOAD());
         usableCommands.add(cmdHelper.getCmdCDEC());
+        usableCommands.add(cmdHelper.getCmdLOAD());
+        usableCommands.add(cmdHelper.getCmdINV());
+        usableCommands.add(cmdHelper.getCmdINC());
     }
 
     private void initCurrCombination() {
