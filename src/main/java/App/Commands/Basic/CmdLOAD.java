@@ -7,8 +7,8 @@ import App.Store;
 /**
  * LOAD: load the bit in the array located at ADDR into STORE ("store the bit the head points to")
  */
-public class LOAD extends Command {
-    public LOAD(Pointer pointer, MemorySpace memorySpace, Store store) {
+public class CmdLOAD extends Command {
+    public CmdLOAD(Pointer pointer, MemorySpace memorySpace, Store store) {
         super(pointer, memorySpace, store);
     }
 
