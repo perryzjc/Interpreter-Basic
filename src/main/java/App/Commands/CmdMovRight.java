@@ -1,7 +1,10 @@
-package App;
+package App.Commands;
 
 import App.Commands.Basic.CmdINC;
 import App.Commands.DefinedCmd;
+import App.MemorySpace;
+import App.Pointer;
+import App.Store;
 
 /**
  * defined command based on basic commands

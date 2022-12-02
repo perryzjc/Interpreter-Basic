@@ -1,4 +1,4 @@
-import App.CmdMovRight;
+import App.Commands.CmdMovRight;
 import App.MemorySpace;
 import App.Pointer;
 import App.Store;
