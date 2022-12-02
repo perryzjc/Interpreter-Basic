@@ -10,6 +10,13 @@ import App.Store;
 
 import java.util.ArrayList;
 
+/**
+ * an optimization of BruceLoop.java
+ * have an additional map to store different result of memory space after a defined command is executed
+ * e.g. 4 commands defined command, the map will store 2^4 (at max) different memory space
+ * many memory space are the same, so the memory map will keep the memory space only once
+ * thus improve the performance
+ */
 public class BruceLoop2 {
     private final ArrayList<Command> usableCommands = new ArrayList<>();
     private final ArrayList<Integer> currCombination = new ArrayList<>();
