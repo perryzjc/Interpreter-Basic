@@ -8,7 +8,7 @@ public class MemorySpace {
     private ArrayList<Integer> memory;
 
     public MemorySpace() {
-        scope = 0;
+        scope = 10;
         memory = new ArrayList<Integer>();
         initializeMemory();
     }
