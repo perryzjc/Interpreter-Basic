@@ -28,7 +28,7 @@ public class BruceLoop {
 
     public static void main(String[] args) {
         //finished: 3， 4， 5， 6， 7， 8， 9， 10， 11， 12， 13, 14
-        for (int i = 3; i < 15; i++) {
+        for (int i = 32; i < 33; i++) {
             BruceLoop bruceLoop = new BruceLoop(i);
 //            BruceLoop bruceLoop = new BruceLoop(SEBASTIAN_SOL_NUM_COMMANDS);
             bruceLoop.startForLoop();
@@ -208,13 +208,16 @@ public class BruceLoop {
 
         @Override
         protected void loadCommands() {
-//            testCorrectCmdSebastianSolution();
-            loadCommandsBasedOnCombinationArray();
+            testCorrectCmdSebastianSolution();
+//            loadCommandsBasedOnCombinationArray();
         }
 
         private void testCorrectCmdSebastianSolution() {
             CmdXORSebastian cmdXORSebastian = new CmdXORSebastian(pointer, memorySpace, store);
-            cmdList.add(cmdXORSebastian);
+            ArrayList<Command> cmdSource = cmdXORSebastian.getCmdList();
+            for (int i = 0; i < _max_commands_used; i++) {
+                cmdList.set(i, cmdSource.get(i));
+            }
         }
 
         private void loadCommandsBasedOnCombinationArray() {
