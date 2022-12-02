@@ -1,8 +1,10 @@
 package App;
 
-
 import java.util.ArrayList;
 
+/**
+ * On startup, the array is initialized to all 0s
+ */
 public class MemorySpace {
     private int scope;
     private ArrayList<Integer> memory;

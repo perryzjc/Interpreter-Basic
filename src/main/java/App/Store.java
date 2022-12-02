@@ -2,6 +2,7 @@ package App;
 
 /**
  * Equivalent to the Store
+ * On startup, STORE = 0b0.
  */
 public class Store {
     private int value;

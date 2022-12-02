@@ -1,5 +1,8 @@
 package App;
 
+/**
+ * On startup, ADDR = 0x0000
+ */
 public class Pointer {
     private int index;
 
