@@ -1,11 +1,8 @@
 package App.Commands;
 
-import App.Commands.Basic.Command;
 import App.MemorySpace;
 import App.Pointer;
 import App.Store;
-
-import java.util.ArrayList;
 
 /**
  * Challenge 0: XOR
