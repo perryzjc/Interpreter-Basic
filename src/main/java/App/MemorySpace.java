@@ -43,4 +43,18 @@ public class MemorySpace {
     public int getScope() {
         return scope;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append("{");
+        for (int i = 0; i < scope; i++) {
+            result.append(memory.get(i));
+            if (i != scope - 1) {
+                result.append(", ");
+            }
+        }
+        result.append("}");
+        return result.toString();
+    }
 }

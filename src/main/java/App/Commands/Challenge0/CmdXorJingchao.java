@@ -17,6 +17,14 @@ public class CmdXorJingchao extends DefinedCmd {
         loadCommands();
     }
 
+    /**
+     * 0 0 -> 1
+     * 0 1 -> 0
+     * 1 0 -> 0
+     * 1 1 -> 1
+     *
+     * find a logical equivalence by performing a series of basic commands
+     */
     @Override
     protected void loadCommands() {
 
