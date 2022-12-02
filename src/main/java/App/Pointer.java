@@ -21,4 +21,8 @@ public class Pointer {
     public void setIndex(int index) {
         this.index = index;
     }
+
+    public void reset() {
+        index = 0;
+    }
 }

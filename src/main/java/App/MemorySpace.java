@@ -36,6 +36,10 @@ public class MemorySpace {
         return memory.get(ptr.getIndex());
     }
 
+    public int getBitForTestOnly(int index) {
+        return memory.get(index);
+    }
+
     public int setBit(Pointer ptr, int bit) {
         return memory.set(ptr.getIndex(), bit);
     }
@@ -56,5 +60,22 @@ public class MemorySpace {
         }
         result.append("}");
         return result.toString();
+    }
+
+    public void reset() {
+        for (int i = 0; i < scope; i++) {
+            memory.set(i, 0);
+        }
+    }
+
+    public void reset(int scope) {
+        this.scope = scope;
+        memory = new ArrayList<Integer>();
+        initializeMemory();
+    }
+
+    public void reset(ArrayList<Integer> memory) {
+        this.memory = memory;
+        scope = memory.size();
     }
 }

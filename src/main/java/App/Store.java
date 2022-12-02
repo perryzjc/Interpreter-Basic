@@ -22,4 +22,8 @@ public class Store {
     public void setValue(int value) {
         this.value = value;
     }
+
+    public void reset() {
+        value = 0;
+    }
 }
