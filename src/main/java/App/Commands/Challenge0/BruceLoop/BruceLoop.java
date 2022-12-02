@@ -208,8 +208,8 @@ public class BruceLoop {
 
         @Override
         protected void loadCommands() {
-            testCorrectCmdSebastianSolution();
-//            loadCommandsBasedOnCombinationArray();
+//            testCorrectCmdSebastianSolution();
+            loadCommandsBasedOnCombinationArray();
         }
 
         private void testCorrectCmdSebastianSolution() {
