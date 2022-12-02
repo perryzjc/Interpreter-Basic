@@ -1,6 +1,7 @@
-package App.Commands.Challenge0.BruceLoop;
+package App.Commands.Challenge0.BruceLoop.ImprovedBruce;
 
 import App.Commands.Basic.Command;
+import App.Commands.Challenge0.BruceLoop.BruceLoop;
 import App.Commands.Challenge0.CmdXORSebastian;
 import App.Commands.CmdHelper;
 import App.Commands.DefinedCmd.DefinedCmd;
@@ -15,6 +16,9 @@ import java.util.ArrayList;
  * have an additional map to store different result of memory space after a defined command is executed
  * e.g. 4 commands defined command, the map will store 2^4 (at max) different memory space
  * many memory space are the same, so the memory map will keep the memory space only once
+ *
+ * 17 commands will operate the deserialized result of 16.map file
+ * 18 commands will operate the deserialized result of 17.map file
  * thus improve the performance
  */
 public class BruceLoop2 {
@@ -126,7 +130,7 @@ public class BruceLoop2 {
         System.out.println("Finished Not find a solution! looptimes: " + loopTimes);
     }
 
-    private void resetState(BruceLoop.INIT_STATE state) {
+    private void resetState(INIT_STATE state) {
         /**
          * can perform 10 inc at max, thus only need 10 bits at max
          */
@@ -159,25 +163,25 @@ public class BruceLoop2 {
     }
 
     private boolean test000() {
-        resetState(BruceLoop.INIT_STATE.T00);
+        resetState(INIT_STATE.T00);
         currDefinedCmd.execute();
         return memorySpace.getBitForTestOnly(2) == 0;
     }
 
     private boolean test011() {
-        resetState(BruceLoop.INIT_STATE.T01);
+        resetState(INIT_STATE.T01);
         currDefinedCmd.execute();
         return memorySpace.getBitForTestOnly(2) == 1;
     }
 
     private boolean test101() {
-        resetState(BruceLoop.INIT_STATE.T10);
+        resetState(INIT_STATE.T10);
         currDefinedCmd.execute();
         return memorySpace.getBitForTestOnly(2) == 1;
     }
 
     private boolean test110() {
-        resetState(BruceLoop.INIT_STATE.T11);
+        resetState(INIT_STATE.T11);
         currDefinedCmd.execute();
         return memorySpace.getBitForTestOnly(2) == 0;
     }

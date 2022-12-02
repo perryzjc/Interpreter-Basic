@@ -93,4 +93,9 @@ public class MemorySpace {
         this.memory = memory;
         scope = memory.size();
     }
+
+    @Override
+    public int hashCode() {
+        return memory.hashCode();
+    }
 }
