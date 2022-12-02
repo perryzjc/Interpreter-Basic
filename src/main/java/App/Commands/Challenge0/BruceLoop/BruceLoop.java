@@ -22,19 +22,18 @@ public class BruceLoop {
     private Store store;
     private CmdHelper cmdHelper;
     private CurrDefinedCmd currDefinedCmd;
-    private ArrayList<Command> result = new ArrayList<>();
+    private ArrayList<Command> result;
     /* curr index to put the command in result */
     private int currIndex;
 
     public static void main(String[] args) {
-        //finished: 3， 4， 5， 6， 7， 8， 9， 10， 11， 12， 13， 14， 15， 16
-        for (int i = 27; i < 28; i++) {
-            //BruceLoop bruceLoop = new BruceLoop(i);
-            BruceLoop bruceLoop = new BruceLoop(SEBASTIAN_SOL_NUM_COMMANDS);
+        //finished: 3， 4， 5， 6， 7， 8， 9， 10， 11， 12， 13, 14
+        for (int i = 3; i < 15; i++) {
+            BruceLoop bruceLoop = new BruceLoop(i);
+//            BruceLoop bruceLoop = new BruceLoop(SEBASTIAN_SOL_NUM_COMMANDS);
             bruceLoop.startForLoop();
             System.out.println("finished: " + i);
         }
-        //BruceLoop bruceLoop = new BruceLoop(4);
     }
 
     enum INIT_STATE {
@@ -47,6 +46,8 @@ public class BruceLoop {
         memorySpace = new MemorySpace();
         store = new Store();
         cmdHelper = new CmdHelper(pointer, memorySpace, store);
+        currDefinedCmd = new CurrDefinedCmd(pointer, memorySpace, store);
+        result = new ArrayList<>();
         loadUsableCmd();
         initCurrCombination();
         initResult();
@@ -104,7 +105,7 @@ public class BruceLoop {
             if (i != 0) {
                 nextCombination();
             }
-            currDefinedCmd = new CurrDefinedCmd(pointer, memorySpace, store);
+            currDefinedCmd.loadCommands();
             if (!test000() || !test011() || !test101() || !test110()) {
                 continue;
             } else {
@@ -200,12 +201,15 @@ public class BruceLoop {
     private class CurrDefinedCmd extends DefinedCmd {
         public CurrDefinedCmd(Pointer pointer, MemorySpace memorySpace, Store store) {
             super(pointer, memorySpace, store);
-            loadCommands();
+            for (int i = 0; i < _max_commands_used; i++) {
+                cmdList.add(null);
+            }
         }
 
         @Override
         protected void loadCommands() {
-            testCorrectCmdSebastianSolution();
+//            testCorrectCmdSebastianSolution();
+            loadCommandsBasedOnCombinationArray();
         }
 
         private void testCorrectCmdSebastianSolution() {
@@ -216,7 +220,7 @@ public class BruceLoop {
         private void loadCommandsBasedOnCombinationArray() {
             for (int i = 0; i < _max_commands_used; i++) {
                 Command cmd = usableCommands.get(currCombination.get(i));
-                result.set(i, cmd);
+                cmdList.set(i, cmd);
             }
         }
     }
