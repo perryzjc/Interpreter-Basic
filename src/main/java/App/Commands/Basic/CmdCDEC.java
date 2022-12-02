@@ -15,6 +15,9 @@ public class CmdCDEC extends Command {
     @Override
     public void execute() {
         int index = pointer.getIndex();
+        if (index == 0) {
+            return;
+        }
         if (store.getValue() == 1) {
             pointer.setIndex(index - 1);
         }
