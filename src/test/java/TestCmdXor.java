@@ -95,6 +95,11 @@ public class TestCmdXor {
         assertEquals(1, memorySpace.getBit(pointer));
     }
 
+    @Test
+    public void printCmdXOR() {
+        System.out.println(cmdXOR.commandName());
+    }
+
     /**
      * initial state for pointer, memory, and the store
      */
