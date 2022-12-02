@@ -13,11 +13,11 @@ import java.util.ArrayList;
  *
  * Output: the XOR of the bits, A XOR B, at address 2
  */
-public class CmdXOR extends Command {
+public class CmdXORSebastian extends Command {
     private CmdHelper cmdHelper;
     private ArrayList<Command> cmdList;
 
-    public CmdXOR(Pointer pointer, MemorySpace memorySpace, Store store) {
+    public CmdXORSebastian(Pointer pointer, MemorySpace memorySpace, Store store) {
         super(pointer, memorySpace, store);
         cmdHelper = new CmdHelper(pointer, memorySpace, store);
         cmdList = new ArrayList<>();

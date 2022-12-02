@@ -1,5 +1,4 @@
-import App.Commands.CmdHelper;
-import App.Commands.CmdXOR;
+import App.Commands.CmdXORSebastian;
 import App.MemorySpace;
 import App.Pointer;
 import App.Store;
@@ -21,14 +20,14 @@ public class TestCmdXor {
     private Pointer pointer;
     private MemorySpace memorySpace;
     private Store store;
-    private CmdXOR cmdXOR;
+    private CmdXORSebastian cmdXOR;
 
     @BeforeEach
     public void init() {
         pointer = new Pointer();
         memorySpace = new MemorySpace(5);
         store = new Store();
-        cmdXOR = new CmdXOR(pointer, memorySpace, store);
+        cmdXOR = new CmdXORSebastian(pointer, memorySpace, store);
     }
 
     @Test
