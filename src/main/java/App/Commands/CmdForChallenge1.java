@@ -13,27 +13,14 @@ import java.util.ArrayList;
  *
  * Output: the 2-bit sum of the bits, A + B, at addresses 2-3.
  */
-public class CmdForChallenge1 extends Command {
-    private CmdHelper cmdHelper;
-    private ArrayList<Command> cmdList;
+public class CmdForChallenge1 extends DefinedCmd {
 
     public CmdForChallenge1(Pointer pointer, MemorySpace memorySpace, Store store) {
         super(pointer, memorySpace, store);
-        cmdHelper = new CmdHelper(pointer, memorySpace, store);
-        cmdList = new ArrayList<>();
-        loadCommands();
-    }
-    @Override
-    public void execute() {
-
     }
 
     @Override
-    public String commandName() {
-        return null;
-    }
-
-    private void loadCommands() {
+    protected void loadCommands() {
 
     }
 }

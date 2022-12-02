@@ -13,22 +13,11 @@ import java.util.ArrayList;
  *
  * Output: the XOR of the bits, A XOR B, at address 2
  */
-public class CmdXORSebastian extends Command {
-    private CmdHelper cmdHelper;
-    private ArrayList<Command> cmdList;
+public class CmdXORSebastian extends DefinedCmd {
 
     public CmdXORSebastian(Pointer pointer, MemorySpace memorySpace, Store store) {
         super(pointer, memorySpace, store);
-        cmdHelper = new CmdHelper(pointer, memorySpace, store);
-        cmdList = new ArrayList<>();
         loadCommands();
-    }
-
-    @Override
-    public void execute() {
-        for (Command cmd : cmdList) {
-            cmd.execute();
-        }
     }
 
     /**
@@ -62,41 +51,32 @@ public class CmdXORSebastian extends Command {
      * 23. INV
      * 24. INC
      */
-    private void loadCommands() {
-        cmdList.add(cmdHelper.getCmdLOAD());
-        cmdList.add(cmdHelper.getCmdCDEC());
-        cmdList.add(cmdHelper.getCmdCDEC());
-        cmdList.add(cmdHelper.getCmdINC());
-        cmdList.add(cmdHelper.getCmdLOAD());
-        cmdList.add(cmdHelper.getCmdINC());
-        cmdList.add(cmdHelper.getCmdINC());
-        cmdList.add(cmdHelper.getCmdLOAD());
-        cmdList.add(cmdHelper.getCmdCDEC());
-        cmdList.add(cmdHelper.getCmdCDEC());
-        cmdList.add(cmdHelper.getCmdCDEC());
-        cmdList.add(cmdHelper.getCmdLOAD());
-        cmdList.add(cmdHelper.getCmdINC());
-        cmdList.add(cmdHelper.getCmdINV());
-        cmdList.add(cmdHelper.getCmdLOAD());
-        cmdList.add(cmdHelper.getCmdCDEC());
-        cmdList.add(cmdHelper.getCmdCDEC());
-        cmdList.add(cmdHelper.getCmdCDEC());
-        cmdList.add(cmdHelper.getCmdINV());
-        cmdList.add(cmdHelper.getCmdLOAD());
-        cmdList.add(cmdHelper.getCmdINV());
-        cmdList.add(cmdHelper.getCmdCDEC());
-        cmdList.add(cmdHelper.getCmdINC());
-        cmdList.add(cmdHelper.getCmdINV());
-        cmdList.add(cmdHelper.getCmdINC());
-    }
-
     @Override
-    public String commandName() {
-        StringBuilder result = new StringBuilder();
-        for (Command cmd : cmdList) {
-            result.append(cmd.commandName());
-            result.append("\n");
-        }
-        return result.toString();
+    protected void loadCommands() {
+        cmdList.add(cmdHelper.getCmdLOAD());
+        cmdList.add(cmdHelper.getCmdCDEC());
+        cmdList.add(cmdHelper.getCmdCDEC());
+        cmdList.add(cmdHelper.getCmdINC());
+        cmdList.add(cmdHelper.getCmdLOAD());
+        cmdList.add(cmdHelper.getCmdINC());
+        cmdList.add(cmdHelper.getCmdINC());
+        cmdList.add(cmdHelper.getCmdLOAD());
+        cmdList.add(cmdHelper.getCmdCDEC());
+        cmdList.add(cmdHelper.getCmdCDEC());
+        cmdList.add(cmdHelper.getCmdCDEC());
+        cmdList.add(cmdHelper.getCmdLOAD());
+        cmdList.add(cmdHelper.getCmdINC());
+        cmdList.add(cmdHelper.getCmdINV());
+        cmdList.add(cmdHelper.getCmdLOAD());
+        cmdList.add(cmdHelper.getCmdCDEC());
+        cmdList.add(cmdHelper.getCmdCDEC());
+        cmdList.add(cmdHelper.getCmdCDEC());
+        cmdList.add(cmdHelper.getCmdINV());
+        cmdList.add(cmdHelper.getCmdLOAD());
+        cmdList.add(cmdHelper.getCmdINV());
+        cmdList.add(cmdHelper.getCmdCDEC());
+        cmdList.add(cmdHelper.getCmdINC());
+        cmdList.add(cmdHelper.getCmdINV());
+        cmdList.add(cmdHelper.getCmdINC());
     }
 }
