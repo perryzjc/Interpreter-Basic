@@ -1,7 +1,6 @@
-package App.Commands;
+package App.Commands.DefinedCmd;
 
 import App.Commands.Basic.CmdINC;
-import App.Commands.DefinedCmd;
 import App.MemorySpace;
 import App.Pointer;
 import App.Store;

@@ -1,4 +1,4 @@
-import App.Commands.CmdXORSebastian;
+import App.Commands.Challenge0.CmdXORSebastian;
 import App.MemorySpace;
 import App.Pointer;
 import App.Store;

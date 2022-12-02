@@ -1,5 +1,6 @@
-package App.Commands;
+package App.Commands.Challenge1;
 
+import App.Commands.DefinedCmd.DefinedCmd;
 import App.MemorySpace;
 import App.Pointer;
 import App.Store;
