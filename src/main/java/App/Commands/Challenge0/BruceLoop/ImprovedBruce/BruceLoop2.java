@@ -1,5 +1,6 @@
 package App.Commands.Challenge0.BruceLoop.ImprovedBruce;
 
+import App.Commands.Basic.Command;
 import App.Commands.Challenge0.BruceLoop.BruceLoop;
 import App.Commands.Challenge0.BruceLoop.ImprovedBruce.MemorySet.MemorySet;
 import App.MemorySpace;
@@ -26,7 +27,7 @@ public class BruceLoop2 extends BruceLoop {
 
     public static void main(String[] args) {
         //finished: 3， 4， 5， 6， 7， 8， 9， 10， 11， 12， 13, 14, 15, 16, 17 (17179869184)
-        BruceLoop2 bruceLoop = new BruceLoop2(8, 8, true);
+        BruceLoop2 bruceLoop = new BruceLoop2(3, 35, true);
         bruceLoop.startForLoop();
     }
 
@@ -47,75 +48,116 @@ public class BruceLoop2 extends BruceLoop {
 
     @Override
     public void startForLoop() {
-        while(curr_commands_used <= _max_commands_used) {
+        boolean found = false;
+        while(curr_commands_used <= _max_commands_used && !found) {
             if (_isInitSet) {
                 loadMemSet(curr_commands_used, true);
-                nonDependentSetLoop();
+                found = nonDependentSetLoop();
                 _isInitSet = false;
             } else {
                 loadMemSet(curr_commands_used - 1, false);
-                dependentSetLoop();
+                found = dependentSetLoop();
             }
             curr_commands_used++;
         }
     }
 
-    public void nonDependentSetLoop() {
+    public boolean nonDependentSetLoop() {
         long loopTimes = (long) Math.pow(NUM_OPTIONS_CMD, curr_commands_used);
         for (long i = 0; i < loopTimes; i++) {
             if (i != 0) {
                 nextCombination();
             }
             currDefinedCmd.loadCommands();
-            if (!test000() || !test011() || !test101() || !test110()) {
-                continue;
-            } else {
+            boolean true1 = test000(false);
+            boolean true2 = test011(false);
+            boolean true3 = test101(false);
+            boolean true4 = test110(false);
+            if (true1 && true2 && true3 && true4) {
                 loadToResult(currDefinedCmd);
                 for (int j = 0; j < curr_commands_used; j++) {
                     System.out.println(result.get(j).commandName());
                 }
-                System.out.println("Found a solution! Number of commands used: " + curr_commands_used);
-                return;
+                System.out.println("Found a solution by nonDependentSetLoop! Number of commands used: " + curr_commands_used);
+                return true;
             }
         }
         String setName = curr_commands_used + ".set";
         memorySet.serialize(setName);
         System.out.println("Finished Not find a solution! loop times: " + loopTimes);
+        return false;
     }
 
-    public void dependentSetLoop() {
+    public boolean dependentSetLoop() {
         long loopTimes = 0;
-        for (MemorySpace mem : memorySet.getMemSet()) {
-            memorySpace.reset(mem);
-            loopTimes++;
+        MemorySet oldMemorySet = new MemorySet(memorySet);
+        memorySet = new MemorySet();
+        for (MemorySpace mem : oldMemorySet.getMemSet()) {
+            for (Command cmd : usableCommands) {
+                loopTimes++;
+                memorySpace.reset(mem);
+                pointer.reset();
+                store.reset();
+                cmd.execute();
+                memorySet.add(memorySpace);
+                boolean t1 = test000(true);
+                boolean t2 = test011(true);
+                boolean t3 = test101(true);
+                boolean t4 = test110(true);
+                if (t1 && t2 && t3 && t4) {
+                    System.out.println(curr_commands_used + ". " + cmd.commandName());
+                    System.out.println("Found a solution by dependentSetLoop! Number of commands used: " + curr_commands_used);
+                    return true;
+                }
+            }
         }
+        String setName = curr_commands_used + ".set";
+        memorySet.serialize(setName);
+        System.out.println("Finished Not find a solution! loop times: " + loopTimes);
+        return false;
     }
 
-    @Override
-    protected boolean test000() {
-        boolean result = super.test000();
-        memorySet.add(memorySpace);
+    protected boolean test000(boolean dependentSet) {
+        boolean result;
+        if (dependentSet) {
+            result = memorySpace.getBitForTestOnly(2) == 0;
+        } else {
+            result = super.test000();
+            memorySet.add(memorySpace);
+        }
         return result;
     }
 
-    @Override
-    protected boolean test011() {
-        boolean result = super.test011();
-        memorySet.add(memorySpace);
+    protected boolean test011(boolean dependentSet) {
+        boolean result;
+        if (dependentSet) {
+            result = memorySpace.getBitForTestOnly(1) == 1;
+        } else {
+            result = super.test011();
+            memorySet.add(memorySpace);
+        }
         return result;
     }
 
-    @Override
-    protected boolean test101() {
-        boolean result = super.test101();
-        memorySet.add(memorySpace);
+    protected boolean test101(boolean dependentSet) {
+        boolean result;
+        if (dependentSet) {
+            result = memorySpace.getBitForTestOnly(0) == 1;
+        } else {
+            result = super.test101();
+            memorySet.add(memorySpace);
+        }
         return result;
     }
 
-    @Override
-    protected boolean test110() {
-        boolean result = super.test110();
-        memorySet.add(memorySpace);
+    protected boolean test110(boolean dependentSet) {
+        boolean result;
+        if (dependentSet) {
+            result = memorySpace.getBitForTestOnly(0) == 0;
+        } else {
+            result = super.test110();
+            memorySet.add(memorySpace);
+        }
         return result;
     }
 }

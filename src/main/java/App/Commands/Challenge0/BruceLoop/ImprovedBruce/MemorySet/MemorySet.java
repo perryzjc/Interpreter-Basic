@@ -26,6 +26,13 @@ public class MemorySet implements Serializable {
         memSet = memorySet.memSet;
     }
 
+    /**
+     * deep copy
+     */
+    public MemorySet(MemorySet memorySet) {
+        memSet = new HashSet<>(memorySet.memSet);
+    }
+
     public void add(MemorySpace mem) {
         memSet.add(new MemorySpace(mem));
     }
