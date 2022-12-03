@@ -26,8 +26,9 @@ public class BruceLoop2 extends BruceLoop {
     public static void main(String[] args) {
         /**
          * my computer can only handle 22 commands because of memory heap limit
+         * VM has 26 as limit
          */
-        BruceLoop2 bruceLoop = new BruceLoop2(3, 25, true);
+        BruceLoop2 bruceLoop = new BruceLoop2(3, 30, true);
         bruceLoop.startForLoop();
     }
 
