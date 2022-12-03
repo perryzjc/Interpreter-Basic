@@ -6,16 +6,16 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestBruceLoop2 {
-    @Test
-    public void testBruceLoop2SebastianSol() {
-        BruceLoop2 bruceLoop2 = new BruceLoop2(3, 20, true);
-        bruceLoop2.startForLoop();
-        BranchSet branchSet = bruceLoop2.getBranchSet();
-        assertTrue(branchSet.contains(correctSebastian000()));
-        assertTrue(branchSet.contains(correctSebastian011()));
-        assertTrue(branchSet.contains(correctSebastian101()));
-        assertTrue(branchSet.contains(correctSebastian110()));
-    }
+//    @Test
+//    public void testBruceLoop2SebastianSol() {
+//        BruceLoop2 bruceLoop2 = new BruceLoop2(3, 20, true);
+//        bruceLoop2.startForLoop();
+//        BranchSet branchSet = bruceLoop2.getBranchSet();
+//        assertTrue(branchSet.contains(correctSebastian000()));
+//        assertTrue(branchSet.contains(correctSebastian011()));
+//        assertTrue(branchSet.contains(correctSebastian101()));
+//        assertTrue(branchSet.contains(correctSebastian110()));
+//    }
 
     @Test
     public void testBruceLoop2SmallData() {

@@ -19,9 +19,9 @@ import App.Commands.Challenge0.BruceLoop.ImprovedBruce.BranchSet.BranchSet;
  */
 public class BruceLoop2 extends BruceLoop {
 
-    private BranchSet branchSet;
-    private int curr_commands_used;
-    boolean _isInitSet;
+    protected BranchSet branchSet;
+    protected int curr_commands_used;
+    protected boolean _isInitSet;
 
     public static void main(String[] args) {
         /**
@@ -43,7 +43,7 @@ public class BruceLoop2 extends BruceLoop {
         return branchSet;
     }
 
-    private void loadBranchSet(int commands_used, boolean isInitSet) {
+    protected void loadBranchSet(int commands_used, boolean isInitSet) {
         if (isInitSet) {
             branchSet = new BranchSet();
         } else {
@@ -127,7 +127,7 @@ public class BruceLoop2 extends BruceLoop {
     protected boolean test000(boolean dependentSet) {
         boolean result;
         if (dependentSet) {
-            result = memorySpace.getBitForTestOnly(2) == false;
+            result = !memorySpace.getBitForTestOnly(2);
         } else {
             result = super.test000();
             Branch branch = new Branch(memorySpace, pointer, store);
@@ -139,7 +139,7 @@ public class BruceLoop2 extends BruceLoop {
     protected boolean test011(boolean dependentSet) {
         boolean result;
         if (dependentSet) {
-            result = memorySpace.getBitForTestOnly(1);
+            result = memorySpace.getBitForTestOnly(2);
         } else {
             result = super.test011();
             Branch branch = new Branch(memorySpace, pointer, store);
@@ -151,7 +151,7 @@ public class BruceLoop2 extends BruceLoop {
     protected boolean test101(boolean dependentSet) {
         boolean result;
         if (dependentSet) {
-            result = memorySpace.getBitForTestOnly(0);
+            result = memorySpace.getBitForTestOnly(2);
         } else {
             result = super.test101();
             Branch branch = new Branch(memorySpace, pointer, store);
@@ -163,7 +163,7 @@ public class BruceLoop2 extends BruceLoop {
     protected boolean test110(boolean dependentSet) {
         boolean result;
         if (dependentSet) {
-            result = !memorySpace.getBitForTestOnly(0);
+            result = !memorySpace.getBitForTestOnly(2);
         } else {
             result = super.test110();
             Branch branch = new Branch(memorySpace, pointer, store);
