@@ -27,7 +27,7 @@ public class MemorySet implements Serializable {
     }
 
     public void add(MemorySpace mem) {
-        memSet.add(mem);
+        memSet.add(new MemorySpace(mem));
     }
 
     public HashSet<MemorySpace> getMemSet() {

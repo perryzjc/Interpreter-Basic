@@ -32,6 +32,14 @@ public class MemorySpace implements Serializable {
         this.scope = memorySpace.scope;
     }
 
+    public MemorySpace(String memorySpace) {
+        memory = new ArrayList<Integer>();
+        for (int i = 0; i < memorySpace.length(); i++) {
+            this.memory.add(memorySpace.charAt(i) - '0');
+        }
+        this.scope = memory.size();
+    }
+
     private void initializeMemory() {
         for (int i = 0; i < scope; i++) {
             memory.add(0);
@@ -106,7 +114,32 @@ public class MemorySpace implements Serializable {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof MemorySpace)) {
+            return false;
+        }
+        MemorySpace memorySpace = (MemorySpace) obj;
+        if (memorySpace.scope != this.scope) {
+            return false;
+        }
+        for (int i = 0; i < scope; i++) {
+            if (memorySpace.memory.get(i).compareTo(this.memory.get(i)) != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
     public int hashCode() {
+//        String hash = memory.toString();
+//        return hash.hashCode();
         return memory.hashCode();
     }
 }

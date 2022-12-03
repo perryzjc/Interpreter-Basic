@@ -4,7 +4,7 @@ import App.Commands.Challenge0.BruceLoop.BruceLoop;
 import App.Commands.Challenge0.BruceLoop.ImprovedBruce.MemorySet.MemorySet;
 import App.MemorySpace;
 
-import java.io.File;
+
 
 /**
  * an optimization of BruceLoop.java
@@ -26,7 +26,7 @@ public class BruceLoop2 extends BruceLoop {
 
     public static void main(String[] args) {
         //finished: 3， 4， 5， 6， 7， 8， 9， 10， 11， 12， 13, 14, 15, 16, 17 (17179869184)
-        BruceLoop2 bruceLoop = new BruceLoop2(7, 7, true);
+        BruceLoop2 bruceLoop = new BruceLoop2(8, 8, true);
         bruceLoop.startForLoop();
     }
 
