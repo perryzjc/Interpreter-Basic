@@ -24,7 +24,10 @@ public class BruceLoop2 extends BruceLoop {
     boolean _isInitSet;
 
     public static void main(String[] args) {
-        BruceLoop2 bruceLoop = new BruceLoop2(3, 22, true);
+        /**
+         * my computer can only handle 22 commands because of memory heap limit
+         */
+        BruceLoop2 bruceLoop = new BruceLoop2(3, 25, true);
         bruceLoop.startForLoop();
     }
 
