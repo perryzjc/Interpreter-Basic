@@ -1,11 +1,12 @@
 package App;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * On startup, the array is initialized to all 0s
  */
-public class MemorySpace {
+public class MemorySpace implements Serializable {
     private int scope;
     private ArrayList<Integer> memory;
 
@@ -24,6 +25,11 @@ public class MemorySpace {
     public MemorySpace(ArrayList<Integer> memory) {
         this.memory = memory;
         scope = memory.size();
+    }
+
+    public MemorySpace(MemorySpace memorySpace) {
+        this.memory = memorySpace.memory;
+        this.scope = memorySpace.scope;
     }
 
     private void initializeMemory() {
@@ -92,6 +98,11 @@ public class MemorySpace {
     public void reset(ArrayList<Integer> memory) {
         this.memory = memory;
         scope = memory.size();
+    }
+
+    public void reset(MemorySpace memorySpace) {
+        this.memory = memorySpace.memory;
+        this.scope = memorySpace.scope;
     }
 
     @Override

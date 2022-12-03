@@ -11,20 +11,20 @@ import App.Store;
 import java.util.ArrayList;
 
 public class BruceLoop {
-    private final static int SEBASTIAN_SOL_NUM_COMMANDS = 32;
-    private final ArrayList<Command> usableCommands = new ArrayList<>();
-    private final ArrayList<Integer> currCombination = new ArrayList<>();
-    private final int NUM_OPTIONS_CMD = 4;
+    protected final static int SEBASTIAN_SOL_NUM_COMMANDS = 32;
+    protected final ArrayList<Command> usableCommands = new ArrayList<>();
+    protected final ArrayList<Integer> currCombination = new ArrayList<>();
+    protected final int NUM_OPTIONS_CMD = 4;
 
-    private int _max_commands_used;
-    private Pointer pointer;
-    private MemorySpace memorySpace;
-    private Store store;
-    private CmdHelper cmdHelper;
-    private CurrDefinedCmd currDefinedCmd;
-    private ArrayList<Command> result;
+    protected int _max_commands_used;
+    protected Pointer pointer;
+    protected MemorySpace memorySpace;
+    protected Store store;
+    protected CmdHelper cmdHelper;
+    protected CurrDefinedCmd currDefinedCmd;
+    protected ArrayList<Command> result;
     /* curr index to put the command in result */
-    private int currIndex;
+    protected int currIndex;
 
     public static void main(String[] args) {
         //finished: 3， 4， 5， 6， 7， 8， 9， 10， 11， 12， 13, 14, 15, 16, 17 (17179869184)
@@ -53,14 +53,14 @@ public class BruceLoop {
         initResult();
     }
 
-    private void loadUsableCmd() {
+    protected void loadUsableCmd() {
         usableCommands.add(cmdHelper.getCmdCDEC());
         usableCommands.add(cmdHelper.getCmdLOAD());
         usableCommands.add(cmdHelper.getCmdINV());
         usableCommands.add(cmdHelper.getCmdINC());
     }
 
-    private void initCurrCombination() {
+    protected void initCurrCombination() {
         if (currCombination.size() == 0) {
             for (int i = 0; i < _max_commands_used; i++) {
                 currCombination.add(0);
@@ -72,7 +72,12 @@ public class BruceLoop {
         }
     }
 
-    private void nextCombination() {
+    /**
+     * increase from the first digit
+     * e.g.
+     * 0000 -> 1000 -> 2000 -> 3000 -> 4000 -> 0100 -> 1100
+     */
+    protected void nextCombination() {
         int i = 0;
         while (i < NUM_OPTIONS_CMD) {
             if (currCombination.get(i) < NUM_OPTIONS_CMD - 1) {
@@ -85,7 +90,7 @@ public class BruceLoop {
         }
     }
 
-    private void initResult() {
+    protected void initResult() {
         if (result.size() == 0) {
             for (int i = 0; i < _max_commands_used; i++) {
                 result.add(null);
@@ -120,7 +125,7 @@ public class BruceLoop {
         System.out.println("Finished Not find a solution! looptimes: " + loopTimes);
     }
 
-    private void resetState(INIT_STATE state) {
+    protected void resetState(INIT_STATE state) {
         /**
          * can perform 10 inc at max, thus only need 10 bits at max
          */
@@ -142,7 +147,7 @@ public class BruceLoop {
         store.reset();
     }
 
-    private ArrayList<Integer> getSampleInitMemorySpaceForFirstTwoPos(int int1, int int2) {
+    protected ArrayList<Integer> getSampleInitMemorySpaceForFirstTwoPos(int int1, int int2) {
         ArrayList<Integer> sample = new ArrayList<>();
         sample.add(int1);
         sample.add(int2);
@@ -152,25 +157,25 @@ public class BruceLoop {
         return sample;
     }
 
-    private boolean test000() {
+    protected boolean test000() {
         resetState(INIT_STATE.T00);
         currDefinedCmd.execute();
         return memorySpace.getBitForTestOnly(2) == 0;
     }
 
-    private boolean test011() {
+    protected boolean test011() {
         resetState(INIT_STATE.T01);
         currDefinedCmd.execute();
         return memorySpace.getBitForTestOnly(2) == 1;
     }
 
-    private boolean test101() {
+    protected boolean test101() {
         resetState(INIT_STATE.T10);
         currDefinedCmd.execute();
         return memorySpace.getBitForTestOnly(2) == 1;
     }
 
-    private boolean test110() {
+    protected boolean test110() {
         resetState(INIT_STATE.T11);
         currDefinedCmd.execute();
         return memorySpace.getBitForTestOnly(2) == 0;
@@ -180,12 +185,12 @@ public class BruceLoop {
      * load every command in cmdList of definedCmd to result list
      * @param definedCmd
      */
-    private void loadToResult(DefinedCmd definedCmd) {
+    protected void loadToResult(DefinedCmd definedCmd) {
         currIndex = 0;
         loadToResultHelper(definedCmd);
     }
 
-    private void loadToResultHelper(DefinedCmd definedCmd) {
+    protected void loadToResultHelper(DefinedCmd definedCmd) {
         ArrayList<Command> cmdList = definedCmd.getCmdList();
         for (int i = 0; i < cmdList.size(); i++) {
             Command command = cmdList.get(i);
@@ -198,7 +203,7 @@ public class BruceLoop {
         }
     }
 
-    private class CurrDefinedCmd extends DefinedCmd {
+    protected class CurrDefinedCmd extends DefinedCmd {
         public CurrDefinedCmd(Pointer pointer, MemorySpace memorySpace, Store store) {
             super(pointer, memorySpace, store);
             for (int i = 0; i < _max_commands_used; i++) {
@@ -207,7 +212,7 @@ public class BruceLoop {
         }
 
         @Override
-        protected void loadCommands() {
+        public void loadCommands() {
 //            testCorrectCmdSebastianSolution();
             loadCommandsBasedOnCombinationArray();
         }
