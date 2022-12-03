@@ -138,8 +138,6 @@ public class MemorySpace implements Serializable {
 
     @Override
     public int hashCode() {
-//        String hash = memory.toString();
-//        return hash.hashCode();
         return memory.hashCode();
     }
 }
