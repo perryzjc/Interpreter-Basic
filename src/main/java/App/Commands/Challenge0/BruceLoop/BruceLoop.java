@@ -28,7 +28,7 @@ public class BruceLoop {
 
     public static void main(String[] args) {
         //finished: 3， 4， 5， 6， 7， 8， 9， 10， 11， 12， 13, 14, 15, 16, 17 (17179869184)
-        for (int i = 17; i < 20; i++) {
+        for (int i = 32; i < 33; i++) {
             BruceLoop bruceLoop = new BruceLoop(i);
 //            BruceLoop bruceLoop = new BruceLoop(SEBASTIAN_SOL_NUM_COMMANDS);
             bruceLoop.startForLoop();
@@ -203,10 +203,27 @@ public class BruceLoop {
         }
     }
 
-    protected class CurrDefinedCmd extends DefinedCmd {
+    public void setNumCmdToUse(int numCmdToUse) {
+        currDefinedCmd._numCmdToUse = numCmdToUse;
+        ArrayList<Command> oldCmdList = new ArrayList<>(currDefinedCmd.getCmdList());
+        ArrayList<Command> ptr = currDefinedCmd.getCmdList();
+        ptr.clear();
+        for (int i = 0; i < currDefinedCmd._numCmdToUse; i++) {
+            ptr.add(oldCmdList.get(i));
+        }
+    }
+
+    public class CurrDefinedCmd extends DefinedCmd {
+        private int _numCmdToUse;
+
         public CurrDefinedCmd(Pointer pointer, MemorySpace memorySpace, Store store) {
             super(pointer, memorySpace, store);
-            for (int i = 0; i < _max_commands_used; i++) {
+            _numCmdToUse = _max_commands_used;
+            init();
+        }
+
+        private void init() {
+            for (int i = 0; i < _numCmdToUse; i++) {
                 cmdList.add(null);
             }
         }
@@ -220,13 +237,13 @@ public class BruceLoop {
         private void testCorrectCmdSebastianSolution() {
             CmdXORSebastian cmdXORSebastian = new CmdXORSebastian(pointer, memorySpace, store);
             ArrayList<Command> cmdSource = cmdXORSebastian.getCmdList();
-            for (int i = 0; i < _max_commands_used; i++) {
+            for (int i = 0; i < _numCmdToUse; i++) {
                 cmdList.set(i, cmdSource.get(i));
             }
         }
 
         private void loadCommandsBasedOnCombinationArray() {
-            for (int i = 0; i < _max_commands_used; i++) {
+            for (int i = 0; i < _numCmdToUse; i++) {
                 Command cmd = usableCommands.get(currCombination.get(i));
                 cmdList.set(i, cmd);
             }

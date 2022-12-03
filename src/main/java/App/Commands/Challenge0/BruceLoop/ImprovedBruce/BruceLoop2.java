@@ -2,10 +2,8 @@ package App.Commands.Challenge0.BruceLoop.ImprovedBruce;
 
 import App.Commands.Basic.Command;
 import App.Commands.Challenge0.BruceLoop.BruceLoop;
-import App.Commands.Challenge0.BruceLoop.ImprovedBruce.MemorySet.MemorySet;
-import App.MemorySpace;
-
-
+import App.Commands.Challenge0.BruceLoop.ImprovedBruce.BranchSet.Branch;
+import App.Commands.Challenge0.BruceLoop.ImprovedBruce.BranchSet.BranchSet;
 
 /**
  * an optimization of BruceLoop.java
@@ -13,36 +11,40 @@ import App.MemorySpace;
  * e.g. 4 commands defined command, the map will store 2^4 (at max) different memory space
  * many memory space are the same, so the memory map will keep the memory space only once
  *
- * 17 commands will operate the deserialized result of 16.map file
- * 18 commands will operate the deserialized result of 17.map file
+ * 17 commands will operate the deserialized result of 16.bset file
+ * 18 commands will operate the deserialized result of 17.bset file
  * thus improve the performance
  *
  * ATTENTION: when using this loop, for safety, pre-define the max-allow spaces (which equals to the max-allow commands)
  */
 public class BruceLoop2 extends BruceLoop {
 
-    private MemorySet memorySet;
+    private BranchSet branchSet;
     private int curr_commands_used;
     boolean _isInitSet;
 
     public static void main(String[] args) {
         //finished: 3， 4， 5， 6， 7， 8， 9， 10， 11， 12， 13, 14, 15, 16, 17 (17179869184)
-        BruceLoop2 bruceLoop = new BruceLoop2(3, 35, true);
+        BruceLoop2 bruceLoop = new BruceLoop2(3, 32, true);
         bruceLoop.startForLoop();
     }
 
     public BruceLoop2(int start_num_commands, int max_commands_used, boolean isInitSet) {
         super(max_commands_used);
+        setNumCmdToUse(start_num_commands);
         curr_commands_used = start_num_commands;
         _isInitSet = isInitSet;
     }
 
-    private void loadMemSet(int commands_used, boolean isInitSet) {
+    public BranchSet getBranchSet() {
+        return branchSet;
+    }
+
+    private void loadBranchSet(int commands_used, boolean isInitSet) {
         if (isInitSet) {
-            memorySet = new MemorySet();
+            branchSet = new BranchSet();
         } else {
-            String filename = commands_used + ".set";
-            memorySet = MemorySet.deserialize(filename);
+            branchSet = BranchSet.deserialize(commands_used);
         }
     }
 
@@ -51,11 +53,11 @@ public class BruceLoop2 extends BruceLoop {
         boolean found = false;
         while(curr_commands_used <= _max_commands_used && !found) {
             if (_isInitSet) {
-                loadMemSet(curr_commands_used, true);
+                loadBranchSet(curr_commands_used, true);
                 found = nonDependentSetLoop();
                 _isInitSet = false;
             } else {
-                loadMemSet(curr_commands_used - 1, false);
+                loadBranchSet(curr_commands_used - 1, false);
                 found = dependentSetLoop();
             }
             curr_commands_used++;
@@ -73,6 +75,9 @@ public class BruceLoop2 extends BruceLoop {
             boolean true2 = test011(false);
             boolean true3 = test101(false);
             boolean true4 = test110(false);
+//            boolean true2 = false;
+//            boolean true3 = false;
+//            boolean true4 = false;
             if (true1 && true2 && true3 && true4) {
                 loadToResult(currDefinedCmd);
                 for (int j = 0; j < curr_commands_used; j++) {
@@ -82,24 +87,24 @@ public class BruceLoop2 extends BruceLoop {
                 return true;
             }
         }
-        String setName = curr_commands_used + ".set";
-        memorySet.serialize(setName);
+        branchSet.serialize(curr_commands_used);
         System.out.println("Finished Not find a solution! loop times: " + loopTimes);
         return false;
     }
 
     public boolean dependentSetLoop() {
         long loopTimes = 0;
-        MemorySet oldMemorySet = new MemorySet(memorySet);
-        memorySet = new MemorySet();
-        for (MemorySpace mem : oldMemorySet.getMemSet()) {
+        BranchSet oldBranchSet = new BranchSet(branchSet);
+        branchSet = new BranchSet();
+        for (Branch b : oldBranchSet) {
             for (Command cmd : usableCommands) {
                 loopTimes++;
-                memorySpace.reset(mem);
-                pointer.reset();
-                store.reset();
+                memorySpace.reset(b.getMemorySpace());
+                pointer.reset(b.getPointer());
+                store.reset(b.getStore());
                 cmd.execute();
-                memorySet.add(memorySpace);
+                Branch newBranch = new Branch(memorySpace, pointer, store);
+                branchSet.add(newBranch);
                 boolean t1 = test000(true);
                 boolean t2 = test011(true);
                 boolean t3 = test101(true);
@@ -111,8 +116,7 @@ public class BruceLoop2 extends BruceLoop {
                 }
             }
         }
-        String setName = curr_commands_used + ".set";
-        memorySet.serialize(setName);
+        branchSet.serialize(curr_commands_used);
         System.out.println("Finished Not find a solution! loop times: " + loopTimes);
         return false;
     }
@@ -123,7 +127,8 @@ public class BruceLoop2 extends BruceLoop {
             result = memorySpace.getBitForTestOnly(2) == 0;
         } else {
             result = super.test000();
-            memorySet.add(memorySpace);
+            Branch branch = new Branch(memorySpace, pointer, store);
+            branchSet.add(branch);
         }
         return result;
     }
@@ -134,7 +139,8 @@ public class BruceLoop2 extends BruceLoop {
             result = memorySpace.getBitForTestOnly(1) == 1;
         } else {
             result = super.test011();
-            memorySet.add(memorySpace);
+            Branch branch = new Branch(memorySpace, pointer, store);
+            branchSet.add(branch);
         }
         return result;
     }
@@ -145,7 +151,8 @@ public class BruceLoop2 extends BruceLoop {
             result = memorySpace.getBitForTestOnly(0) == 1;
         } else {
             result = super.test101();
-            memorySet.add(memorySpace);
+            Branch branch = new Branch(memorySpace, pointer, store);
+            branchSet.add(branch);
         }
         return result;
     }
@@ -156,7 +163,8 @@ public class BruceLoop2 extends BruceLoop {
             result = memorySpace.getBitForTestOnly(0) == 0;
         } else {
             result = super.test110();
-            memorySet.add(memorySpace);
+            Branch branch = new Branch(memorySpace, pointer, store);
+            branchSet.add(branch);
         }
         return result;
     }

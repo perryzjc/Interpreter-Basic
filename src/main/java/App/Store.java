@@ -1,10 +1,12 @@
 package App;
 
+import java.io.Serializable;
+
 /**
  * Equivalent to the Store
  * On startup, STORE = 0b0.
  */
-public class Store {
+public class Store implements Serializable {
     private int value;
 
     public Store() {
@@ -31,6 +33,14 @@ public class Store {
         value = 0;
     }
 
+    public void reset(int value) {
+        this.value = value;
+    }
+
+    public void reset(Store store) {
+        value = store.value;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;
@@ -47,6 +57,6 @@ public class Store {
 
     @Override
     public String toString() {
-        return Integer.toString(value);
+        return "Store: " + value;
     }
 }

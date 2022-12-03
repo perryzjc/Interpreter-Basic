@@ -28,7 +28,7 @@ public class MemorySpace implements Serializable {
     }
 
     public MemorySpace(MemorySpace memorySpace) {
-        this.memory = memorySpace.memory;
+        this.memory = new ArrayList<>(memorySpace.memory);
         this.scope = memorySpace.scope;
     }
 

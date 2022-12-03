@@ -4,14 +4,12 @@ import App.MemorySpace;
 import App.Pointer;
 import App.Store;
 
-import java.io.File;
 import java.io.Serializable;
 
 /**
  * a branch set store the executed result of memory space, pointer, and store
  */
 public class Branch implements Serializable {
-    public static final File BRANCH_DIR = new File("src/main/java/App/Commands/Challenge0/BruceLoop/ImprovedBruce/BranchSet");
 
     private MemorySpace memorySpace;
     private Pointer pointer;
@@ -21,6 +19,31 @@ public class Branch implements Serializable {
         this.memorySpace = new MemorySpace(memorySpace);
         this.pointer = new Pointer(pointer);
         this.store = new Store(store);
+    }
+
+    public Branch(Branch branch) {
+        this.memorySpace = new MemorySpace(branch.memorySpace);
+        this.pointer = new Pointer(branch.pointer);
+        this.store = new Store(branch.store);
+    }
+
+    public Branch(String branchString) {
+        String[] branchStringArray = branchString.split(" ");
+        this.memorySpace = new MemorySpace(branchStringArray[0]);
+        this.pointer = new Pointer(Integer.parseInt(branchStringArray[1]));
+        this.store = new Store(Integer.parseInt(branchStringArray[2]));
+    }
+
+    public MemorySpace getMemorySpace() {
+        return memorySpace;
+    }
+
+    public Pointer getPointer() {
+        return pointer;
+    }
+
+    public Store getStore() {
+        return store;
     }
 
     @Override
@@ -35,5 +58,10 @@ public class Branch implements Serializable {
     @Override
     public int hashCode() {
         return store.hashCode() + pointer.hashCode() + memorySpace.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return memorySpace.toString() + " " + pointer.toString() + " " + store.toString();
     }
 }

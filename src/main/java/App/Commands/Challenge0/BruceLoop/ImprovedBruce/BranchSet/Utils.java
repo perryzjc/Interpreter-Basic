@@ -1,4 +1,4 @@
-package App.Commands.Challenge0.BruceLoop.ImprovedBruce.MemorySet;
+package App.Commands.Challenge0.BruceLoop.ImprovedBruce.BranchSet;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;

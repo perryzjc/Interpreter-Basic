@@ -1,11 +1,13 @@
 package App;
 
+import java.io.Serializable;
+
 /**
  * On startup, ADDR = 0x0000
  * Since the tape is circular, when moving left at ADDR = 0x0000, it will move to the end of the tape
  * like how python index works
  */
-public class Pointer {
+public class Pointer implements Serializable {
     private int index;
 
     public Pointer() {
@@ -30,6 +32,14 @@ public class Pointer {
 
     public void reset() {
         index = 0;
+    }
+
+    public void reset(int index) {
+        this.index = index;
+    }
+
+    public void reset(Pointer pointer) {
+        index = pointer.index;
     }
 
     @Override

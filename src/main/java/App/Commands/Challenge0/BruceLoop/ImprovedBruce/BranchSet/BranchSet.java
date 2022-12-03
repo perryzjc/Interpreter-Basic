@@ -1,53 +1,51 @@
-package App.Commands.Challenge0.BruceLoop.ImprovedBruce.MemorySet;
-
-import App.MemorySpace;
+package App.Commands.Challenge0.BruceLoop.ImprovedBruce.BranchSet;
 
 import java.io.File;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Iterator;
 
-public class MemorySet implements Serializable {
-    public static final File MAP_DIR = new File("src/main/java/App/Commands/Challenge0/BruceLoop/ImprovedBruce/MemorySet");
-    /**
-     * key: a list of commands in string (separated by line)
-     * e.g.
-     * INC
-     * INC
-     * value: the memory space
-     */
-    private HashSet<MemorySpace> memSet;
+public class BranchSet implements Serializable,Iterable<Branch> {
+    public static final File BRANCH_SET_DIR = new File("src/main/java/App/Commands/Challenge0/BruceLoop/ImprovedBruce/BranchSet");
+    public static final String POSTFIX = ".bset";
 
-    public MemorySet() {
-        memSet = new HashSet<>();
+    private HashSet<Branch> branchSet;
+
+    public BranchSet() {
+        branchSet = new HashSet<>();
     }
 
-    public MemorySet(File file) {
-        MemorySet memorySet = (MemorySet) Utils.readObject(file, MemorySet.class);
-        memSet = memorySet.memSet;
+    public BranchSet(File file) {
+        BranchSet branchSet = (BranchSet) Utils.readObject(file, BranchSet.class);
+        this.branchSet = branchSet.branchSet;
     }
 
-    /**
-     * deep copy
-     */
-    public MemorySet(MemorySet memorySet) {
-        memSet = new HashSet<>(memorySet.memSet);
+    public BranchSet(BranchSet branchSet) {
+        this.branchSet = new HashSet<>(branchSet.branchSet);
     }
 
-    public void add(MemorySpace mem) {
-        memSet.add(new MemorySpace(mem));
+    public void add(Branch branch) {
+        branchSet.add(new Branch(branch));
     }
 
-    public HashSet<MemorySpace> getMemSet() {
-        return memSet;
+    public boolean contains(Branch branch) {
+        return branchSet.contains(branch);
     }
 
-    public void serialize(String filename) {
-        File file = new File(MAP_DIR, filename);
+    public void serialize(int numOfCommands) {
+        String filename = numOfCommands + POSTFIX;
+        File file = new File(BRANCH_SET_DIR, filename);
         Utils.writeObject(file, this);
     }
 
-    public static MemorySet deserialize(String filename) {
-        File file = new File(MAP_DIR, filename);
-        return (MemorySet) Utils.readObject(file, MemorySet.class);
+    public static BranchSet deserialize(int numOfCommands) {
+        String filename = numOfCommands + POSTFIX;
+        File file = new File(BRANCH_SET_DIR, filename);
+        return (BranchSet) Utils.readObject(file, BranchSet.class);
+    }
+
+    @Override
+    public Iterator<Branch> iterator() {
+        return branchSet.iterator();
     }
 }

@@ -25,7 +25,7 @@ public class TestCmdXor {
     @BeforeEach
     public void init() {
         pointer = new Pointer();
-        memorySpace = new MemorySpace(5);
+        memorySpace = new MemorySpace();
         store = new Store();
         cmdXOR = new CmdXORSebastian(pointer, memorySpace, store);
     }
@@ -36,7 +36,7 @@ public class TestCmdXor {
      */
     public void testCmdXOR_000() {
         testInitState();
-        ArrayList<Integer> testSpace = getMaxArrayList(25);
+        ArrayList<Integer> testSpace = getMaxArrayList(32);
         testSpace.set(0, 0);
         testSpace.set(1, 0);
         memorySpace.reset(testSpace);
@@ -51,7 +51,7 @@ public class TestCmdXor {
      */
     public void testCmdXOR_011() {
         testInitState();
-        ArrayList<Integer> testSpace = getMaxArrayList(25);
+        ArrayList<Integer> testSpace = getMaxArrayList(32);
         testSpace.set(0, 0);
         testSpace.set(1, 1);
         memorySpace.reset(testSpace);
@@ -66,7 +66,7 @@ public class TestCmdXor {
      */
     public void testCmdXOR_101() {
         testInitState();
-        ArrayList<Integer> testSpace = getMaxArrayList(25);
+        ArrayList<Integer> testSpace = getMaxArrayList(32);
         testSpace.set(0, 1);
         testSpace.set(1, 0);
         memorySpace.reset(testSpace);
@@ -81,7 +81,7 @@ public class TestCmdXor {
      */
     public void testCmdXOR_110() {
         testInitState();
-        ArrayList<Integer> testSpace = getMaxArrayList(25);
+        ArrayList<Integer> testSpace = getMaxArrayList(32);
         testSpace.set(0, 1);
         testSpace.set(1, 1);
         memorySpace.reset(testSpace);
