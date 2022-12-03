@@ -36,13 +36,13 @@ public class TestCmdXor {
      */
     public void testCmdXOR_000() {
         testInitState();
-        ArrayList<Integer> testSpace = getMaxArrayList(32);
-        testSpace.set(0, 0);
-        testSpace.set(1, 0);
+        ArrayList<Boolean> testSpace = getMaxArrayList(32);
+        testSpace.set(0, false);
+        testSpace.set(1, false);
         memorySpace.reset(testSpace);
         cmdXOR.execute();
         pointer.setIndex(2);
-        assertEquals(0, memorySpace.getBit(pointer));
+        assertEquals(false, memorySpace.getBit(pointer));
     }
 
     @Test
@@ -51,13 +51,13 @@ public class TestCmdXor {
      */
     public void testCmdXOR_011() {
         testInitState();
-        ArrayList<Integer> testSpace = getMaxArrayList(32);
-        testSpace.set(0, 0);
-        testSpace.set(1, 1);
+        ArrayList<Boolean> testSpace = getMaxArrayList(32);
+        testSpace.set(0, false);
+        testSpace.set(1, true);
         memorySpace.reset(testSpace);
         cmdXOR.execute();
         pointer.setIndex(2);
-        assertEquals(1, memorySpace.getBit(pointer));
+        assertEquals(true, memorySpace.getBit(pointer));
     }
 
     @Test
@@ -66,13 +66,13 @@ public class TestCmdXor {
      */
     public void testCmdXOR_101() {
         testInitState();
-        ArrayList<Integer> testSpace = getMaxArrayList(32);
-        testSpace.set(0, 1);
-        testSpace.set(1, 0);
+        ArrayList<Boolean> testSpace = getMaxArrayList(32);
+        testSpace.set(0, true);
+        testSpace.set(1, false);
         memorySpace.reset(testSpace);
         cmdXOR.execute();
         pointer.setIndex(2);
-        assertEquals(1, memorySpace.getBit(pointer));
+        assertEquals(true, memorySpace.getBit(pointer));
     }
 
     @Test
@@ -81,13 +81,13 @@ public class TestCmdXor {
      */
     public void testCmdXOR_110() {
         testInitState();
-        ArrayList<Integer> testSpace = getMaxArrayList(32);
-        testSpace.set(0, 1);
-        testSpace.set(1, 1);
+        ArrayList<Boolean> testSpace = getMaxArrayList(32);
+        testSpace.set(0, true);
+        testSpace.set(1, true);
         memorySpace.reset(testSpace);
         cmdXOR.execute();
         pointer.setIndex(2);
-        assertEquals(0, memorySpace.getBit(pointer));
+        assertEquals(false, memorySpace.getBit(pointer));
     }
 
     @Test
@@ -100,14 +100,14 @@ public class TestCmdXor {
      */
     private void testInitState() {
         assertEquals(0, pointer.getIndex());
-        assertEquals(0, memorySpace.getBit(pointer));
-        assertEquals(0, store.getValue());
+        assertEquals(false, memorySpace.getBit(pointer));
+        assertEquals(false, store.getValue());
     }
 
-    private ArrayList<Integer> getMaxArrayList(int size) {
-        ArrayList<Integer> maxArrayList = new ArrayList<>();
+    private ArrayList<Boolean> getMaxArrayList(int size) {
+        ArrayList<Boolean> maxArrayList = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            maxArrayList.add(0);
+            maxArrayList.add(false);
         }
         return maxArrayList;
     }

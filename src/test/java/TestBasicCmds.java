@@ -28,46 +28,46 @@ public class TestBasicCmds {
     @Test
     public void testINC() {
         assertEquals(0, pointer.getIndex());
-        assertEquals(0, memorySpace.getBit(pointer));
-        assertEquals(0, store.getValue());
+        assertEquals(false, memorySpace.getBit(pointer));
+        assertEquals(false, store.getValue());
         new CmdINC(pointer, memorySpace, store).execute();
         assertEquals(1, pointer.getIndex());
-        assertEquals(0, memorySpace.getBit(pointer));
-        assertEquals(0, store.getValue());
+        assertEquals(false, memorySpace.getBit(pointer));
+        assertEquals(false, store.getValue());
     }
 
     @Test
     public void testINV() {
         assertEquals(0, pointer.getIndex());
-        assertEquals(0, memorySpace.getBit(pointer));
-        assertEquals(0, store.getValue());
+        assertEquals(false, memorySpace.getBit(pointer));
+        assertEquals(false, store.getValue());
         new CmdINV(pointer, memorySpace, store).execute();
         assertEquals(0, pointer.getIndex());
-        assertEquals(1, memorySpace.getBit(pointer));
-        assertEquals(0, store.getValue());
+        assertEquals(true, memorySpace.getBit(pointer));
+        assertEquals(false, store.getValue());
     }
 
     @Test
     public void testLOAD() {
         assertEquals(0, pointer.getIndex());
-        assertEquals(0, memorySpace.getBit(pointer));
-        assertEquals(0, store.getValue());
+        assertEquals(false, memorySpace.getBit(pointer));
+        assertEquals(false, store.getValue());
         new CmdINV(pointer, memorySpace, store).execute();
         new CmdLOAD(pointer, memorySpace, store).execute();
         assertEquals(0, pointer.getIndex());
-        assertEquals(1, memorySpace.getBit(pointer));
-        assertEquals(1, store.getValue());
+        assertEquals(true, memorySpace.getBit(pointer));
+        assertEquals(true, store.getValue());
     }
 
     @Test
     public void testCDEC_StoreNot1() {
         assertEquals(0, pointer.getIndex());
-        assertEquals(0, memorySpace.getBit(pointer));
-        assertEquals(0, store.getValue());
+        assertEquals(false, memorySpace.getBit(pointer));
+        assertEquals(false, store.getValue());
         new CmdLOAD(pointer, memorySpace, store).execute();
         new CmdINC(pointer, memorySpace, store).execute();
         assertEquals(1, pointer.getIndex());
-        assertEquals(0, store.getValue());
+        assertEquals(false, store.getValue());
         new CmdCDEC(pointer, memorySpace, store).execute();
         // pointer should not decrease, since store is not 1
         assertEquals(1, pointer.getIndex());
@@ -76,13 +76,13 @@ public class TestBasicCmds {
     @Test
     public void testCDEC_StoreIs1() {
         assertEquals(0, pointer.getIndex());
-        assertEquals(0, memorySpace.getBit(pointer));
-        assertEquals(0, store.getValue());
+        assertEquals(false, memorySpace.getBit(pointer));
+        assertEquals(false, store.getValue());
         new CmdINV(pointer, memorySpace, store).execute();
         new CmdLOAD(pointer, memorySpace, store).execute();
         new CmdINC(pointer, memorySpace, store).execute();
         assertEquals(1, pointer.getIndex());
-        assertEquals(1, store.getValue());
+        assertEquals(true, store.getValue());
         new CmdCDEC(pointer, memorySpace, store).execute();
         // pointer should decrease, since store is 1
         assertEquals(0, pointer.getIndex());

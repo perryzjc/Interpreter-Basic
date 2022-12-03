@@ -7,33 +7,33 @@ import java.io.Serializable;
  * On startup, STORE = 0b0.
  */
 public class Store implements Serializable {
-    private int value;
+    private boolean value;
 
     public Store() {
-        value = 0;
+        value = false;
     }
 
     public Store(Store store) {
         value = store.value;
     }
 
-    public Store(int value) {
+    public Store(boolean value) {
         this.value = value;
     }
 
-    public int getValue() {
+    public boolean getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(boolean value) {
         this.value = value;
     }
 
     public void reset() {
-        value = 0;
+        value = false;
     }
 
-    public void reset(int value) {
+    public void reset(boolean value) {
         this.value = value;
     }
 
@@ -52,7 +52,7 @@ public class Store implements Serializable {
 
     @Override
     public int hashCode() {
-        return value;
+        return value ? 1 : 0;
     }
 
     @Override

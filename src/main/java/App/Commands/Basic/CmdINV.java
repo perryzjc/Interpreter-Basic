@@ -14,8 +14,8 @@ public class CmdINV extends Command {
 
     @Override
     public void execute() {
-        int currBit = memorySpace.getBit(pointer);
-        memorySpace.setBit(pointer, 1 - currBit);
+        boolean currBit = memorySpace.getBit(pointer);
+        memorySpace.setBit(pointer, !currBit);
     }
 
     @Override

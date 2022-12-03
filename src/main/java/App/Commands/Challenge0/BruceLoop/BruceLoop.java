@@ -131,28 +131,28 @@ public class BruceLoop {
          */
         switch (state) {
             case T00:
-                memorySpace.reset(getSampleInitMemorySpaceForFirstTwoPos(0, 0));
+                memorySpace.reset(getSampleInitMemorySpaceForFirstTwoPos(false, false));
                 break;
             case T01:
-                memorySpace.reset(getSampleInitMemorySpaceForFirstTwoPos(0, 1));
+                memorySpace.reset(getSampleInitMemorySpaceForFirstTwoPos(false, true));
                 break;
             case T10:
-                memorySpace.reset(getSampleInitMemorySpaceForFirstTwoPos(1, 0));
+                memorySpace.reset(getSampleInitMemorySpaceForFirstTwoPos(true, false));
                 break;
             case T11:
-                memorySpace.reset(getSampleInitMemorySpaceForFirstTwoPos(1, 1));
+                memorySpace.reset(getSampleInitMemorySpaceForFirstTwoPos(true, true));
                 break;
         }
         pointer.reset();
         store.reset();
     }
 
-    protected ArrayList<Integer> getSampleInitMemorySpaceForFirstTwoPos(int int1, int int2) {
-        ArrayList<Integer> sample = new ArrayList<>();
-        sample.add(int1);
-        sample.add(int2);
+    protected ArrayList<Boolean> getSampleInitMemorySpaceForFirstTwoPos(boolean t1, boolean t2) {
+        ArrayList<Boolean> sample = new ArrayList<>();
+        sample.add(t1);
+        sample.add(t2);
         for (int i = 2; i < _max_commands_used; i++) {
-            sample.add(0);
+            sample.add(false);
         }
         return sample;
     }
@@ -160,25 +160,25 @@ public class BruceLoop {
     protected boolean test000() {
         resetState(INIT_STATE.T00);
         currDefinedCmd.execute();
-        return memorySpace.getBitForTestOnly(2) == 0;
+        return !memorySpace.getBitForTestOnly(2);
     }
 
     protected boolean test011() {
         resetState(INIT_STATE.T01);
         currDefinedCmd.execute();
-        return memorySpace.getBitForTestOnly(2) == 1;
+        return memorySpace.getBitForTestOnly(2);
     }
 
     protected boolean test101() {
         resetState(INIT_STATE.T10);
         currDefinedCmd.execute();
-        return memorySpace.getBitForTestOnly(2) == 1;
+        return memorySpace.getBitForTestOnly(2);
     }
 
     protected boolean test110() {
         resetState(INIT_STATE.T11);
         currDefinedCmd.execute();
-        return memorySpace.getBitForTestOnly(2) == 0;
+        return !memorySpace.getBitForTestOnly(2);
     }
 
     /**

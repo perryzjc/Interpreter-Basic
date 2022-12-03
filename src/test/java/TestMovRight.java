@@ -28,8 +28,8 @@ public class TestMovRight {
         CmdMovRight cmdMovRight = new CmdMovRight(3, pointer, memorySpace, store);
         cmdMovRight.execute();
         assertEquals(3, pointer.getIndex());
-        assertEquals(0, memorySpace.getBit(pointer));
-        assertEquals(0, store.getValue());
+        assertEquals(false, memorySpace.getBit(pointer));
+        assertEquals(false, store.getValue());
     }
 
     @Test
@@ -41,6 +41,6 @@ public class TestMovRight {
     private void testInitState() {
         pointer.setIndex(0);
         assertEquals(0, pointer.getIndex());
-        assertEquals(0, memorySpace.getBit(pointer));
+        assertEquals(false, memorySpace.getBit(pointer));
     }
 }

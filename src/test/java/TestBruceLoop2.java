@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestBruceLoop2 {
     @Test
     public void testBruceLoop2SebastianSol() {
-        BruceLoop2 bruceLoop2 = new BruceLoop2(3, 32, true);
+        BruceLoop2 bruceLoop2 = new BruceLoop2(3, 20, true);
         bruceLoop2.startForLoop();
         BranchSet branchSet = bruceLoop2.getBranchSet();
         assertTrue(branchSet.contains(correctSebastian000()));
@@ -19,10 +19,8 @@ public class TestBruceLoop2 {
 
     @Test
     public void testBruceLoop2SmallData() {
-        BruceLoop2 bruceLoop2 = new BruceLoop2(3, 3, true);
+        BruceLoop2 bruceLoop2 = new BruceLoop2(4, 4, true);
         bruceLoop2.startForLoop();
-        //INC INC INV-> pointer = 2, store = 0
-        //memory: "001" + 29's 0""
         BranchSet branchSet = bruceLoop2.getBranchSet();
         Branch expected = inc2Inv1Inc1();
         assertTrue(branchSet.contains(expected));
@@ -30,7 +28,7 @@ public class TestBruceLoop2 {
 
     @Test
     public void testInv1Load1DCEC2() {
-        BruceLoop2 bruceLoop2 = new BruceLoop2(3, 4, true);
+        BruceLoop2 bruceLoop2 = new BruceLoop2(4, 4, true);
         bruceLoop2.startForLoop();
         BranchSet branchSet = bruceLoop2.getBranchSet();
         Branch expected = inv1Load1DCEC2();
@@ -67,7 +65,7 @@ public class TestBruceLoop2 {
     private Branch inc2Inv1Inc1() {
         StringBuilder sb = new StringBuilder();
         //001 + 29's 0
-        String memory = "001";
+        String memory = "0010";
         String pointer = "2";
         String store = "0";
         sb.append(memory).append(" ").append(pointer).append(" ").append(store);
@@ -112,5 +110,49 @@ public class TestBruceLoop2 {
         String store = "1";
         branchString.append(memStr).append(" ").append(pointer).append(" ").append(store);
         return new Branch(branchString.toString());
+    }
+
+    @Test
+    public void testSeba0031Before32() {
+        sebstian0031CmdsBefore32();
+        BruceLoop2 bruceLoop2 = new BruceLoop2(32, 32, false);
+        bruceLoop2.startForLoop();
+        BranchSet branchSet = bruceLoop2.getBranchSet();
+        assertTrue(branchSet.contains(correctSebastian000()));
+    }
+
+    @Test
+    public void testSeba1031Before32() {
+        sebstian1031CmdsBefore32();
+        BruceLoop2 bruceLoop2 = new BruceLoop2(32, 32, false);
+        bruceLoop2.startForLoop();
+        BranchSet branchSet = bruceLoop2.getBranchSet();
+        assertTrue(branchSet.contains(correctSebastian101()));
+    }
+
+    private void sebstian0031CmdsBefore32() {
+        BranchSet branchSet = new BranchSet();
+        //{false, true, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false}
+        StringBuilder branchString = new StringBuilder();
+        String memStr = "01001000000000000000000000000000";
+        String pointer = "8";
+        String store = "1";
+        branchString.append(memStr).append(" ").append(pointer).append(" ").append(store);
+        Branch branch = new Branch(branchString.toString());
+        branchSet.add(branch);
+        branchSet.serialize(31);
+    }
+
+    private void sebstian1031CmdsBefore32() {
+        BranchSet branchSet = new BranchSet();
+        //{true, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true}
+        StringBuilder branchString = new StringBuilder();
+        String memStr = "10100000000000000000000000000001";
+        String pointer = "6";
+        String store = "1";
+        branchString.append(memStr).append(" ").append(pointer).append(" ").append(store);
+        Branch branch = new Branch(branchString.toString());
+        branchSet.add(branch);
+        branchSet.serialize(31);
     }
 }

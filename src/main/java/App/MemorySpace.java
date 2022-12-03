@@ -8,21 +8,21 @@ import java.util.ArrayList;
  */
 public class MemorySpace implements Serializable {
     private int scope;
-    private ArrayList<Integer> memory;
+    private ArrayList<Boolean> memory;
 
     public MemorySpace() {
         scope = 10;
-        memory = new ArrayList<Integer>();
+        memory = new ArrayList<Boolean>();
         initializeMemory();
     }
 
     public MemorySpace(int scope) {
         this.scope = scope;
-        memory = new ArrayList<Integer>();
+        memory = new ArrayList<Boolean>();
         initializeMemory();
     }
 
-    public MemorySpace(ArrayList<Integer> memory) {
+    public MemorySpace(ArrayList<Boolean> memory) {
         this.memory = memory;
         scope = memory.size();
     }
@@ -33,23 +33,23 @@ public class MemorySpace implements Serializable {
     }
 
     public MemorySpace(String memorySpace) {
-        memory = new ArrayList<Integer>();
+        memory = new ArrayList<Boolean>();
         for (int i = 0; i < memorySpace.length(); i++) {
-            this.memory.add(memorySpace.charAt(i) - '0');
+            this.memory.add((Boolean) (memorySpace.charAt(i) == '1'));
         }
         this.scope = memory.size();
     }
 
     private void initializeMemory() {
         for (int i = 0; i < scope; i++) {
-            memory.add(0);
+            memory.add(false);
         }
     }
 
     /**
      * if index is negative number, it reads the memory reversely, like python
      */
-    public int getBit(Pointer ptr) {
+    public boolean getBit(Pointer ptr) {
         int index = ptr.getIndex();
         if (index < 0) {
             index = scope + index;
@@ -57,20 +57,19 @@ public class MemorySpace implements Serializable {
         return memory.get(index);
     }
 
-    public int getBitForTestOnly(int index) {
+    public boolean getBitForTestOnly(int index) {
         return memory.get(index);
     }
 
     /**
      * if index is negative number, it reads the memory reversely, like python
      */
-    public int setBit(Pointer ptr, int bit) {
+    public void setBit(Pointer ptr, boolean bit) {
         int index = ptr.getIndex();
         if (index < 0) {
             index = scope + index;
         }
         memory.set(index, bit);
-        return bit;
     }
 
     public int getScope() {
@@ -93,23 +92,23 @@ public class MemorySpace implements Serializable {
 
     public void reset() {
         for (int i = 0; i < scope; i++) {
-            memory.set(i, 0);
+            memory.set(i, false);
         }
     }
 
     public void reset(int scope) {
         this.scope = scope;
-        memory = new ArrayList<Integer>();
+        memory = new ArrayList<Boolean>();
         initializeMemory();
     }
 
-    public void reset(ArrayList<Integer> memory) {
+    public void reset(ArrayList<Boolean> memory) {
         this.memory = memory;
         scope = memory.size();
     }
 
     public void reset(MemorySpace memorySpace) {
-        this.memory = memorySpace.memory;
+        this.memory = new ArrayList<>(memorySpace.memory);
         this.scope = memorySpace.scope;
     }
 

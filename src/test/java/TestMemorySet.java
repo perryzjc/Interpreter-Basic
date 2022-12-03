@@ -8,6 +8,5 @@ import java.util.HashSet;
 public class TestMemorySet {
     @Test
     public void testDeserialize() {
-
     }
 }

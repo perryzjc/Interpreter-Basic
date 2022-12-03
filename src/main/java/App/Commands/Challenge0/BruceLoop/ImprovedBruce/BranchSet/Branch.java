@@ -31,7 +31,8 @@ public class Branch implements Serializable {
         String[] branchStringArray = branchString.split(" ");
         this.memorySpace = new MemorySpace(branchStringArray[0]);
         this.pointer = new Pointer(Integer.parseInt(branchStringArray[1]));
-        this.store = new Store(Integer.parseInt(branchStringArray[2]));
+        int storeBit = Integer.parseInt(branchStringArray[2]);
+        this.store = new Store(storeBit == 1);
     }
 
     public MemorySpace getMemorySpace() {

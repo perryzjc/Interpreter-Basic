@@ -7,3 +7,5 @@ gradle/
 gradlew
 gradlew.bat
 settings.gradle
+
+src/main/java/App/Commands/Challenge0/BruceLoop/ImprovedBruce/BranchSet/*.bset
