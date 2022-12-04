@@ -1,8 +1,4 @@
-package App.Commands.Basic;
-
-import App.MemorySpace;
-import App.Pointer;
-import App.Store;
+package App;
 
 import java.io.Serializable;
 
