@@ -3,205 +3,152 @@ package App.Commands.Challenge0.BruceLoop.ImprovedBruce;
 import App.Commands.Basic.Command;
 import App.Commands.Challenge0.BruceLoop.BruceLoop;
 import App.Commands.Challenge0.BruceLoop.ImprovedBruce.BranchSet.Branch;
-import App.Commands.Challenge0.BruceLoop.ImprovedBruce.BranchSet.BranchSet;
 import App.MemorySpace;
 import App.Pointer;
 import App.Store;
 
 /**
- * an optimization of BruceLoop.java
- * have an additional map to store different result of memory space after a defined command is executed
- * e.g. 4 commands defined command, the map will store 2^4 (at max) different memory space
- * many memory space are the same, so the memory map will keep the memory space only once
- *
- * 17 commands will operate the deserialized result of 16.bset file
- * 18 commands will operate the deserialized result of 17.bset file
- * thus improve the performance
- *
- * ATTENTION: when using this loop, for safety, pre-define the max-allow spaces (which equals to the max-allow commands)
+ * previous idea can not work
+ * now optimize loop1 to an efficient way that take advantage of previous result
+ * using deep first search
  */
 public class BruceLoop2 extends BruceLoop {
-
-    protected BranchSet branchSet00;
-    protected BranchSet branchSet01;
-    protected BranchSet branchSet10;
-    protected BranchSet branchSet11;
-    protected int curr_commands_used;
-    protected boolean _isInitSet;
+    protected int starter_num_cmd;
+    private int loopTimes;
 
     public static void main(String[] args) {
-        /**
-         * my computer can only handle 22 commands because of memory heap limit
-         * VM has 26 as limit
-         */
-        BruceLoop2 bruceLoop = new BruceLoop2(3, 30, true);
+        BruceLoop2 bruceLoop = new BruceLoop2(30);
         bruceLoop.startForLoop();
     }
 
-    public BruceLoop2(int start_num_commands, int max_commands_used, boolean isInitSet) {
+    public BruceLoop2(int max_commands_used) {
         super(max_commands_used);
-        setNumCmdToUse(start_num_commands);
-        curr_commands_used = start_num_commands;
-        _isInitSet = isInitSet;
+        starter_num_cmd = 1;
+        loopTimes = 0;
     }
 
-//    public BranchSet getBranchSet() {
-//        return branchSet;
-//    }
-//
-//    private void loadBranchSet(int commands_used, boolean isInitSet) {
-//        if (isInitSet) {
-//            branchSet = new BranchSet();
-//        } else {
-//            branchSet = BranchSet.deserialize(commands_used);
-//        }
-//    }
-//
-//    @Override
-//    public void startForLoop() {
-//        boolean found = false;
-//        while(curr_commands_used <= _max_commands_used && !found) {
-//            if (_isInitSet) {
-//                loadBranchSet(curr_commands_used, true);
-//                found = nonDependentSetLoop();
-//                _isInitSet = false;
-//            } else {
-//                loadBranchSet(curr_commands_used - 1, false);
-//                found = dependentSetLoop();
-//            }
-//            curr_commands_used++;
-//        }
-//    }
-//
-//    public boolean nonDependentSetLoop() {
-//        long loopTimes = (long) Math.pow(NUM_OPTIONS_CMD, curr_commands_used);
-//        for (long i = 0; i < loopTimes; i++) {
-//            if (i != 0) {
-//                nextCombination();
-//            }
-//            currDefinedCmd.loadCommands();
-//            boolean true1 = test000(false);
-//            boolean true2 = test011(false);
-//            boolean true3 = test101(false);
-//            boolean true4 = test110(false);
-////            boolean true2 = false;
-////            boolean true3 = false;
-////            boolean true4 = false;
-//            if (true1 && true2 && true3 && true4) {
-//                loadToResult(currDefinedCmd);
-//                for (int j = 0; j < curr_commands_used; j++) {
-//                    System.out.println(result.get(j).commandName());
-//                }
-//                System.out.println("Found a solution by nonDependentSetLoop! Number of commands used: " + curr_commands_used);
-//                return true;
-//            }
-//        }
-//        branchSet.serialize(curr_commands_used);
-//        System.out.println("Finished Not find a solution! loop times: " + loopTimes);
-//        return false;
-//    }
-//
-//    public boolean dependentSetLoop() {
-//        long loopTimes = 0;
-//        BranchSet oldBranchSet = new BranchSet(branchSet);
-//        branchSet = new BranchSet();
-//        for (Branch b : oldBranchSet) {
-//            for (Command cmd : usableCommands) {
-//                loopTimes++;
-//                memorySpace.reset(b.getMemorySpace());
-//                pointer.reset(b.getPointer());
-//                store.reset(b.getStore());
-//                cmd.execute();
-//                Branch newBranch = new Branch(memorySpace, pointer, store);
-//                branchSet.add(newBranch);
-//                boolean t1 = test000(true);
-//                boolean t2 = test011(true);
-//                boolean t3 = test101(true);
-//                boolean t4 = test110(true);
-//                if (t1 && t2 && t3 && t4) {
-//                    System.out.println(curr_commands_used + ". " + cmd.commandName());
-//                    System.out.println("Found a solution by dependentSetLoop! Number of commands used: " + curr_commands_used);
-//                    return true;
-//                }
-//            }
-//        }
-//        branchSet.serialize(curr_commands_used);
-//        System.out.println("Not find a solution! loop times: " + loopTimes + " command used: " + curr_commands_used);
-//        return false;
-//    }
-//
-//    /**
-//     * initialize the 4 branches from challenge 0
-//     */
-//    private void initChallenge0() {
-//        branchSet00 = new BranchSet();
-//        branchSet01 = new BranchSet();
-//        branchSet10 = new BranchSet();
-//        branchSet11 = new BranchSet();
-//        Branch b00 = initBranch(false, false);
-//        Branch b01 = initBranch(false, true);
-//        Branch b10 = initBranch(true, false);
-//        Branch b11 = initBranch(true, true);
-//        branchSet00.add(b00);
-//        branchSet01.add(b01);
-//        branchSet10.add(b10);
-//        branchSet11.add(b11);
-//    }
-//
-//    private Branch initBranch(boolean firstBit, boolean secondBit) {
-//        MemorySpace memorySpace = new MemorySpace(_max_commands_used);
-//        memorySpace.setBit(0, firstBit);
-//        memorySpace.setBit(1, secondBit);
-//        Pointer pointer = new Pointer(0);
-//        Store store = new Store();
-//        return new Branch(memorySpace, pointer, store);
-//    }
-//
-//    @Override
-//    protected boolean test000() {
-//        for (Branch b : branchSet00) {
-//            MemorySpace mem = b.getMemorySpace();
-//            if (!mem.getBitForTestOnly(2)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//
-//    @Override
-//    protected boolean test011() {
-//        for (Branch b : branchSet01) {
-//            MemorySpace mem = b.getMemorySpace();
-//            if (mem.getBitForTestOnly(2)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//
-//    @Override
-//    protected boolean test101(boolean dependentSet) {
-//        boolean result;
-//        if (dependentSet) {
-//            result = memorySpace.getBitForTestOnly(2);
-//        } else {
-//            result = super.test101();
-//            Branch branch = new Branch(memorySpace, pointer, store);
-//            branchSet.add(branch);
-//        }
-//        return result;
-//    }
-//
-//    @Override
-//    protected boolean test110(boolean dependentSet) {
-//        boolean result;
-//        if (dependentSet) {
-//            result = !memorySpace.getBitForTestOnly(2);
-//        } else {
-//            result = super.test110();
-//            Branch branch = new Branch(memorySpace, pointer, store);
-//            branchSet.add(branch);
-//        }
-//        return result;
-//    }
+    @Override
+    public boolean startForLoop() {
+        if (starter_num_cmd < 1 || starter_num_cmd > _max_commands_used) {
+            throw new RuntimeException("curr_commands_used should be in range [1, _max_commands_used]");
+        }
+        initResult();
+        boolean found = false;
+        Branch b00 = initBranch(false, false);
+        Branch b01 = initBranch(false, true);
+        Branch b10 = initBranch(true, false);
+        Branch b11 = initBranch(true, true);
+        found = deepFirstSearch(starter_num_cmd, b00, b01, b10, b11);
+        if (!found) {
+            System.out.println("not found");
+            System.out.println("loopTimes: " + loopTimes);
+        }
+        return found;
+    }
+
+    public boolean deepFirstSearch(int curr_commands_used, Branch b00, Branch b01, Branch b10, Branch b11) {
+        if (curr_commands_used > _max_commands_used) return false;
+        boolean found;
+        for (Command cmd : usableCommands) {
+            loopTimes++;
+            result.set(curr_commands_used - 1, cmd);
+            //deep copy
+            Branch resultB00 = new Branch(b00);
+            Branch resultB01 = new Branch(b01);
+            Branch resultB10 = new Branch(b10);
+            Branch resultB11 = new Branch(b11);
+            applyCmdTo4Branches(cmd, resultB00, resultB01, resultB10, resultB11);
+            if (isAllTestPassed(resultB00, resultB01, resultB10, resultB11)) {
+                handleFound(curr_commands_used);
+                return true;
+            }
+            found = deepFirstSearch(curr_commands_used + 1, resultB00, resultB01, resultB10, resultB11);
+            if (found) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void handleFound(int curr_commands_used) {
+        for (Command cmd : result) {
+            System.out.println(cmd.commandName());
+        }
+        System.out.println("Found a solution during recursion! Number of commands used: " + curr_commands_used);
+        System.out.println("loopTimes: " + loopTimes);
+    }
+
+    private Branch initBranch(boolean firstBit, boolean secondBit) {
+        MemorySpace memorySpace = new MemorySpace(_max_commands_used);
+        memorySpace.setBit(0, firstBit);
+        memorySpace.setBit(1, secondBit);
+        Pointer pointer = new Pointer(0);
+        Store store = new Store();
+        return new Branch(memorySpace, pointer, store);
+    }
+
+    /**
+     * attention, tricky thing is that each command created by CmdHelper (static) is connected to reg branch
+     * it's for efficiency
+     *
+     * thus, when using cmd, have to apply the branch to the reg branch
+     * for efficiency, I can use shallow copy for branch
+     */
+    private void applyCmdTo4Branches(Command cmd, Branch b00, Branch b01, Branch b10, Branch b11) {
+        applyBranchToRegBranch(b00);
+        cmd.execute();
+        readRegBranchToTargetBranch(b00);
+
+        applyBranchToRegBranch(b01);
+        cmd.execute();
+        readRegBranchToTargetBranch(b01);
+
+        applyBranchToRegBranch(b10);
+        cmd.execute();
+        readRegBranchToTargetBranch(b10);
+
+        applyBranchToRegBranch(b11);
+        cmd.execute();
+        readRegBranchToTargetBranch(b11);
+
+        safeClearReference();
+    }
+
+    private void applyBranchToRegBranch(Branch b) {
+        //for efficiency, use shallow copy here
+        memorySpace.shallowCopy(b.getMemorySpace());
+        pointer.reset(b.getPointer());
+        store.reset(b.getStore());
+    }
+
+    private void readRegBranchToTargetBranch(Branch b) {
+        b.getMemorySpace().shallowCopy(memorySpace);
+        b.getPointer().reset(pointer);
+        b.getStore().reset(store);
+    }
+
+    private void safeClearReference() {
+        memorySpace.clear();
+        //this function mainly for testing purpose
+    }
+
+    private boolean isAllTestPassed(Branch b00, Branch b01, Branch b10, Branch b11) {
+        return test000(b00) && test011(b01) && test101(b10) && test110(b11);
+    }
+
+    private boolean test000(Branch b00) {
+        return !b00.getMemorySpace().getBitForTestOnly(2);
+    }
+
+    private boolean test011(Branch b01) {
+        return b01.getMemorySpace().getBitForTestOnly(2);
+    }
+
+    private boolean test101(Branch b10) {
+        return b10.getMemorySpace().getBitForTestOnly(2);
+    }
+
+    protected boolean test110(Branch b11) {
+        return !b11.getMemorySpace().getBitForTestOnly(2);
+    }
 }

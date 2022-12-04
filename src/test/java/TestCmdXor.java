@@ -1,4 +1,7 @@
+import App.Commands.Challenge0.CmdRecurSol30;
 import App.Commands.Challenge0.CmdXORSebastian;
+import App.Commands.Challenge0.CmdXORSebastian2;
+import App.Commands.DefinedCmd.DefinedCmd;
 import App.MemorySpace;
 import App.Pointer;
 import App.Store;
@@ -20,14 +23,16 @@ public class TestCmdXor {
     private Pointer pointer;
     private MemorySpace memorySpace;
     private Store store;
-    private CmdXORSebastian cmdXOR;
+    private DefinedCmd cmdXOR;
 
     @BeforeEach
     public void init() {
         pointer = new Pointer();
         memorySpace = new MemorySpace();
         store = new Store();
-        cmdXOR = new CmdXORSebastian(pointer, memorySpace, store);
+        //cmdXOR = new CmdXORSebastian(pointer, memorySpace, store);
+//        cmdXOR = new CmdXORSebastian2(pointer, memorySpace, store);
+        cmdXOR = new CmdRecurSol30(pointer, memorySpace, store);
     }
 
     @Test

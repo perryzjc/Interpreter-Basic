@@ -116,6 +116,16 @@ public class MemorySpace implements Serializable {
         this.scope = memorySpace.scope;
     }
 
+    public void shallowCopy(MemorySpace mem) {
+        this.memory = mem.memory;
+        this.scope = mem.scope;
+    }
+
+    public void clear() {
+        memory = null;
+        scope = 0;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
