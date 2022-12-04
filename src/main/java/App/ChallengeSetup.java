@@ -77,6 +77,9 @@ public class ChallengeSetup {
      * TODO: every command that work for the provided branches store to a command hashmap file
      * TODO: finally, the usable commands are the intersection of all command hashmap files
      *
+     * TODO: new idea, is there a way to perform basic 1 bit calculation without side effect at least for challenge 2&3?
+     * TODO: so that I can use those series of command repeated to get I want
+     *
      */
     public ArrayList<Branch> generateInitBranchList() {
         return null;
