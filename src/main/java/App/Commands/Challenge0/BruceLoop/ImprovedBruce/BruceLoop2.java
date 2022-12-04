@@ -17,7 +17,7 @@ public class BruceLoop2 extends BruceLoop {
     private int loopTimes;
 
     public static void main(String[] args) {
-        BruceLoop2 bruceLoop = new BruceLoop2(30);
+        BruceLoop2 bruceLoop = new BruceLoop2(12);
         bruceLoop.startForLoop();
     }
 
