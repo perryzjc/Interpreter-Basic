@@ -4,6 +4,9 @@ import App.Commands.Basic.Command;
 import App.Commands.Challenge0.BruceLoop.BruceLoop;
 import App.Commands.Challenge0.BruceLoop.ImprovedBruce.BranchSet.Branch;
 import App.Commands.Challenge0.BruceLoop.ImprovedBruce.BranchSet.BranchSet;
+import App.MemorySpace;
+import App.Pointer;
+import App.Store;
 
 /**
  * an optimization of BruceLoop.java
@@ -19,7 +22,10 @@ import App.Commands.Challenge0.BruceLoop.ImprovedBruce.BranchSet.BranchSet;
  */
 public class BruceLoop2 extends BruceLoop {
 
-    protected BranchSet branchSet;
+    protected BranchSet branchSet00;
+    protected BranchSet branchSet01;
+    protected BranchSet branchSet10;
+    protected BranchSet branchSet11;
     protected int curr_commands_used;
     protected boolean _isInitSet;
 
@@ -39,136 +45,163 @@ public class BruceLoop2 extends BruceLoop {
         _isInitSet = isInitSet;
     }
 
-    public BranchSet getBranchSet() {
-        return branchSet;
-    }
-
-    protected void loadBranchSet(int commands_used, boolean isInitSet) {
-        if (isInitSet) {
-            branchSet = new BranchSet();
-        } else {
-            branchSet = BranchSet.deserialize(commands_used);
-        }
-    }
-
-    @Override
-    public void startForLoop() {
-        boolean found = false;
-        while(curr_commands_used <= _max_commands_used && !found) {
-            if (_isInitSet) {
-                loadBranchSet(curr_commands_used, true);
-                found = nonDependentSetLoop();
-                _isInitSet = false;
-            } else {
-                loadBranchSet(curr_commands_used - 1, false);
-                found = dependentSetLoop();
-            }
-            curr_commands_used++;
-        }
-    }
-
-    public boolean nonDependentSetLoop() {
-        long loopTimes = (long) Math.pow(NUM_OPTIONS_CMD, curr_commands_used);
-        for (long i = 0; i < loopTimes; i++) {
-            if (i != 0) {
-                nextCombination();
-            }
-            currDefinedCmd.loadCommands();
-            boolean true1 = test000(false);
-            boolean true2 = test011(false);
-            boolean true3 = test101(false);
-            boolean true4 = test110(false);
-//            boolean true2 = false;
-//            boolean true3 = false;
-//            boolean true4 = false;
-            if (true1 && true2 && true3 && true4) {
-                loadToResult(currDefinedCmd);
-                for (int j = 0; j < curr_commands_used; j++) {
-                    System.out.println(result.get(j).commandName());
-                }
-                System.out.println("Found a solution by nonDependentSetLoop! Number of commands used: " + curr_commands_used);
-                return true;
-            }
-        }
-        branchSet.serialize(curr_commands_used);
-        System.out.println("Finished Not find a solution! loop times: " + loopTimes);
-        return false;
-    }
-
-    public boolean dependentSetLoop() {
-        long loopTimes = 0;
-        BranchSet oldBranchSet = new BranchSet(branchSet);
-        branchSet = new BranchSet();
-        for (Branch b : oldBranchSet) {
-            for (Command cmd : usableCommands) {
-                loopTimes++;
-                memorySpace.reset(b.getMemorySpace());
-                pointer.reset(b.getPointer());
-                store.reset(b.getStore());
-                cmd.execute();
-                Branch newBranch = new Branch(memorySpace, pointer, store);
-                branchSet.add(newBranch);
-                boolean t1 = test000(true);
-                boolean t2 = test011(true);
-                boolean t3 = test101(true);
-                boolean t4 = test110(true);
-                if (t1 && t2 && t3 && t4) {
-                    System.out.println(curr_commands_used + ". " + cmd.commandName());
-                    System.out.println("Found a solution by dependentSetLoop! Number of commands used: " + curr_commands_used);
-                    return true;
-                }
-            }
-        }
-        branchSet.serialize(curr_commands_used);
-        System.out.println("Not find a solution! loop times: " + loopTimes + " command used: " + curr_commands_used);
-        return false;
-    }
-
-    protected boolean test000(boolean dependentSet) {
-        boolean result;
-        if (dependentSet) {
-            result = !memorySpace.getBitForTestOnly(2);
-        } else {
-            result = super.test000();
-            Branch branch = new Branch(memorySpace, pointer, store);
-            branchSet.add(branch);
-        }
-        return result;
-    }
-
-    protected boolean test011(boolean dependentSet) {
-        boolean result;
-        if (dependentSet) {
-            result = memorySpace.getBitForTestOnly(2);
-        } else {
-            result = super.test011();
-            Branch branch = new Branch(memorySpace, pointer, store);
-            branchSet.add(branch);
-        }
-        return result;
-    }
-
-    protected boolean test101(boolean dependentSet) {
-        boolean result;
-        if (dependentSet) {
-            result = memorySpace.getBitForTestOnly(2);
-        } else {
-            result = super.test101();
-            Branch branch = new Branch(memorySpace, pointer, store);
-            branchSet.add(branch);
-        }
-        return result;
-    }
-
-    protected boolean test110(boolean dependentSet) {
-        boolean result;
-        if (dependentSet) {
-            result = !memorySpace.getBitForTestOnly(2);
-        } else {
-            result = super.test110();
-            Branch branch = new Branch(memorySpace, pointer, store);
-            branchSet.add(branch);
-        }
-        return result;
-    }
+//    public BranchSet getBranchSet() {
+//        return branchSet;
+//    }
+//
+//    private void loadBranchSet(int commands_used, boolean isInitSet) {
+//        if (isInitSet) {
+//            branchSet = new BranchSet();
+//        } else {
+//            branchSet = BranchSet.deserialize(commands_used);
+//        }
+//    }
+//
+//    @Override
+//    public void startForLoop() {
+//        boolean found = false;
+//        while(curr_commands_used <= _max_commands_used && !found) {
+//            if (_isInitSet) {
+//                loadBranchSet(curr_commands_used, true);
+//                found = nonDependentSetLoop();
+//                _isInitSet = false;
+//            } else {
+//                loadBranchSet(curr_commands_used - 1, false);
+//                found = dependentSetLoop();
+//            }
+//            curr_commands_used++;
+//        }
+//    }
+//
+//    public boolean nonDependentSetLoop() {
+//        long loopTimes = (long) Math.pow(NUM_OPTIONS_CMD, curr_commands_used);
+//        for (long i = 0; i < loopTimes; i++) {
+//            if (i != 0) {
+//                nextCombination();
+//            }
+//            currDefinedCmd.loadCommands();
+//            boolean true1 = test000(false);
+//            boolean true2 = test011(false);
+//            boolean true3 = test101(false);
+//            boolean true4 = test110(false);
+////            boolean true2 = false;
+////            boolean true3 = false;
+////            boolean true4 = false;
+//            if (true1 && true2 && true3 && true4) {
+//                loadToResult(currDefinedCmd);
+//                for (int j = 0; j < curr_commands_used; j++) {
+//                    System.out.println(result.get(j).commandName());
+//                }
+//                System.out.println("Found a solution by nonDependentSetLoop! Number of commands used: " + curr_commands_used);
+//                return true;
+//            }
+//        }
+//        branchSet.serialize(curr_commands_used);
+//        System.out.println("Finished Not find a solution! loop times: " + loopTimes);
+//        return false;
+//    }
+//
+//    public boolean dependentSetLoop() {
+//        long loopTimes = 0;
+//        BranchSet oldBranchSet = new BranchSet(branchSet);
+//        branchSet = new BranchSet();
+//        for (Branch b : oldBranchSet) {
+//            for (Command cmd : usableCommands) {
+//                loopTimes++;
+//                memorySpace.reset(b.getMemorySpace());
+//                pointer.reset(b.getPointer());
+//                store.reset(b.getStore());
+//                cmd.execute();
+//                Branch newBranch = new Branch(memorySpace, pointer, store);
+//                branchSet.add(newBranch);
+//                boolean t1 = test000(true);
+//                boolean t2 = test011(true);
+//                boolean t3 = test101(true);
+//                boolean t4 = test110(true);
+//                if (t1 && t2 && t3 && t4) {
+//                    System.out.println(curr_commands_used + ". " + cmd.commandName());
+//                    System.out.println("Found a solution by dependentSetLoop! Number of commands used: " + curr_commands_used);
+//                    return true;
+//                }
+//            }
+//        }
+//        branchSet.serialize(curr_commands_used);
+//        System.out.println("Not find a solution! loop times: " + loopTimes + " command used: " + curr_commands_used);
+//        return false;
+//    }
+//
+//    /**
+//     * initialize the 4 branches from challenge 0
+//     */
+//    private void initChallenge0() {
+//        branchSet00 = new BranchSet();
+//        branchSet01 = new BranchSet();
+//        branchSet10 = new BranchSet();
+//        branchSet11 = new BranchSet();
+//        Branch b00 = initBranch(false, false);
+//        Branch b01 = initBranch(false, true);
+//        Branch b10 = initBranch(true, false);
+//        Branch b11 = initBranch(true, true);
+//        branchSet00.add(b00);
+//        branchSet01.add(b01);
+//        branchSet10.add(b10);
+//        branchSet11.add(b11);
+//    }
+//
+//    private Branch initBranch(boolean firstBit, boolean secondBit) {
+//        MemorySpace memorySpace = new MemorySpace(_max_commands_used);
+//        memorySpace.setBit(0, firstBit);
+//        memorySpace.setBit(1, secondBit);
+//        Pointer pointer = new Pointer(0);
+//        Store store = new Store();
+//        return new Branch(memorySpace, pointer, store);
+//    }
+//
+//    @Override
+//    protected boolean test000() {
+//        for (Branch b : branchSet00) {
+//            MemorySpace mem = b.getMemorySpace();
+//            if (!mem.getBitForTestOnly(2)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//
+//    @Override
+//    protected boolean test011() {
+//        for (Branch b : branchSet01) {
+//            MemorySpace mem = b.getMemorySpace();
+//            if (mem.getBitForTestOnly(2)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//
+//    @Override
+//    protected boolean test101(boolean dependentSet) {
+//        boolean result;
+//        if (dependentSet) {
+//            result = memorySpace.getBitForTestOnly(2);
+//        } else {
+//            result = super.test101();
+//            Branch branch = new Branch(memorySpace, pointer, store);
+//            branchSet.add(branch);
+//        }
+//        return result;
+//    }
+//
+//    @Override
+//    protected boolean test110(boolean dependentSet) {
+//        boolean result;
+//        if (dependentSet) {
+//            result = !memorySpace.getBitForTestOnly(2);
+//        } else {
+//            result = super.test110();
+//            Branch branch = new Branch(memorySpace, pointer, store);
+//            branchSet.add(branch);
+//        }
+//        return result;
+//    }
 }

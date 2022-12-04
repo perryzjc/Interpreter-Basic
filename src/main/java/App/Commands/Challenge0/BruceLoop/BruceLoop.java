@@ -27,12 +27,14 @@ public class BruceLoop {
     protected int currIndex;
 
     public static void main(String[] args) {
+        boolean found = false;
         //finished: 3， 4， 5， 6， 7， 8， 9， 10， 11， 12， 13, 14, 15, 16, 17 (17179869184)
-        for (int i = 32; i < 33; i++) {
-            BruceLoop bruceLoop = new BruceLoop(i);
+        for (int i = 3; i < 15; i++) {
+            BruceLoop bruceLoop = new BruceLoop(24);
 //            BruceLoop bruceLoop = new BruceLoop(SEBASTIAN_SOL_NUM_COMMANDS);
-            bruceLoop.startForLoop();
+            found = bruceLoop.startForLoop();
             System.out.println("finished: " + i);
+            if (found) break;
         }
     }
 
@@ -102,7 +104,7 @@ public class BruceLoop {
         }
     }
 
-    public void startForLoop() {
+    public boolean startForLoop() {
         long loopTimes = (long) Math.pow(NUM_OPTIONS_CMD, _max_commands_used);
         for (long i = 0; i < loopTimes; i++) {
            // System.out.println("Loop " + i);
@@ -119,10 +121,11 @@ public class BruceLoop {
                     System.out.println(result.get(j).commandName());
                 }
                 System.out.println("Found a solution! Number of commands used: " + result.size());
-                return;
+                return true;
             }
         }
         System.out.println("Finished Not find a solution! looptimes: " + loopTimes);
+        return false;
     }
 
     protected void resetState(INIT_STATE state) {

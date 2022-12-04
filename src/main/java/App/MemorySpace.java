@@ -72,6 +72,10 @@ public class MemorySpace implements Serializable {
         memory.set(index, bit);
     }
 
+    public void setBit(int index, boolean bit) {
+        memory.set(index, bit);
+    }
+
     public int getScope() {
         return scope;
     }

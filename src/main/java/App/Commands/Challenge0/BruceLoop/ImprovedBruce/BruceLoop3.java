@@ -25,8 +25,9 @@ public class BruceLoop3 extends BruceLoop2{
     }
 
     @Override
-    public void startForLoop() {
+    public boolean startForLoop() {
         initResult();
+        return false;
     }
 
     public boolean deepFirstSearch() {
@@ -69,11 +70,12 @@ public class BruceLoop3 extends BruceLoop2{
     }
 
     private boolean isPassAllTest() {
-        boolean t1 = test000(true);
-        boolean t2 = test011(true);
-        boolean t3 = test101(true);
-        boolean t4 = test110(true);
-        return t1 && t2 && t3 && t4;
+//        boolean t1 = test000(true);
+//        boolean t2 = test011(true);
+//        boolean t3 = test101(true);
+//        boolean t4 = test110(true);
+//        return t1 && t2 && t3 && t4;
+        return false;
     }
 
     private Branch generateCurrBranch() {
