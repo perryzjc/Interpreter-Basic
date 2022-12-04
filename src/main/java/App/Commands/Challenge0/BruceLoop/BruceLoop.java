@@ -10,6 +10,10 @@ import App.Store;
 
 import java.util.ArrayList;
 
+/**
+ * loop1's algorithm has bug and not efficient
+ * please check BruceLoop2
+ */
 public class BruceLoop {
     protected final static int SEBASTIAN_SOL_NUM_COMMANDS = 32;
     protected final ArrayList<Command> usableCommands = new ArrayList<>();
