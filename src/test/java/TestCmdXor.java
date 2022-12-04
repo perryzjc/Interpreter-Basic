@@ -1,6 +1,4 @@
-import App.Commands.Challenge0.CmdRecurSol30;
-import App.Commands.Challenge0.CmdXORSebastian;
-import App.Commands.Challenge0.CmdXORSebastian2;
+import App.Commands.Challenge0.DefindCmd.CmdRecurSol30;
 import App.Commands.DefinedCmd.DefinedCmd;
 import App.MemorySpace;
 import App.Pointer;

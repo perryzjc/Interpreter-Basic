@@ -11,6 +11,8 @@ import App.Store;
 /**
  * each command require 3 arguments for constructor, it's redundant to write it
  * command helper can make those procedures as a function
+ * it's also efficient without repeating create object, since cmd are static
+ * but pay attention, cmd only apply to the pointer, memorySpace, store in this object
  */
 public class CmdHelper {
     private Pointer pointer;

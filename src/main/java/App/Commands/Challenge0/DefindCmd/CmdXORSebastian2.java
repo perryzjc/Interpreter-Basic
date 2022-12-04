@@ -1,4 +1,4 @@
-package App.Commands.Challenge0;
+package App.Commands.Challenge0.DefindCmd;
 
 import App.Commands.DefinedCmd.DefinedCmd;
 import App.MemorySpace;

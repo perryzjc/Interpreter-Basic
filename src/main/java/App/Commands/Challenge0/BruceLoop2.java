@@ -1,24 +1,26 @@
-package App.Commands.Challenge0.BruceLoop.ImprovedBruce;
+package App.Commands.Challenge0;
 
+import App.ChallengeSetup;
 import App.Commands.Basic.Command;
-import App.Commands.Challenge0.BruceLoop.BruceLoop;
-import App.Commands.Challenge0.BruceLoop.ImprovedBruce.BranchSet.Branch;
+import App.Commands.Basic.Branch;
 import App.MemorySpace;
 import App.Pointer;
 import App.Store;
 
 /**
  * previous idea can not work
- * now optimize loop1 to an efficient way that take advantage of previous result
- * using deep first search
+ * now optimize loop1 to an efficient way that take advantage of previous branch
+ * using deep first search, shallow copy, and lazy evaluation
+ *
+ * best solution found by this class is only 12 commands
  */
-public class BruceLoop2 extends BruceLoop {
+public class BruceLoop2 extends ChallengeSetup {
     protected int starter_num_cmd;
     private int loopTimes;
 
     public static void main(String[] args) {
         BruceLoop2 bruceLoop = new BruceLoop2(12);
-        bruceLoop.startForLoop();
+        bruceLoop.exhaustivelyFindSolution();
     }
 
     public BruceLoop2(int max_commands_used) {
@@ -27,13 +29,12 @@ public class BruceLoop2 extends BruceLoop {
         loopTimes = 0;
     }
 
-    @Override
-    public boolean startForLoop() {
+    public boolean exhaustivelyFindSolution() {
         if (starter_num_cmd < 1 || starter_num_cmd > _max_commands_used) {
             throw new RuntimeException("curr_commands_used should be in range [1, _max_commands_used]");
         }
         initResult();
-        boolean found = false;
+        boolean found;
         Branch b00 = initBranch(false, false);
         Branch b01 = initBranch(false, true);
         Branch b10 = initBranch(true, false);
@@ -74,17 +75,29 @@ public class BruceLoop2 extends BruceLoop {
         for (Command cmd : result) {
             System.out.println(cmd.commandName());
         }
-        System.out.println("Found a solution during recursion! Number of commands used: " + curr_commands_used);
+        System.out.println("\nFound a solution during recursion! Number of commands used: " + curr_commands_used);
         System.out.println("loopTimes: " + loopTimes);
     }
 
     private Branch initBranch(boolean firstBit, boolean secondBit) {
-        MemorySpace memorySpace = new MemorySpace(_max_commands_used);
+        MemorySpace memorySpace = memorySpaceForChallenge0();
         memorySpace.setBit(0, firstBit);
         memorySpace.setBit(1, secondBit);
         Pointer pointer = new Pointer(0);
         Store store = new Store();
         return new Branch(memorySpace, pointer, store);
+    }
+
+    /**
+     * challenge require store the result at address 2
+     * thus, it at least have 3 bits
+     */
+    private MemorySpace memorySpaceForChallenge0() {
+        if (_max_commands_used < 3) {
+            return new MemorySpace(3);
+        } else {
+            return new MemorySpace(_max_commands_used);
+        }
     }
 
     /**

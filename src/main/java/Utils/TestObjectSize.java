@@ -1,6 +1,6 @@
 package Utils;
 
-import App.Commands.Challenge0.BruceLoop.ImprovedBruce.BranchSet.Branch;
+import App.Commands.Basic.Branch;
 import App.MemorySpace;
 import App.Pointer;
 import App.Store;
