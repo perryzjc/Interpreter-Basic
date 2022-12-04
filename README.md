@@ -21,7 +21,7 @@ INVI
 INC
 INV
 
-### 1. least commands solution of challenge 1 is found by my BruceFindSolution class, only 14 commands
+### 1. least commands solution of challenge 1 is found by my BruceFindSolution class, only 13 commands
 LOAD
 INC
 INV
