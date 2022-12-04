@@ -73,6 +73,9 @@ public class ChallengeSetup {
      *
      * TODO: to verify the absolute correctness of the solution, I should come up with a way to test all possible initial state,
      * TODO: one of way is separate the init branches into different files, and handle each of them in different stage to avoid heap memory limit
+     * TODO: this time, deep first search should not exist if find something
+     * TODO: every command that work for the provided branches store to a command hashmap file
+     * TODO: finally, the usable commands are the intersection of all command hashmap files
      *
      */
     public ArrayList<Branch> generateInitBranchList() {
