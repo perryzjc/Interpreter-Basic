@@ -35,7 +35,7 @@ public class BruceFindSolution extends ChallengeSetup {
      * INC
      * INC
      * INV
-     * my program verify that at least 13 commands needed
+     * my program verify that at least 14 commands needed
      */
     public static void main(String[] args) {
         BruceFindSolution bruceLoop = new BruceFindSolution(13);
