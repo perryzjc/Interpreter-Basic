@@ -1,42 +1,21 @@
-package App.Commands.Challenge1;
+package App.Commands.Challenge2;
 
 import App.ChallengeSetup;
-import App.Commands.Basic.Branch;
+import App.Branch;
 import App.Commands.Basic.Command;
 import App.MemorySpace;
 import App.Pointer;
 import App.Store;
 
 /**
- * Challenge 1: 1-bit addition
- * Input: two bits A and B at addresses 0 and 1
- *
- * Output: the 2-bit sum of the bits, A + B , at addresses 2-3.
- *
- * NOTE: all integers are represented LSB first in memory.
- * LSB means the rightmost (least-significant) bit is the first bit.
- * MSB means the leftmost (most-significant) is the first bit.
+ * Challenge 2: 16-bit addition
+ * Input: two 16-bit numbers A and B at addresses 0-15 and 16-31.
+ * Output: the 17-bit sum of the numbers, A + B, at addresses 32-48.
  */
 public class BruceFindSolution extends ChallengeSetup {
     protected int starter_num_cmd;
     private int loopTimes;
 
-    /**
-     * LOAD
-     * INC
-     * INV
-     * CDEC
-     * INV
-     * LOAD
-     * CDEC
-     * INC
-     * LOAD
-     * CDEC
-     * INC
-     * INC
-     * INV
-     * my program verify that at least 14 commands needed
-     */
     public static void main(String[] args) {
         BruceFindSolution bruceLoop = new BruceFindSolution(13);
         bruceLoop.exhaustivelyFindSolution();
@@ -108,12 +87,13 @@ public class BruceFindSolution extends ChallengeSetup {
     }
 
     /**
-     * challenge require store the result at address 2-3
-     * thus, it at least have 4 bits
+     * challenge require store the result at address 0-15 and 16-31,
+     * and output the result at address 32-48
+     * thus, memory space should be 49 bits at least
      */
     private MemorySpace memorySpaceForChallenge1() {
-        if (_max_commands_used < 4) {
-            return new MemorySpace(4);
+        if (_max_commands_used < 49) {
+            return new MemorySpace(49);
         } else {
             return new MemorySpace(_max_commands_used);
         }

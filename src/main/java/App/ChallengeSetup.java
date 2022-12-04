@@ -52,4 +52,19 @@ public class ChallengeSetup {
             }
         }
     }
+
+    /**
+     * generate all possible initial branch state
+     * e.g.
+     * for challenge 0&1, only two bits are input
+     * there 2^2 = 4 possible initial state
+     *
+     * for challenge 2,
+     * input A at 0-15 and B at 16-31
+     * based on discrete math
+     * there are 2^16 * 2^16 = 2^32 possible initial state
+     */
+    public ArrayList<Branch> generateInitBranchList() {
+        return null;
+    }
 }

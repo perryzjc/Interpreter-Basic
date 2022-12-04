@@ -2,7 +2,7 @@ package App.Commands.Challenge0;
 
 import App.ChallengeSetup;
 import App.Commands.Basic.Command;
-import App.Commands.Basic.Branch;
+import App.Branch;
 import App.MemorySpace;
 import App.Pointer;
 import App.Store;
