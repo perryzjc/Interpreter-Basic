@@ -44,6 +44,7 @@ public class BruceLoop3 extends BruceLoop2{
             Branch branch = generateCurrBranch();
             found = deepFirstSearchHelper(curr_commands_used + 1, branch);
         }
+        return found;
     }
 
     private boolean deepFirstSearchHelper(int curr_commands_used, Branch currBranch) {
