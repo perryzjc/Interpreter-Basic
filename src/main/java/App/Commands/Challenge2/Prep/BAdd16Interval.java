@@ -2,6 +2,8 @@ package App.Commands.Challenge2.Prep;
 
 import App.*;
 import App.Commands.Basic.Command;
+import App.Commands.CmdHelper;
+import App.Commands.Strategy.GuessForNBitsAddition;
 
 import java.util.ArrayList;
 
@@ -10,23 +12,85 @@ import java.util.ArrayList;
  * want to get a possible series commands for 1-bit addition that has no side effect for challenge2&3
  *
  * this version focus on 1bit addition that can work correctly for A at 0, and B at 16, produce result at 32-33
+ * solution found for this method:
  */
 public class BAdd16Interval extends ChallengeSetup {
     protected int starter_num_cmd;
     private int loopTimes;
+    private static final int INPUT_A_INDEX = 0;
+    private static final int INPUT_B_INDEX = 16;
+    private static final int RESULT_INDEX_1 = 32;
+    private static final int RESULT_INDEX_2 = 33;
 
+    /**
+     * INV
+     * LOAD
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * INV
+     * CDEC
+     * LOAD
+     * INV
+     * INC
+     * CDEC
+     * LOAD
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * INC
+     * CDEC
+     * LOAD
+     * INC
+     * INC
+     * CDEC
+     * INV
+     *
+     * Found a solution during recursion! Number of commands used: 45
+     */
     public static void main(String[] args) {
         boolean found;
-        for (int i = 1; i < 20; i++) {
-            BAdd16Interval bruceLoop = new BAdd16Interval(i);
-            found = bruceLoop.exhaustivelyFindSolution();
+        for (int i = 45; i < 50; i++) {
+            try {
+                BAdd16Interval bruceLoop = new BAdd16Interval(i);
+                found = bruceLoop.exhaustivelyFindSolution();
+            } catch (Exception e) {
+                System.out.println("Exception: " + e.getMessage());
+                break;
+            }
             System.out.println("target command: " + i);
             if (found) break;
         }
     }
 
+
     public BAdd16Interval(int max_commands_used) {
         super(max_commands_used);
+        //TODO: test code for verify the correctness of the GuessForNBitsAddition class
+        cmdAllocateStrategy = new GuessForNBitsAddition(16, max_commands_used, new CmdHelper(pointer, memorySpace, store));
         starter_num_cmd = 1;
         loopTimes = 0;
     }
@@ -53,6 +117,10 @@ public class BAdd16Interval extends ChallengeSetup {
     public boolean deepFirstSearch(int curr_commands_used, ArrayList<Command> usableCommands, Branch b00, Branch b01, Branch b10, Branch b11) {
         if (curr_commands_used > _max_commands_used) {
             cmdAllocateStrategy.traceBackLastStatus();
+            b00 = null;
+            b01 = null;
+            b10 = null;
+            b11 = null;
             return false;
         }
         boolean found;
@@ -74,6 +142,10 @@ public class BAdd16Interval extends ChallengeSetup {
             if (found) {
                 return true;
             }
+            resultB00 = null;
+            resultB01 = null;
+            resultB10 = null;
+            resultB11 = null;
         }
         return false;
     }
@@ -88,8 +160,8 @@ public class BAdd16Interval extends ChallengeSetup {
 
     private Branch initBranch(boolean firstBit, boolean secondBit) {
         MemorySpace memorySpace = memorySpaceForChallenge1();
-        memorySpace.setBit(0, firstBit);
-        memorySpace.setBit(16, secondBit);
+        memorySpace.setBit(INPUT_A_INDEX, firstBit);
+        memorySpace.setBit(INPUT_B_INDEX, secondBit);
         Pointer pointer = new Pointer(0);
         Store store = new Store();
         return new Branch(memorySpace, pointer, store);
@@ -163,12 +235,12 @@ public class BAdd16Interval extends ChallengeSetup {
 
     private boolean test0000(Branch b00) {
         MemorySpace mem = b00.getMemorySpace();
-        return !mem.getBitForTestOnly(32) && !mem.getBitForTestOnly(33);
+        return !mem.getBitForTestOnly(RESULT_INDEX_1) && !mem.getBitForTestOnly(RESULT_INDEX_2);
     }
 
     private boolean test0110(Branch b01) {
         MemorySpace mem = b01.getMemorySpace();
-        return mem.getBitForTestOnly(32) && !mem.getBitForTestOnly(33);
+        return mem.getBitForTestOnly(RESULT_INDEX_1) && !mem.getBitForTestOnly(RESULT_INDEX_2);
     }
 
     /**
@@ -180,6 +252,6 @@ public class BAdd16Interval extends ChallengeSetup {
 
     protected boolean test1101(Branch b11) {
         MemorySpace mem = b11.getMemorySpace();
-        return !mem.getBitForTestOnly(32) && mem.getBitForTestOnly(33);
+        return !mem.getBitForTestOnly(RESULT_INDEX_1) && mem.getBitForTestOnly(RESULT_INDEX_2);
     }
 }
