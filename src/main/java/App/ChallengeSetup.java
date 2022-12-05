@@ -1,6 +1,7 @@
 package App;
 
 import App.Commands.Basic.Command;
+import App.Commands.CmdAllocateStrategy;
 import App.Commands.CmdHelper;
 
 import java.util.ArrayList;
@@ -12,12 +13,11 @@ import java.util.ArrayList;
  */
 public class ChallengeSetup {
     protected final int NUM_OPTIONS_CMD = 4;
-    protected final ArrayList<Command> usableCommands = new ArrayList<>();
 
     protected Pointer pointer;
     protected MemorySpace memorySpace;
     protected Store store;
-    protected CmdHelper cmdHelper;
+    protected CmdAllocateStrategy cmdAllocateStrategy;
 
 
     protected int _max_commands_used;
@@ -27,18 +27,10 @@ public class ChallengeSetup {
         pointer = new Pointer();
         memorySpace = new MemorySpace();
         store = new Store();
-        cmdHelper = new CmdHelper(pointer, memorySpace, store);
+        cmdAllocateStrategy = new CmdAllocateStrategy(new CmdHelper(pointer, memorySpace, store));
         result = new ArrayList<>();
         _max_commands_used = max_commands_used;
-        loadUsableCmd();
         initResult();
-    }
-
-    private void loadUsableCmd() {
-        usableCommands.add(cmdHelper.getCmdCDEC());
-        usableCommands.add(cmdHelper.getCmdLOAD());
-        usableCommands.add(cmdHelper.getCmdINV());
-        usableCommands.add(cmdHelper.getCmdINC());
     }
 
     protected void initResult() {

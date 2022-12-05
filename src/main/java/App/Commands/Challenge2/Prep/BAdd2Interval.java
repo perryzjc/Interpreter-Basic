@@ -3,6 +3,8 @@ package App.Commands.Challenge2.Prep;
 import App.*;
 import App.Commands.Basic.Command;
 
+import java.util.ArrayList;
+
 /**
  * modification to challenge 1's BruceFindSolution
  * want to get a possible series commands for 1-bit addition that has no side effect for challenge2&3
@@ -33,7 +35,7 @@ public class BAdd2Interval extends ChallengeSetup {
      */
     public static void main(String[] args) {
         boolean found;
-        for (int i = 15; i < 15; i++) {
+        for (int i = 15; i < 16; i++) {
             BAdd2Interval bruceLoop = new BAdd2Interval(i);
             found = bruceLoop.exhaustivelyFindSolution();
             System.out.println("target command: " + i);
@@ -57,7 +59,8 @@ public class BAdd2Interval extends ChallengeSetup {
         Branch b01 = initBranch(false, true);
         Branch b10 = initBranch(true, false);
         Branch b11 = initBranch(true, true);
-        found = deepFirstSearch(starter_num_cmd, b00, b01, b10, b11);
+        ArrayList<Command> initUsableCmd = cmdAllocateStrategy.getInitStarterCmd();
+        found = deepFirstSearch(starter_num_cmd, initUsableCmd, b00, b01, b10, b11);
         if (!found) {
             System.out.println("not found");
             System.out.println("loopTimes: " + loopTimes);
@@ -65,7 +68,7 @@ public class BAdd2Interval extends ChallengeSetup {
         return found;
     }
 
-    public boolean deepFirstSearch(int curr_commands_used, Branch b00, Branch b01, Branch b10, Branch b11) {
+    public boolean deepFirstSearch(int curr_commands_used, ArrayList<Command> usableCommands, Branch b00, Branch b01, Branch b10, Branch b11) {
         if (curr_commands_used > _max_commands_used) return false;
         boolean found;
         for (Command cmd : usableCommands) {
@@ -81,7 +84,8 @@ public class BAdd2Interval extends ChallengeSetup {
                 handleFound(curr_commands_used);
                 return true;
             }
-            found = deepFirstSearch(curr_commands_used + 1, resultB00, resultB01, resultB10, resultB11);
+            ArrayList<Command> newUsableCommands = cmdAllocateStrategy.nextUsableCommands(cmd);
+            found = deepFirstSearch(curr_commands_used + 1, newUsableCommands, resultB00, resultB01, resultB10, resultB11);
             if (found) {
                 return true;
             }

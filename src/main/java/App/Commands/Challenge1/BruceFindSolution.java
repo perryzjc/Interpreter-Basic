@@ -7,6 +7,8 @@ import App.MemorySpace;
 import App.Pointer;
 import App.Store;
 
+import java.util.ArrayList;
+
 /**
  * Challenge 1: 1-bit addition
  * Input: two bits A and B at addresses 0 and 1
@@ -58,7 +60,8 @@ public class BruceFindSolution extends ChallengeSetup {
         Branch b01 = initBranch(false, true);
         Branch b10 = initBranch(true, false);
         Branch b11 = initBranch(true, true);
-        found = deepFirstSearch(starter_num_cmd, b00, b01, b10, b11);
+        ArrayList<Command> initUsableCmd = cmdAllocateStrategy.getInitStarterCmd();
+        found = deepFirstSearch(starter_num_cmd, initUsableCmd, b00, b01, b10, b11);
         if (!found) {
             System.out.println("not found");
             System.out.println("loopTimes: " + loopTimes);
@@ -66,7 +69,7 @@ public class BruceFindSolution extends ChallengeSetup {
         return found;
     }
 
-    public boolean deepFirstSearch(int curr_commands_used, Branch b00, Branch b01, Branch b10, Branch b11) {
+    public boolean deepFirstSearch(int curr_commands_used, ArrayList<Command> usableCommands, Branch b00, Branch b01, Branch b10, Branch b11) {
         if (curr_commands_used > _max_commands_used) return false;
         boolean found;
         for (Command cmd : usableCommands) {
@@ -82,7 +85,8 @@ public class BruceFindSolution extends ChallengeSetup {
                 handleFound(curr_commands_used);
                 return true;
             }
-            found = deepFirstSearch(curr_commands_used + 1, resultB00, resultB01, resultB10, resultB11);
+            ArrayList<Command> newUsableCommands = cmdAllocateStrategy.nextUsableCommands(cmd);
+            found = deepFirstSearch(curr_commands_used + 1, newUsableCommands, resultB00, resultB01, resultB10, resultB11);
             if (found) {
                 return true;
             }
