@@ -85,7 +85,7 @@ public class MemorySpace implements Serializable {
         StringBuilder result = new StringBuilder();
         result.append("{");
         for (int i = 0; i < scope; i++) {
-            result.append(memory.get(i));
+            result.append(memory.get(i) ? '1' : '0');
             if (i != scope - 1) {
                 result.append(", ");
             }
