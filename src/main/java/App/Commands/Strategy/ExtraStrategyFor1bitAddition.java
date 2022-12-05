@@ -14,9 +14,9 @@ import java.util.Stack;
  * only 1 bit provided at A and B
  */
 public class ExtraStrategyFor1bitAddition extends CmdAllocateStrategy{
-    private ArrayList<Command> last7CmdAsEnd;
-    private ArrayList<ArrayList<Command>> last7CmdAsEndList;
-    private static final int NUM_END_CMD = 7;
+    protected ArrayList<Command> last7CmdAsEnd;
+    protected ArrayList<ArrayList<Command>> last7CmdAsEndList;
+    protected static final int NUM_END_CMD = 7;
 
     public ExtraStrategyFor1bitAddition(int max_cmd_used, CmdHelper cmdHelper) {
         super(max_cmd_used, cmdHelper);
@@ -26,11 +26,6 @@ public class ExtraStrategyFor1bitAddition extends CmdAllocateStrategy{
         this.initUsableCmd();
     }
 
-    /**
-     * 0: CDEC
-     * 1:
-     * @return
-     */
     @Override
     public ArrayList<Command> nextUsableCommands(int curr_cmd_used, Command lastCmdUsed) {
         super.checkIfCmdMeaningful(lastCmdUsed);

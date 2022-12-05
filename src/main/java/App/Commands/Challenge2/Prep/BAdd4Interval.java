@@ -4,6 +4,7 @@ import App.*;
 import App.Commands.Basic.Command;
 import App.Commands.CmdHelper;
 import App.Commands.Strategy.ExtraStrategyFor1bitAddition;
+import App.Commands.Strategy.GuessFor4bitsAddition;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,31 @@ public class BAdd4Interval extends ChallengeSetup {
     protected int starter_num_cmd;
     private int loopTimes;
 
+    /**
+     * INV
+     * LOAD
+     * INC
+     * INC
+     * INC
+     * INC
+     * INV
+     * CDEC
+     * LOAD
+     * INV
+     * INC
+     * CDEC
+     * LOAD
+     * INC
+     * INC
+     * CDEC
+     * LOAD
+     * INC
+     * INC
+     * CDEC
+     * INV
+     *
+     * Found a solution during recursion! Number of commands used: 21
+     */
     public static void main(String[] args) {
         boolean found;
         for (int i = 17; i < 28; i++) {
@@ -28,10 +54,11 @@ public class BAdd4Interval extends ChallengeSetup {
         }
     }
 
+
     public BAdd4Interval(int max_commands_used) {
         super(max_commands_used);
-        //TODO: test code for verify the correctness of the ExtraStrategyFor1bitAddition class
-        cmdAllocateStrategy = new ExtraStrategyFor1bitAddition(max_commands_used, new CmdHelper(pointer, memorySpace, store));
+        //TODO: test code for verify the correctness of the GuessFor4bitsAddition class
+        cmdAllocateStrategy = new GuessFor4bitsAddition(max_commands_used, new CmdHelper(pointer, memorySpace, store));
         starter_num_cmd = 1;
         loopTimes = 0;
     }
