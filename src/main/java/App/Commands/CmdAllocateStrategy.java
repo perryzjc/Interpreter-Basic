@@ -42,6 +42,7 @@ public class CmdAllocateStrategy {
         CDECMeaningful = true;
         _cmdHelper = cmdHelper;
         statusStack = new Stack<>();
+        _max_cmd_used = max_cmd_used;
         initUsableCmd();
     }
 
