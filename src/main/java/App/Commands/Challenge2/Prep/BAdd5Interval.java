@@ -5,6 +5,7 @@ import App.Commands.Basic.Command;
 import App.Commands.CmdHelper;
 import App.Commands.Strategy.GuessFor4bitsAddition;
 import App.Commands.Strategy.GuessFor5bitsAddition;
+import App.Commands.Strategy.GuessForNBitsAddition;
 
 import java.util.ArrayList;
 
@@ -59,8 +60,8 @@ public class BAdd5Interval extends ChallengeSetup {
 
     public BAdd5Interval(int max_commands_used) {
         super(max_commands_used);
-        //TODO: test code for verify the correctness of the GuessFor4bitsAddition class
-        cmdAllocateStrategy = new GuessFor5bitsAddition(max_commands_used, new CmdHelper(pointer, memorySpace, store));
+        //TODO: test code for verify the correctness of the GuessForNBitsAddition class
+        cmdAllocateStrategy = new GuessForNBitsAddition(5, max_commands_used, new CmdHelper(pointer, memorySpace, store));
         starter_num_cmd = 1;
         loopTimes = 0;
     }

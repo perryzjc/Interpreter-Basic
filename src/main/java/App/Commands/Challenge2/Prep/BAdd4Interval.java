@@ -3,8 +3,7 @@ package App.Commands.Challenge2.Prep;
 import App.*;
 import App.Commands.Basic.Command;
 import App.Commands.CmdHelper;
-import App.Commands.Strategy.ExtraStrategyFor1bitAddition;
-import App.Commands.Strategy.GuessFor4bitsAddition;
+import App.Commands.Strategy.GuessForNBitsAddition;
 
 import java.util.ArrayList;
 
@@ -57,8 +56,8 @@ public class BAdd4Interval extends ChallengeSetup {
 
     public BAdd4Interval(int max_commands_used) {
         super(max_commands_used);
-        //TODO: test code for verify the correctness of the GuessFor4bitsAddition class
-        cmdAllocateStrategy = new GuessFor4bitsAddition(max_commands_used, new CmdHelper(pointer, memorySpace, store));
+        //TODO: test code for verify the correctness of the GuessForNBitsAddition class
+        cmdAllocateStrategy = new GuessForNBitsAddition(4, max_commands_used, new CmdHelper(pointer, memorySpace, store));
         starter_num_cmd = 1;
         loopTimes = 0;
     }

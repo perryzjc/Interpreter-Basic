@@ -19,7 +19,7 @@ public class AdditionPattern {
         return last7Cmd;
     }
 
-    public static ArrayList<Command> getFixedStart7Cmd(CmdHelper cmdHelper, int bitInterval) {
+    public static ArrayList<Command> getFixedStartnCmd(CmdHelper cmdHelper, int bitInterval) {
         ArrayList<Command> start7Cmd = new ArrayList<>();
         start7Cmd.add(cmdHelper.getCmdINV());
         start7Cmd.add(cmdHelper.getCmdLOAD());
