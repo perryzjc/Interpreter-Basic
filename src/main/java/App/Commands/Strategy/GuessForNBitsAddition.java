@@ -7,23 +7,6 @@ import App.Commands.Strategy.PatternGuess.AdditionPattern;
 import java.util.ArrayList;
 
 public class GuessForNBitsAddition extends ExtraStrategyFor1bitAddition {
-    /**
-     * based on the result from 1 bit, 2 bit, 3 bit, and 4 bit addition
-     * I guess there is a pattern for 5 bit addition
-     * the start should be
-     * INV
-     * LOAD
-     * INC
-     * INC
-     * INC
-     * INC
-     * INC
-     * INV
-     *
-     * 8 commands
-     *
-     * one INC more than the 3 bit addition
-     */
     private ArrayList<Command> firstnCmdAsStart;
     private ArrayList<ArrayList<Command>> firstnCmdAsStartList;
     private int _bitInterval;
@@ -31,7 +14,7 @@ public class GuessForNBitsAddition extends ExtraStrategyFor1bitAddition {
 
     public GuessForNBitsAddition(int bitInterval, int max_cmd_used, CmdHelper cmdHelper) {
         super(max_cmd_used, cmdHelper);
-        NUM_START_CMD = bitInterval + 3;
+        NUM_START_CMD = bitInterval + 4;
         int requireCmd = NUM_START_CMD + NUM_END_CMD + 1;
         if (max_cmd_used < requireCmd) {
             throw new IllegalArgumentException("max_cmd_used should be at least " + requireCmd + " for this strategy");

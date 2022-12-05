@@ -20,13 +20,14 @@ public class AdditionPattern {
     }
 
     public static ArrayList<Command> getFixedStartnCmd(CmdHelper cmdHelper, int bitInterval) {
-        ArrayList<Command> start7Cmd = new ArrayList<>();
-        start7Cmd.add(cmdHelper.getCmdINV());
-        start7Cmd.add(cmdHelper.getCmdLOAD());
+        ArrayList<Command> startNCmd = new ArrayList<>();
+        startNCmd.add(cmdHelper.getCmdINV());
+        startNCmd.add(cmdHelper.getCmdLOAD());
         for (int i = 0; i < bitInterval; i++) {
-            start7Cmd.add(cmdHelper.getCmdINC());
+            startNCmd.add(cmdHelper.getCmdINC());
         }
-        start7Cmd.add(cmdHelper.getCmdINV());
-        return start7Cmd;
+        startNCmd.add(cmdHelper.getCmdINV());
+        startNCmd.add(cmdHelper.getCmdCDEC());
+        return startNCmd;
     }
 }

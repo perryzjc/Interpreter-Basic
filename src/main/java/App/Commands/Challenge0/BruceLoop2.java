@@ -31,8 +31,8 @@ public class BruceLoop2 extends ChallengeSetup {
 
     public BruceLoop2(int max_commands_used) {
         super(max_commands_used);
-//        //TODO: test code for verify the correctness of the GuessForNBitsAddition class
-//        cmdAllocateStrategy = new GuessForNBitsAddition(1, max_commands_used, new CmdHelper(pointer, memorySpace, store));
+        //TODO: test code for verify the correctness of the GuessForNBitsAddition class
+        cmdAllocateStrategy = new GuessForNBitsAddition(1, max_commands_used, new CmdHelper(pointer, memorySpace, store));
         starter_num_cmd = 1;
         loopTimes = 0;
     }
