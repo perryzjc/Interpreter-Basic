@@ -5,10 +5,10 @@ import App.MemorySpace;
 import App.Pointer;
 import App.Store;
 
-public class PatternGenerator {
+public class OneBitAdditionPattern {
     private int _bitInterval;
 
-    public PatternGenerator(int bitInterval, Pointer pointer, MemorySpace memorySpace, Store store) {
+    public OneBitAdditionPattern(int bitInterval, Pointer pointer, MemorySpace memorySpace, Store store) {
         _bitInterval = bitInterval;
     }
 
