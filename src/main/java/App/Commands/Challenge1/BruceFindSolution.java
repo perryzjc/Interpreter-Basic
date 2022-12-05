@@ -72,6 +72,10 @@ public class BruceFindSolution extends ChallengeSetup {
     public boolean deepFirstSearch(int curr_commands_used, ArrayList<Command> usableCommands, Branch b00, Branch b01, Branch b10, Branch b11) {
         if (curr_commands_used > _max_commands_used) {
             cmdAllocateStrategy.traceBackLastStatus();
+            b00 = null;
+            b01 = null;
+            b10 = null;
+            b11 = null;
             return false;
         }
         boolean found;
@@ -93,6 +97,10 @@ public class BruceFindSolution extends ChallengeSetup {
             if (found) {
                 return true;
             }
+            resultB00 = null;
+            resultB01 = null;
+            resultB10 = null;
+            resultB11 = null;
         }
         return false;
     }
