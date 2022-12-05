@@ -3,6 +3,8 @@ package App.Commands.Challenge0;
 import App.ChallengeSetup;
 import App.Commands.Basic.Command;
 import App.Branch;
+import App.Commands.CmdHelper;
+import App.Commands.Strategy.GuessForNBitsAddition;
 import App.MemorySpace;
 import App.Pointer;
 import App.Store;
@@ -21,12 +23,16 @@ public class BruceLoop2 extends ChallengeSetup {
     private int loopTimes;
 
     public static void main(String[] args) {
-        BruceLoop2 bruceLoop = new BruceLoop2(12);
-        bruceLoop.exhaustivelyFindSolution();
+        for (int i = 12; i < 13; i++) {
+            BruceLoop2 bruceLoop = new BruceLoop2(i);
+            bruceLoop.exhaustivelyFindSolution();
+        }
     }
 
     public BruceLoop2(int max_commands_used) {
         super(max_commands_used);
+//        //TODO: test code for verify the correctness of the GuessForNBitsAddition class
+//        cmdAllocateStrategy = new GuessForNBitsAddition(1, max_commands_used, new CmdHelper(pointer, memorySpace, store));
         starter_num_cmd = 1;
         loopTimes = 0;
     }
