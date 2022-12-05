@@ -19,51 +19,29 @@ public class BAdd3Interval extends ChallengeSetup {
     private int loopTimes;
 
     /**
-     * not found
-     * loopTimes: 4
-     * target command: 1
-     * not found
-     * loopTimes: 18
-     * target command: 2
-     * not found
-     * loopTimes: 67
-     * target command: 3
-     * not found
-     * loopTimes: 239
-     * target command: 4
-     * not found
-     * loopTimes: 843
-     * target command: 5
-     * not found
-     * loopTimes: 2963
-     * target command: 6
-     * not found
-     * loopTimes: 10405
-     * target command: 7
-     * not found
-     * loopTimes: 36529
-     * target command: 8
-     * not found
-     * loopTimes: 128233
-     * target command: 9
-     * not found
-     * loopTimes: 450145
-     * target command: 10
-     * not found
-     * loopTimes: 1580165
-     * target command: 11
-     * not found
-     * loopTimes: 5546917
-     * target command: 12
-     * not found
-     * loopTimes: 19471557
-     * target command: 13
-     * not found
-     * loopTimes: 68351749
-     * target command: 14
-     * not found
-     * loopTimes: 239937741
-     * target command: 15
+     *INV
+     * LOAD
+     * INC
+     * INC
+     * INC
+     * INV
+     * CDEC
+     * LOAD
+     * INV
+     * INC
+     * CDEC
+     * LOAD
+     * INC
+     * CDEC
+     * LOAD
+     * INC
+     * INC
+     * CDEC
+     * INV
+     *
+     * Found a solution during recursion! Number of commands used: 19
+     * loopTimes: 7833932
+     * target command: 19
      */
     public static void main(String[] args) {
         boolean found;
