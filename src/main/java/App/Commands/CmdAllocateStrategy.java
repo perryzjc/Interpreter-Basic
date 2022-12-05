@@ -66,10 +66,13 @@ public class CmdAllocateStrategy {
     public void traceBackLastStatus() {
         CurrMeaningfulStatus m = statusStack.pop();
         m.recoverStatus();
+        m = null;
     }
 
     private void checkIfCmdMeaningful(Command lastCmdUsed) {
-        statusStack.push(new CurrMeaningfulStatus());
+        CurrMeaningfulStatus m = new CurrMeaningfulStatus();
+        statusStack.push(m);
+        m = null;
 
         if (lastCmdUsed == _cmdHelper.getCmdLOAD()) {
             LOADMeaningful = false;
@@ -121,21 +124,21 @@ public class CmdAllocateStrategy {
         allBasicCmdWithoutINVAndLOAD = new ArrayList<>();
         INVOnlyAsFinalCmd = new ArrayList<>();
 
-        allBasicCmd.add(_cmdHelper.getCmdCDEC());
         allBasicCmd.add(_cmdHelper.getCmdLOAD());
         allBasicCmd.add(_cmdHelper.getCmdINV());
         allBasicCmd.add(_cmdHelper.getCmdINC());
+        allBasicCmd.add(_cmdHelper.getCmdCDEC());
 
-        allBasicCmdWithoutINV.add(_cmdHelper.getCmdCDEC());
         allBasicCmdWithoutINV.add(_cmdHelper.getCmdLOAD());
         allBasicCmdWithoutINV.add(_cmdHelper.getCmdINC());
+        allBasicCmdWithoutINV.add(_cmdHelper.getCmdCDEC());
 
-        allBasicCmdWithoutLOAD.add(_cmdHelper.getCmdCDEC());
         allBasicCmdWithoutLOAD.add(_cmdHelper.getCmdINV());
         allBasicCmdWithoutLOAD.add(_cmdHelper.getCmdINC());
+        allBasicCmdWithoutLOAD.add(_cmdHelper.getCmdCDEC());
 
-        allBasicCmdWithoutINVAndLOAD.add(_cmdHelper.getCmdCDEC());
         allBasicCmdWithoutINVAndLOAD.add(_cmdHelper.getCmdINC());
+        allBasicCmdWithoutINVAndLOAD.add(_cmdHelper.getCmdCDEC());
 
         INVOnlyAsFinalCmd.add(_cmdHelper.getCmdINV());
     }
