@@ -4,6 +4,7 @@ import App.*;
 import App.Commands.Basic.Command;
 import App.Commands.CmdHelper;
 import App.Commands.Strategy.GuessForNBitsAddition;
+import App.Commands.Strategy.InitBranchGenerator;
 
 import java.util.ArrayList;
 
@@ -67,10 +68,15 @@ public class BAdd3Interval extends ChallengeSetup {
         }
         initResult();
         boolean found;
-        Branch b00 = initBranch(false, false);
-        Branch b01 = initBranch(false, true);
-        Branch b10 = initBranch(true, false);
-        Branch b11 = initBranch(true, true);
+        ArrayList<Branch> branches = InitBranchGenerator.getInitBranches(0, 3, 1,  _max_commands_used);
+        Branch b00 = branches.get(0);
+        Branch b01 = branches.get(1);
+        Branch b10 = branches.get(2);
+        Branch b11 = branches.get(3);
+//        Branch b00 = initBranch(false, false);
+//        Branch b01 = initBranch(false, true);
+//        Branch b10 = initBranch(true, false);
+//        Branch b11 = initBranch(true, true);
         ArrayList<Command> initUsableCmd = cmdAllocateStrategy.getInitStarterCmd();
         found = deepFirstSearch(starter_num_cmd, initUsableCmd, b00, b01, b10, b11);
         if (!found) {
@@ -122,26 +128,6 @@ public class BAdd3Interval extends ChallengeSetup {
         }
         System.out.println("\nFound a solution during recursion! Number of commands used: " + curr_commands_used);
         System.out.println("loopTimes: " + loopTimes);
-    }
-
-    private Branch initBranch(boolean firstBit, boolean secondBit) {
-        MemorySpace memorySpace = memorySpaceForChallenge1();
-        memorySpace.setBit(0, firstBit);
-        memorySpace.setBit(3, secondBit);
-        Pointer pointer = new Pointer(0);
-        Store store = new Store();
-        return new Branch(memorySpace, pointer, store);
-    }
-
-    /**
-     * just in case, memory space for this version should have at least 300 bits
-     */
-    private MemorySpace memorySpaceForChallenge1() {
-        if (_max_commands_used < 300) {
-            return new MemorySpace(300);
-        } else {
-            return new MemorySpace(_max_commands_used);
-        }
     }
 
     /**

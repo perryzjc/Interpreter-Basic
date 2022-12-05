@@ -4,6 +4,7 @@ import App.*;
 import App.Commands.Basic.Command;
 import App.Commands.CmdHelper;
 import App.Commands.Strategy.GuessForNBitsAddition;
+import App.Commands.Strategy.InitBranchGenerator;
 
 import java.util.ArrayList;
 
@@ -61,10 +62,11 @@ public class BAdd2Interval extends ChallengeSetup {
         }
         initResult();
         boolean found;
-        Branch b00 = initBranch(false, false);
-        Branch b01 = initBranch(false, true);
-        Branch b10 = initBranch(true, false);
-        Branch b11 = initBranch(true, true);
+        ArrayList<Branch> branches = InitBranchGenerator.getInitBranches(0, 2, 1,  _max_commands_used);
+        Branch b00 = branches.get(0);
+        Branch b01 = branches.get(1);
+        Branch b10 = branches.get(2);
+        Branch b11 = branches.get(3);
         ArrayList<Command> initUsableCmd = cmdAllocateStrategy.getInitStarterCmd();
         found = deepFirstSearch(starter_num_cmd, initUsableCmd, b00, b01, b10, b11);
         if (!found) {
