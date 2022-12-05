@@ -32,4 +32,15 @@ public class AdditionPattern {
         startNCmd.add(cmdHelper.getCmdINV());
         return startNCmd;
     }
+
+    public static ArrayList<Command> getFixedMiddleCmd(CmdHelper cmdHelper, int currCmdUsed) {
+        if (currCmdUsed < 3) {
+            return null;
+        }
+        ArrayList<Command> middleCmd = new ArrayList<>();
+        middleCmd.add(cmdHelper.getCmdINC());
+        middleCmd.add(cmdHelper.getCmdCDEC());
+        middleCmd.add(cmdHelper.getCmdLOAD());
+        return middleCmd;
+    }
 }
