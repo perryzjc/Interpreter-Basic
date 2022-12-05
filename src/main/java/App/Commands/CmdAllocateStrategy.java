@@ -10,9 +10,14 @@ import java.util.Stack;
  * e.g.
  * it's meaningless to perform INV twice consecutively
  * it's true for LOAD as well
- * it's also true for INC then CDEC or CDEC then INC
+ *
+ * ATTENTION: it's NOT true to NOT perform INC after CDEC or CDEC after INC
+ * because CDEC can work only when store is 1
+ *
+ * Strategy3: INV has to be the last commands to avoid redundant commands
  */
 public class CmdAllocateStrategy {
+    private int _max_cmd_used;
     /**
      * if not meaningful, strategy will return a commands list without this command
      */
@@ -27,11 +32,10 @@ public class CmdAllocateStrategy {
     private ArrayList<Command> allBasicCmdWithoutINV;
     private ArrayList<Command> allBasicCmdWithoutLOAD;
     private ArrayList<Command> allBasicCmdWithoutINVAndLOAD;
-    private ArrayList<Command> allBasicCmdWithoutINC;
-    private ArrayList<Command> allBasicCmdWithoutCDEC;
+    private ArrayList<Command> INVOnlyAsFinalCmd;
     private static final int NUM_BASIC_CMD = 4;
 
-    public CmdAllocateStrategy(CmdHelper cmdHelper) {
+    public CmdAllocateStrategy(int max_cmd_used, CmdHelper cmdHelper) {
         INVMeaningful = true;
         LOADMeaningful = true;
         INCMeaningful = true;
@@ -50,9 +54,9 @@ public class CmdAllocateStrategy {
      * 1:
      * @return
      */
-    public ArrayList<Command> nextUsableCommands(Command lastCmdUsed) {
+    public ArrayList<Command> nextUsableCommands(int curr_cmd_used, Command lastCmdUsed) {
         checkIfCmdMeaningful(lastCmdUsed);
-        return getMeaningfulCmd();
+        return getMeaningfulCmd(curr_cmd_used);
     }
 
     /**
@@ -91,19 +95,17 @@ public class CmdAllocateStrategy {
         }
     }
 
-    private ArrayList<Command> getMeaningfulCmd() {
-        if (INVMeaningful && LOADMeaningful && INCMeaningful && CDECMeaningful) {
-            return allBasicCmd;
-        } else if (!INCMeaningful) {
-            return allBasicCmdWithoutINC;
-        } else if (!CDECMeaningful) {
-            return allBasicCmdWithoutCDEC;
+    private ArrayList<Command> getMeaningfulCmd(int curr_cmd_used) {
+        if (curr_cmd_used == _max_cmd_used) {
+            return INVOnlyAsFinalCmd;
         } else if (!INVMeaningful && !LOADMeaningful) {
             return allBasicCmdWithoutINVAndLOAD;
         } else if (!INVMeaningful) {
             return allBasicCmdWithoutINV;
-        } else {
+        } else if (!LOADMeaningful) {
             return allBasicCmdWithoutLOAD;
+        } else {
+            return allBasicCmd;
         }
     }
 
@@ -116,8 +118,7 @@ public class CmdAllocateStrategy {
         allBasicCmdWithoutINV = new ArrayList<>();
         allBasicCmdWithoutLOAD = new ArrayList<>();
         allBasicCmdWithoutINVAndLOAD = new ArrayList<>();
-        allBasicCmdWithoutINC = new ArrayList<>();
-        allBasicCmdWithoutCDEC = new ArrayList<>();
+        INVOnlyAsFinalCmd = new ArrayList<>();
 
         allBasicCmd.add(_cmdHelper.getCmdCDEC());
         allBasicCmd.add(_cmdHelper.getCmdLOAD());
@@ -135,13 +136,7 @@ public class CmdAllocateStrategy {
         allBasicCmdWithoutINVAndLOAD.add(_cmdHelper.getCmdCDEC());
         allBasicCmdWithoutINVAndLOAD.add(_cmdHelper.getCmdINC());
 
-        allBasicCmdWithoutINC.add(_cmdHelper.getCmdCDEC());
-        allBasicCmdWithoutINC.add(_cmdHelper.getCmdLOAD());
-        allBasicCmdWithoutINC.add(_cmdHelper.getCmdINV());
-
-        allBasicCmdWithoutCDEC.add(_cmdHelper.getCmdLOAD());
-        allBasicCmdWithoutCDEC.add(_cmdHelper.getCmdINV());
-        allBasicCmdWithoutCDEC.add(_cmdHelper.getCmdINC());
+        INVOnlyAsFinalCmd.add(_cmdHelper.getCmdINV());
     }
 
     private class CurrMeaningfulStatus {

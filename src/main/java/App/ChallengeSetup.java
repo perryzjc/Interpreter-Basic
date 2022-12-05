@@ -27,7 +27,7 @@ public class ChallengeSetup {
         pointer = new Pointer();
         memorySpace = new MemorySpace();
         store = new Store();
-        cmdAllocateStrategy = new CmdAllocateStrategy(new CmdHelper(pointer, memorySpace, store));
+        cmdAllocateStrategy = new CmdAllocateStrategy(max_commands_used, new CmdHelper(pointer, memorySpace, store));
         result = new ArrayList<>();
         _max_commands_used = max_commands_used;
         initResult();

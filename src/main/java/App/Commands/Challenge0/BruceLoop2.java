@@ -21,7 +21,7 @@ public class BruceLoop2 extends ChallengeSetup {
     private int loopTimes;
 
     public static void main(String[] args) {
-        BruceLoop2 bruceLoop = new BruceLoop2(3);
+        BruceLoop2 bruceLoop = new BruceLoop2(12);
         bruceLoop.exhaustivelyFindSolution();
     }
 
@@ -69,7 +69,7 @@ public class BruceLoop2 extends ChallengeSetup {
                 handleFound(curr_commands_used);
                 return true;
             }
-            ArrayList<Command> newUsableCommands = cmdAllocateStrategy.nextUsableCommands(cmd);
+            ArrayList<Command> newUsableCommands = cmdAllocateStrategy.nextUsableCommands(curr_commands_used, cmd);
             found = deepFirstSearch(curr_commands_used + 1, newUsableCommands, resultB00, resultB01, resultB10, resultB11);
             if (found) {
                 return true;

@@ -69,7 +69,10 @@ public class BAdd2Interval extends ChallengeSetup {
     }
 
     public boolean deepFirstSearch(int curr_commands_used, ArrayList<Command> usableCommands, Branch b00, Branch b01, Branch b10, Branch b11) {
-        if (curr_commands_used > _max_commands_used) return false;
+        if (curr_commands_used > _max_commands_used) {
+            cmdAllocateStrategy.traceBackLastStatus();
+            return false;
+        }
         boolean found;
         for (Command cmd : usableCommands) {
             loopTimes++;
@@ -84,7 +87,7 @@ public class BAdd2Interval extends ChallengeSetup {
                 handleFound(curr_commands_used);
                 return true;
             }
-            ArrayList<Command> newUsableCommands = cmdAllocateStrategy.nextUsableCommands(cmd);
+            ArrayList<Command> newUsableCommands = cmdAllocateStrategy.nextUsableCommands(curr_commands_used, cmd);
             found = deepFirstSearch(curr_commands_used + 1, newUsableCommands, resultB00, resultB01, resultB10, resultB11);
             if (found) {
                 return true;
