@@ -2,6 +2,8 @@ package App.Commands.Challenge2.Prep;
 
 import App.*;
 import App.Commands.Basic.Command;
+import App.Commands.CmdHelper;
+import App.Commands.Strategy.ExtraStrategyFor1bitAddition;
 
 import java.util.ArrayList;
 
@@ -9,42 +11,74 @@ import java.util.ArrayList;
  * modification to challenge 1's BruceFindSolution
  * want to get a possible series commands for 1-bit addition that has no side effect for challenge2&3
  *
- * this version focus on 1bit addition that can work correctly for A at 0, and B at 2, produce result at 4-6
- * solution found for this method: 15 commands
+ * this version focus on 1bit addition that can work correctly for A at 0, and B at 3, produce result at 6-10
+ * solution found for this method:
  */
-public class BAdd2Interval extends ChallengeSetup {
+public class BAdd3Interval extends ChallengeSetup {
     protected int starter_num_cmd;
     private int loopTimes;
 
     /**
-     * INV
-     * LOAD
-     * INC
-     * INC
-     * INV
-     * CDEC
-     * LOAD
-     * INV
-     * CDEC
-     * INC
-     * LOAD
-     * CDEC
-     * INC
-     * INC
-     * INV
+     * not found
+     * loopTimes: 4
+     * target command: 1
+     * not found
+     * loopTimes: 18
+     * target command: 2
+     * not found
+     * loopTimes: 67
+     * target command: 3
+     * not found
+     * loopTimes: 239
+     * target command: 4
+     * not found
+     * loopTimes: 843
+     * target command: 5
+     * not found
+     * loopTimes: 2963
+     * target command: 6
+     * not found
+     * loopTimes: 10405
+     * target command: 7
+     * not found
+     * loopTimes: 36529
+     * target command: 8
+     * not found
+     * loopTimes: 128233
+     * target command: 9
+     * not found
+     * loopTimes: 450145
+     * target command: 10
+     * not found
+     * loopTimes: 1580165
+     * target command: 11
+     * not found
+     * loopTimes: 5546917
+     * target command: 12
+     * not found
+     * loopTimes: 19471557
+     * target command: 13
+     * not found
+     * loopTimes: 68351749
+     * target command: 14
+     * not found
+     * loopTimes: 239937741
+     * target command: 15
      */
     public static void main(String[] args) {
         boolean found;
-        for (int i = 15; i < 16; i++) {
-            BAdd2Interval bruceLoop = new BAdd2Interval(i);
+        for (int i = 18; i < 25; i++) {
+            BAdd3Interval bruceLoop = new BAdd3Interval(i);
             found = bruceLoop.exhaustivelyFindSolution();
             System.out.println("target command: " + i);
             if (found) break;
         }
     }
 
-    public BAdd2Interval(int max_commands_used) {
+    public BAdd3Interval(int max_commands_used) {
         super(max_commands_used);
+        //TODO: test code for verify the correctness of the ExtraStrategyFor1bitAddition class
+        cmdAllocateStrategy = new ExtraStrategyFor1bitAddition(max_commands_used, new CmdHelper(pointer, memorySpace, store));
         starter_num_cmd = 1;
         loopTimes = 0;
     }
@@ -115,7 +149,7 @@ public class BAdd2Interval extends ChallengeSetup {
     private Branch initBranch(boolean firstBit, boolean secondBit) {
         MemorySpace memorySpace = memorySpaceForChallenge1();
         memorySpace.setBit(0, firstBit);
-        memorySpace.setBit(2, secondBit);
+        memorySpace.setBit(3, secondBit);
         Pointer pointer = new Pointer(0);
         Store store = new Store();
         return new Branch(memorySpace, pointer, store);
@@ -189,12 +223,12 @@ public class BAdd2Interval extends ChallengeSetup {
 
     private boolean test0000(Branch b00) {
         MemorySpace mem = b00.getMemorySpace();
-        return !mem.getBitForTestOnly(4) && !mem.getBitForTestOnly(5);
+        return !mem.getBitForTestOnly(6) && !mem.getBitForTestOnly(7);
     }
 
     private boolean test0110(Branch b01) {
         MemorySpace mem = b01.getMemorySpace();
-        return mem.getBitForTestOnly(4) && !mem.getBitForTestOnly(5);
+        return mem.getBitForTestOnly(6) && !mem.getBitForTestOnly(7);
     }
 
     /**
@@ -206,6 +240,6 @@ public class BAdd2Interval extends ChallengeSetup {
 
     protected boolean test1101(Branch b11) {
         MemorySpace mem = b11.getMemorySpace();
-        return !mem.getBitForTestOnly(4) && mem.getBitForTestOnly(5);
+        return !mem.getBitForTestOnly(6) && mem.getBitForTestOnly(7);
     }
 }

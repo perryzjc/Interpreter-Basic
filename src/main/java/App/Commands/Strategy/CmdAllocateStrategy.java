@@ -101,7 +101,7 @@ public class CmdAllocateStrategy {
     }
 
     protected ArrayList<Command> getMeaningfulCmd(int curr_cmd_used) {
-        if (curr_cmd_used == _max_cmd_used) {
+        if (curr_cmd_used == _max_cmd_used - 1) {
             return INVOnlyAsFinalCmd;
         } else if (!INVMeaningful && !LOADMeaningful) {
             return allBasicCmdWithoutINVAndLOAD;

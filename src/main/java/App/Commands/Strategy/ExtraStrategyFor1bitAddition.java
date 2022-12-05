@@ -20,8 +20,8 @@ public class ExtraStrategyFor1bitAddition extends CmdAllocateStrategy{
 
     public ExtraStrategyFor1bitAddition(int max_cmd_used, CmdHelper cmdHelper) {
         super(max_cmd_used, cmdHelper);
-        if (max_cmd_used < NUM_END_CMD) {
-            throw new IllegalArgumentException("max_cmd_used should be at least 7 for this strategy");
+        if (max_cmd_used < NUM_END_CMD + 1) {
+            throw new IllegalArgumentException("max_cmd_used should be at least 8 for this strategy");
         }
         this.initUsableCmd();
     }
@@ -42,8 +42,12 @@ public class ExtraStrategyFor1bitAddition extends CmdAllocateStrategy{
      * override the strategy for this new strategy
      */
     protected ArrayList<Command> getMeaningfulCmd(int curr_cmd_used) {
-        if (_max_cmd_used - curr_cmd_used + 1 <=  NUM_END_CMD) {
-            return last7CmdAsEndList.get(NUM_END_CMD - (_max_cmd_used - curr_cmd_used));
+        if (curr_cmd_used >= _max_cmd_used) {
+            return null;
+        }
+        int count = _max_cmd_used - curr_cmd_used;
+        if (count <=  NUM_END_CMD) {
+            return last7CmdAsEndList.get(NUM_END_CMD - count);
         } else if (!INVMeaningful && !LOADMeaningful) {
             return allBasicCmdWithoutINVAndLOAD;
         } else if (!INVMeaningful) {
@@ -58,6 +62,7 @@ public class ExtraStrategyFor1bitAddition extends CmdAllocateStrategy{
     protected void initUsableCmd() {
         super.initUsableCmd();
         last7CmdAsEnd = new ArrayList<>();
+        last7CmdAsEndList = new ArrayList<>();
         last7CmdAsEnd.add(_cmdHelper.getCmdINC());
         last7CmdAsEnd.add(_cmdHelper.getCmdCDEC());
         last7CmdAsEnd.add(_cmdHelper.getCmdLOAD());
