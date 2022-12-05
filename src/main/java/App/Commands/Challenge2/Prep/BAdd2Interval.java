@@ -1,0 +1,196 @@
+package App.Commands.Challenge2.Prep;
+
+import App.*;
+import App.Commands.Basic.Command;
+
+/**
+ * modification to challenge 1's BruceFindSolution
+ * want to get a possible series commands for 1-bit addition that has no side effect for challenge2&3
+ *
+ * this version focus on 1bit addition that can work correctly for A at 0, and B at 2, produce result at 4-6
+ * solution found for this method: 15 commands
+ */
+public class BAdd2Interval extends ChallengeSetup {
+    protected int starter_num_cmd;
+    private int loopTimes;
+
+    /**
+     * INV
+     * LOAD
+     * INC
+     * INC
+     * INV
+     * CDEC
+     * LOAD
+     * INV
+     * CDEC
+     * INC
+     * LOAD
+     * CDEC
+     * INC
+     * INC
+     * INV
+     */
+    public static void main(String[] args) {
+        boolean found;
+        for (int i = 15; i < 15; i++) {
+            BAdd2Interval bruceLoop = new BAdd2Interval(i);
+            found = bruceLoop.exhaustivelyFindSolution();
+            System.out.println("target command: " + i);
+            if (found) break;
+        }
+    }
+
+    public BAdd2Interval(int max_commands_used) {
+        super(max_commands_used);
+        starter_num_cmd = 1;
+        loopTimes = 0;
+    }
+
+    public boolean exhaustivelyFindSolution() {
+        if (starter_num_cmd < 1 || starter_num_cmd > _max_commands_used) {
+            throw new RuntimeException("curr_commands_used should be in range [1, _max_commands_used]");
+        }
+        initResult();
+        boolean found;
+        Branch b00 = initBranch(false, false);
+        Branch b01 = initBranch(false, true);
+        Branch b10 = initBranch(true, false);
+        Branch b11 = initBranch(true, true);
+        found = deepFirstSearch(starter_num_cmd, b00, b01, b10, b11);
+        if (!found) {
+            System.out.println("not found");
+            System.out.println("loopTimes: " + loopTimes);
+        }
+        return found;
+    }
+
+    public boolean deepFirstSearch(int curr_commands_used, Branch b00, Branch b01, Branch b10, Branch b11) {
+        if (curr_commands_used > _max_commands_used) return false;
+        boolean found;
+        for (Command cmd : usableCommands) {
+            loopTimes++;
+            result.set(curr_commands_used - 1, cmd);
+            //deep copy
+            Branch resultB00 = new Branch(b00);
+            Branch resultB01 = new Branch(b01);
+            Branch resultB10 = new Branch(b10);
+            Branch resultB11 = new Branch(b11);
+            applyCmdTo4Branches(cmd, resultB00, resultB01, resultB10, resultB11);
+            if (isAllTestPassed(resultB00, resultB01, resultB10, resultB11)) {
+                handleFound(curr_commands_used);
+                return true;
+            }
+            found = deepFirstSearch(curr_commands_used + 1, resultB00, resultB01, resultB10, resultB11);
+            if (found) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void handleFound(int curr_commands_used) {
+        for (Command cmd : result) {
+            System.out.println(cmd.commandName());
+        }
+        System.out.println("\nFound a solution during recursion! Number of commands used: " + curr_commands_used);
+        System.out.println("loopTimes: " + loopTimes);
+    }
+
+    private Branch initBranch(boolean firstBit, boolean secondBit) {
+        MemorySpace memorySpace = memorySpaceForChallenge1();
+        memorySpace.setBit(0, firstBit);
+        memorySpace.setBit(2, secondBit);
+        Pointer pointer = new Pointer(0);
+        Store store = new Store();
+        return new Branch(memorySpace, pointer, store);
+    }
+
+    /**
+     * just in case, memory space for this version should have at least 300 bits
+     */
+    private MemorySpace memorySpaceForChallenge1() {
+        if (_max_commands_used < 300) {
+            return new MemorySpace(300);
+        } else {
+            return new MemorySpace(_max_commands_used);
+        }
+    }
+
+    /**
+     * attention, tricky thing is that each command created by CmdHelper (static) is connected to reg branch
+     * it's for efficiency
+     *
+     * thus, when using cmd, have to apply the branch to the reg branch
+     * for efficiency, I can use shallow copy for branch
+     */
+    private void applyCmdTo4Branches(Command cmd, Branch b00, Branch b01, Branch b10, Branch b11) {
+        applyBranchToRegBranch(b00);
+        cmd.execute();
+        readRegBranchToTargetBranch(b00);
+
+        applyBranchToRegBranch(b01);
+        cmd.execute();
+        readRegBranchToTargetBranch(b01);
+
+        applyBranchToRegBranch(b10);
+        cmd.execute();
+        readRegBranchToTargetBranch(b10);
+
+        applyBranchToRegBranch(b11);
+        cmd.execute();
+        readRegBranchToTargetBranch(b11);
+
+        safeClearReference();
+    }
+
+    private void applyBranchToRegBranch(Branch b) {
+        //for efficiency, use shallow copy here
+        memorySpace.shallowCopy(b.getMemorySpace());
+        pointer.reset(b.getPointer());
+        store.reset(b.getStore());
+    }
+
+    private void readRegBranchToTargetBranch(Branch b) {
+        b.getMemorySpace().shallowCopy(memorySpace);
+        b.getPointer().reset(pointer);
+        b.getStore().reset(store);
+    }
+
+    private void safeClearReference() {
+        memorySpace.clear();
+        //this function mainly for testing purpose
+    }
+
+    /**
+     * different from challenge 1, now the position got moved
+     * first 0 at 0
+     * second 0 at 16
+     * result at 32-33
+     */
+    private boolean isAllTestPassed(Branch b00, Branch b01, Branch b10, Branch b11) {
+        return test0000(b00) && test0110(b01) && test1010(b10) && test1101(b11);
+    }
+
+    private boolean test0000(Branch b00) {
+        MemorySpace mem = b00.getMemorySpace();
+        return !mem.getBitForTestOnly(4) && !mem.getBitForTestOnly(5);
+    }
+
+    private boolean test0110(Branch b01) {
+        MemorySpace mem = b01.getMemorySpace();
+        return mem.getBitForTestOnly(4) && !mem.getBitForTestOnly(5);
+    }
+
+    /**
+     * result is logically equivalent to test0110
+     */
+    private boolean test1010(Branch b10) {
+       return test0110(b10);
+    }
+
+    protected boolean test1101(Branch b11) {
+        MemorySpace mem = b11.getMemorySpace();
+        return !mem.getBitForTestOnly(4) && mem.getBitForTestOnly(5);
+    }
+}

@@ -34,7 +34,7 @@ public class TestChallenge1 {
         cmd1BitAdder.execute();
         assertFalse(memorySpace.getBitForTestOnly(2));
         assertFalse(memorySpace.getBitForTestOnly(3));
-        checkCurrMemorySpace();
+        checkCurrStatus();
     }
 
     @Test
@@ -47,7 +47,7 @@ public class TestChallenge1 {
         cmd1BitAdder.execute();
         assertTrue(memorySpace.getBitForTestOnly(2));
         assertFalse(memorySpace.getBitForTestOnly(3));
-        checkCurrMemorySpace();
+        checkCurrStatus();
     }
 
     @Test
@@ -60,7 +60,7 @@ public class TestChallenge1 {
         cmd1BitAdder.execute();
         assertTrue(memorySpace.getBitForTestOnly(2));
         assertFalse(memorySpace.getBitForTestOnly(3));
-        checkCurrMemorySpace();
+       checkCurrStatus();
     }
 
     @Test
@@ -76,7 +76,7 @@ public class TestChallenge1 {
         cmd1BitAdder.execute();
         assertFalse(memorySpace.getBitForTestOnly(2));
         assertTrue(memorySpace.getBitForTestOnly(3));
-        checkCurrMemorySpace();
+        checkCurrStatus();
     }
 
     /**
@@ -96,7 +96,9 @@ public class TestChallenge1 {
         return maxArrayList;
     }
 
-    private void checkCurrMemorySpace() {
+    private void checkCurrStatus() {
         System.out.println("Memory Space: " + memorySpace.toString());
+        System.out.println("Pointer: " + pointer.getIndex());
+        System.out.println("Store: " + store.toString());
     }
 }
