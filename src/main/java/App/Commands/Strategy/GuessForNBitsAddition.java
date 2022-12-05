@@ -8,7 +8,9 @@ import java.util.ArrayList;
 
 public class GuessForNBitsAddition extends ExtraStrategyFor1bitAddition {
     private ArrayList<Command> firstnCmdAsStart;
+    private ArrayList<Command> midCmd;
     private ArrayList<ArrayList<Command>> firstnCmdAsStartList;
+    private ArrayList<ArrayList<Command>> midCmdList;
     private int _bitInterval;
     private int NUM_START_CMD;
 
@@ -16,6 +18,9 @@ public class GuessForNBitsAddition extends ExtraStrategyFor1bitAddition {
         super(max_cmd_used, cmdHelper);
         NUM_START_CMD = bitInterval + 6;
         int requireCmd = NUM_START_CMD + NUM_END_CMD;
+        if (max_cmd_used >= 19) {
+            requireCmd += bitInterval;
+        }
         if (max_cmd_used < requireCmd) {
             throw new IllegalArgumentException("max_cmd_used should be at least " + requireCmd + " for this strategy");
         }
@@ -41,6 +46,8 @@ public class GuessForNBitsAddition extends ExtraStrategyFor1bitAddition {
     protected ArrayList<Command> getMeaningfulCmd(int curr_cmd_used) {
         if (curr_cmd_used < NUM_START_CMD) {
             return firstnCmdAsStartList.get(curr_cmd_used);
+        } else if (curr_cmd_used < NUM_START_CMD + midCmd.size()) {
+            return midCmdList.get(curr_cmd_used - NUM_START_CMD);
         } else {
             return super.getMeaningfulCmd(curr_cmd_used);
         }
@@ -49,13 +56,25 @@ public class GuessForNBitsAddition extends ExtraStrategyFor1bitAddition {
     protected void initUsableCmd() {
         super.initUsableCmd();
         firstnCmdAsStart = AdditionPattern.getFixedStartnCmd(_cmdHelper, _bitInterval);
+        //midCmd is possible to be null
+        midCmd = AdditionPattern.getFixedMiddleCmd(_cmdHelper, _bitInterval);
         firstnCmdAsStartList = new ArrayList<>();
+        midCmdList = new ArrayList<>();
 
         for (Command cmd : firstnCmdAsStart) {
             ArrayList<Command> onlyOneCmd = new ArrayList<>();
             onlyOneCmd.add(cmd);
             firstnCmdAsStartList.add(onlyOneCmd);
             onlyOneCmd = null;
+        }
+
+        if (midCmd != null) {
+            for (Command cmd : midCmd) {
+                ArrayList<Command> onlyOneCmd = new ArrayList<>();
+                onlyOneCmd.add(cmd);
+                midCmdList.add(onlyOneCmd);
+                onlyOneCmd = null;
+            }
         }
     }
 }

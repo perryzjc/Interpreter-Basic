@@ -33,14 +33,17 @@ public class AdditionPattern {
         return startNCmd;
     }
 
-    public static ArrayList<Command> getFixedMiddleCmd(CmdHelper cmdHelper, int currCmdUsed) {
-        if (currCmdUsed < 3) {
+    public static ArrayList<Command> getFixedMiddleCmd(CmdHelper cmdHelper, int bitInterval) {
+        if (bitInterval< 3) {
             return null;
         }
         ArrayList<Command> middleCmd = new ArrayList<>();
         middleCmd.add(cmdHelper.getCmdINC());
         middleCmd.add(cmdHelper.getCmdCDEC());
         middleCmd.add(cmdHelper.getCmdLOAD());
+        for (int i = 0; i < bitInterval - 3; i++) {
+            middleCmd.add(cmdHelper.getCmdINC());
+        }
         return middleCmd;
     }
 }
