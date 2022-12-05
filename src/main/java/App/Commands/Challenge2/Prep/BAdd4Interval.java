@@ -2,6 +2,8 @@ package App.Commands.Challenge2.Prep;
 
 import App.*;
 import App.Commands.Basic.Command;
+import App.Commands.CmdHelper;
+import App.Commands.Strategy.ExtraStrategyFor1bitAddition;
 
 import java.util.ArrayList;
 
@@ -18,7 +20,7 @@ public class BAdd4Interval extends ChallengeSetup {
 
     public static void main(String[] args) {
         boolean found;
-        for (int i = 17; i < 20; i++) {
+        for (int i = 17; i < 28; i++) {
             BAdd4Interval bruceLoop = new BAdd4Interval(i);
             found = bruceLoop.exhaustivelyFindSolution();
             System.out.println("target command: " + i);
@@ -28,6 +30,8 @@ public class BAdd4Interval extends ChallengeSetup {
 
     public BAdd4Interval(int max_commands_used) {
         super(max_commands_used);
+        //TODO: test code for verify the correctness of the ExtraStrategyFor1bitAddition class
+        cmdAllocateStrategy = new ExtraStrategyFor1bitAddition(max_commands_used, new CmdHelper(pointer, memorySpace, store));
         starter_num_cmd = 1;
         loopTimes = 0;
     }

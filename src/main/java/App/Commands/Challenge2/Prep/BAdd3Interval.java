@@ -19,7 +19,7 @@ public class BAdd3Interval extends ChallengeSetup {
     private int loopTimes;
 
     /**
-     *INV
+     * INV
      * LOAD
      * INC
      * INC

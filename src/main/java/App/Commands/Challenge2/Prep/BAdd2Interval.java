@@ -27,17 +27,19 @@ public class BAdd2Interval extends ChallengeSetup {
      * CDEC
      * LOAD
      * INV
-     * CDEC
      * INC
+     * CDEC
      * LOAD
+     * INC
+     * INC
      * CDEC
-     * INC
-     * INC
      * INV
+     *
+     * 15 commands
      */
     public static void main(String[] args) {
         boolean found;
-        for (int i = 15; i < 16; i++) {
+        for (int i = 8; i < 16; i++) {
             BAdd2Interval bruceLoop = new BAdd2Interval(i);
             found = bruceLoop.exhaustivelyFindSolution();
             System.out.println("target command: " + i);

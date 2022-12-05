@@ -32,13 +32,14 @@ public class BruceFindSolution extends ChallengeSetup {
      * CDEC
      * INV
      * LOAD
-     * CDEC
      * INC
+     * CDEC
      * LOAD
+     * INC
+     * INC
      * CDEC
-     * INC
-     * INC
      * INV
+     *
      * my program verify that at least 13 commands needed
      */
     public static void main(String[] args) {
