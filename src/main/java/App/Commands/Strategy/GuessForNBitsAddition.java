@@ -14,8 +14,8 @@ public class GuessForNBitsAddition extends ExtraStrategyFor1bitAddition {
 
     public GuessForNBitsAddition(int bitInterval, int max_cmd_used, CmdHelper cmdHelper) {
         super(max_cmd_used, cmdHelper);
-        NUM_START_CMD = bitInterval + 4;
-        int requireCmd = NUM_START_CMD + NUM_END_CMD + 1;
+        NUM_START_CMD = bitInterval + 6;
+        int requireCmd = NUM_START_CMD + NUM_END_CMD;
         if (max_cmd_used < requireCmd) {
             throw new IllegalArgumentException("max_cmd_used should be at least " + requireCmd + " for this strategy");
         }

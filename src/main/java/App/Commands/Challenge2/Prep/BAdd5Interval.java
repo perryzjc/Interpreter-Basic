@@ -47,7 +47,7 @@ public class BAdd5Interval extends ChallengeSetup {
      */
     public static void main(String[] args) {
         boolean found;
-        for (int i = 17; i < 28; i++) {
+        for (int i = 18; i < 28; i++) {
             BAdd5Interval bruceLoop = new BAdd5Interval(i);
             found = bruceLoop.exhaustivelyFindSolution();
             System.out.println("target command: " + i);

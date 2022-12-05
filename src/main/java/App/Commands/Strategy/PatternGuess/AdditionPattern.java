@@ -28,6 +28,8 @@ public class AdditionPattern {
         }
         startNCmd.add(cmdHelper.getCmdINV());
         startNCmd.add(cmdHelper.getCmdCDEC());
+        startNCmd.add(cmdHelper.getCmdLOAD());
+        startNCmd.add(cmdHelper.getCmdINV());
         return startNCmd;
     }
 }

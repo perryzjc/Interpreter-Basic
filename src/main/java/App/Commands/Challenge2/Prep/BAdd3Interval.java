@@ -46,7 +46,7 @@ public class BAdd3Interval extends ChallengeSetup {
      */
     public static void main(String[] args) {
         boolean found;
-        for (int i = 15; i < 25; i++) {
+        for (int i = 17; i < 25; i++) {
             BAdd3Interval bruceLoop = new BAdd3Interval(i);
             found = bruceLoop.exhaustivelyFindSolution();
             System.out.println("target command: " + i);
