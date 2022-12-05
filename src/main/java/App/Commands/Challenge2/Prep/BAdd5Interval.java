@@ -3,8 +3,6 @@ package App.Commands.Challenge2.Prep;
 import App.*;
 import App.Commands.Basic.Command;
 import App.Commands.CmdHelper;
-import App.Commands.Strategy.GuessFor4bitsAddition;
-import App.Commands.Strategy.GuessFor5bitsAddition;
 import App.Commands.Strategy.GuessForNBitsAddition;
 
 import java.util.ArrayList;
