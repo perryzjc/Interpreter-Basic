@@ -2,6 +2,7 @@ package App.Commands.Strategy;
 
 import App.Commands.Basic.Command;
 import App.Commands.CmdHelper;
+import App.Commands.Strategy.PatternGuess.AdditionPattern;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -56,15 +57,8 @@ public class ExtraStrategyFor1bitAddition extends CmdAllocateStrategy{
 
     protected void initUsableCmd() {
         super.initUsableCmd();
-        last7CmdAsEnd = new ArrayList<>();
+        last7CmdAsEnd = AdditionPattern.getFixedLast7Cmd(_cmdHelper);
         last7CmdAsEndList = new ArrayList<>();
-        last7CmdAsEnd.add(_cmdHelper.getCmdINC());
-        last7CmdAsEnd.add(_cmdHelper.getCmdCDEC());
-        last7CmdAsEnd.add(_cmdHelper.getCmdLOAD());
-        last7CmdAsEnd.add(_cmdHelper.getCmdINC());
-        last7CmdAsEnd.add(_cmdHelper.getCmdINC());
-        last7CmdAsEnd.add(_cmdHelper.getCmdCDEC());
-        last7CmdAsEnd.add(_cmdHelper.getCmdINV());
         for (Command cmd : last7CmdAsEnd) {
             ArrayList<Command> onlyOneCmd = new ArrayList<>();
             onlyOneCmd.add(cmd);
