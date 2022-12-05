@@ -2,6 +2,7 @@ package App.Commands.Strategy;
 
 import App.Commands.Basic.Command;
 import App.Commands.CmdHelper;
+import App.Commands.Strategy.PatternGuess.AdditionPattern;
 
 import java.util.ArrayList;
 
@@ -60,16 +61,8 @@ public class GuessFor5bitsAddition extends ExtraStrategyFor1bitAddition {
 
     protected void initUsableCmd() {
         super.initUsableCmd();
-        first8CmdAsStart = new ArrayList<>();
+        first8CmdAsStart = AdditionPattern.getFixedStart7Cmd(_cmdHelper, 5);
         first8CmdAsStartList = new ArrayList<>();
-        first8CmdAsStart.add(_cmdHelper.getCmdINV());
-        first8CmdAsStart.add(_cmdHelper.getCmdLOAD());
-        first8CmdAsStart.add(_cmdHelper.getCmdINC());
-        first8CmdAsStart.add(_cmdHelper.getCmdINC());
-        first8CmdAsStart.add(_cmdHelper.getCmdINC());
-        first8CmdAsStart.add(_cmdHelper.getCmdINC());
-        first8CmdAsStart.add(_cmdHelper.getCmdINC());
-        first8CmdAsStart.add(_cmdHelper.getCmdINV());
 
         for (Command cmd : first8CmdAsStart) {
             ArrayList<Command> onlyOneCmd = new ArrayList<>();
