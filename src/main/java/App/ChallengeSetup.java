@@ -1,7 +1,7 @@
 package App;
 
 import App.Commands.Basic.Command;
-import App.Commands.CmdAllocateStrategy;
+import App.Commands.Strategy.CmdAllocateStrategy;
 import App.Commands.CmdHelper;
 
 import java.util.ArrayList;

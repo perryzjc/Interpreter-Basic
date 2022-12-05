@@ -1,6 +1,7 @@
-package App.Commands;
+package App.Commands.Strategy;
 
 import App.Commands.Basic.Command;
+import App.Commands.CmdHelper;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -17,23 +18,23 @@ import java.util.Stack;
  * Strategy3: INV has to be the last commands to avoid redundant commands
  */
 public class CmdAllocateStrategy {
-    private int _max_cmd_used;
+    protected int _max_cmd_used;
     /**
      * if not meaningful, strategy will return a commands list without this command
      */
-    private boolean INVMeaningful;
-    private boolean LOADMeaningful;
-    private boolean INCMeaningful;
-    private boolean CDECMeaningful;
-    private Stack<CurrMeaningfulStatus> statusStack;
+    protected boolean INVMeaningful;
+    protected boolean LOADMeaningful;
+    protected boolean INCMeaningful;
+    protected boolean CDECMeaningful;
+    protected Stack<CurrMeaningfulStatus> statusStack;
 
-    private CmdHelper _cmdHelper;
-    private ArrayList<Command> allBasicCmd;
-    private ArrayList<Command> allBasicCmdWithoutINV;
-    private ArrayList<Command> allBasicCmdWithoutLOAD;
-    private ArrayList<Command> allBasicCmdWithoutINVAndLOAD;
-    private ArrayList<Command> INVOnlyAsFinalCmd;
-    private static final int NUM_BASIC_CMD = 4;
+    protected CmdHelper _cmdHelper;
+    protected ArrayList<Command> allBasicCmd;
+    protected ArrayList<Command> allBasicCmdWithoutINV;
+    protected ArrayList<Command> allBasicCmdWithoutLOAD;
+    protected ArrayList<Command> allBasicCmdWithoutINVAndLOAD;
+    protected ArrayList<Command> INVOnlyAsFinalCmd;
+    protected static final int NUM_BASIC_CMD = 4;
 
     public CmdAllocateStrategy(int max_cmd_used, CmdHelper cmdHelper) {
         INVMeaningful = true;
@@ -69,7 +70,7 @@ public class CmdAllocateStrategy {
         m = null;
     }
 
-    private void checkIfCmdMeaningful(Command lastCmdUsed) {
+    protected void checkIfCmdMeaningful(Command lastCmdUsed) {
         CurrMeaningfulStatus m = new CurrMeaningfulStatus();
         statusStack.push(m);
         m = null;
@@ -99,7 +100,7 @@ public class CmdAllocateStrategy {
         }
     }
 
-    private ArrayList<Command> getMeaningfulCmd(int curr_cmd_used) {
+    protected ArrayList<Command> getMeaningfulCmd(int curr_cmd_used) {
         if (curr_cmd_used == _max_cmd_used) {
             return INVOnlyAsFinalCmd;
         } else if (!INVMeaningful && !LOADMeaningful) {
@@ -117,7 +118,7 @@ public class CmdAllocateStrategy {
      * since after INC or CDEC, LOAD and INV become meaningful,
      * the list logic can be simplified
      */
-    private void initUsableCmd() {
+    protected void initUsableCmd() {
         allBasicCmd = new ArrayList<>();
         allBasicCmdWithoutINV = new ArrayList<>();
         allBasicCmdWithoutLOAD = new ArrayList<>();
