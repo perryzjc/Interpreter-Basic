@@ -1,4 +1,4 @@
-package App.Commands.Challenge2.Prep;
+package App.Commands.Challenge2.Prep.NInterlval1BitAddition;
 
 import App.*;
 import App.Commands.Basic.Command;
@@ -11,10 +11,10 @@ import java.util.ArrayList;
  * modification to challenge 1's BruceFindSolution
  * want to get a possible series commands for 1-bit addition that has no side effect for challenge2&3
  *
- * this version focus on 1bit addition that can work correctly for A at 0, and B at 5, produce result at 10-15
+ * this version focus on 1bit addition that can work correctly for A at 0, and B at 3, produce result at 6-10
  * solution found for this method:
  */
-public class BAdd5Interval extends ChallengeSetup {
+public class BAdd3Interval extends ChallengeSetup {
     protected int starter_num_cmd;
     private int loopTimes;
 
@@ -24,8 +24,6 @@ public class BAdd5Interval extends ChallengeSetup {
      * INC
      * INC
      * INC
-     * INC
-     * INC
      * INV
      * CDEC
      * LOAD
@@ -33,8 +31,6 @@ public class BAdd5Interval extends ChallengeSetup {
      * INC
      * CDEC
      * LOAD
-     * INC
-     * INC
      * INC
      * CDEC
      * LOAD
@@ -43,23 +39,24 @@ public class BAdd5Interval extends ChallengeSetup {
      * CDEC
      * INV
      *
-     * Found a solution during recursion! Number of commands used: 23
+     * Found a solution during recursion! Number of commands used: 19
+     * loopTimes: 7833932
+     * target command: 19
      */
     public static void main(String[] args) {
         boolean found;
-        for (int i = 23; i < 28; i++) {
-            BAdd5Interval bruceLoop = new BAdd5Interval(i);
+        for (int i = 19; i < 25; i++) {
+            BAdd3Interval bruceLoop = new BAdd3Interval(i);
             found = bruceLoop.exhaustivelyFindSolution();
             System.out.println("target command: " + i);
             if (found) break;
         }
     }
 
-
-    public BAdd5Interval(int max_commands_used) {
+    public BAdd3Interval(int max_commands_used) {
         super(max_commands_used);
         //TODO: test code for verify the correctness of the GuessForNBitsAddition class
-        cmdAllocateStrategy = new GuessForNBitsAddition(5, max_commands_used, new CmdHelper(pointer, memorySpace, store));
+        cmdAllocateStrategy = new GuessForNBitsAddition(3, max_commands_used, new CmdHelper(pointer, memorySpace, store));
         starter_num_cmd = 1;
         loopTimes = 0;
     }
@@ -130,7 +127,7 @@ public class BAdd5Interval extends ChallengeSetup {
     private Branch initBranch(boolean firstBit, boolean secondBit) {
         MemorySpace memorySpace = memorySpaceForChallenge1();
         memorySpace.setBit(0, firstBit);
-        memorySpace.setBit(5, secondBit);
+        memorySpace.setBit(3, secondBit);
         Pointer pointer = new Pointer(0);
         Store store = new Store();
         return new Branch(memorySpace, pointer, store);
@@ -204,12 +201,12 @@ public class BAdd5Interval extends ChallengeSetup {
 
     private boolean test0000(Branch b00) {
         MemorySpace mem = b00.getMemorySpace();
-        return !mem.getBitForTestOnly(10) && !mem.getBitForTestOnly(11);
+        return !mem.getBitForTestOnly(6) && !mem.getBitForTestOnly(7);
     }
 
     private boolean test0110(Branch b01) {
         MemorySpace mem = b01.getMemorySpace();
-        return mem.getBitForTestOnly(10) && !mem.getBitForTestOnly(11);
+        return mem.getBitForTestOnly(6) && !mem.getBitForTestOnly(7);
     }
 
     /**
@@ -221,6 +218,6 @@ public class BAdd5Interval extends ChallengeSetup {
 
     protected boolean test1101(Branch b11) {
         MemorySpace mem = b11.getMemorySpace();
-        return !mem.getBitForTestOnly(10) && mem.getBitForTestOnly(11);
+        return !mem.getBitForTestOnly(6) && mem.getBitForTestOnly(7);
     }
 }

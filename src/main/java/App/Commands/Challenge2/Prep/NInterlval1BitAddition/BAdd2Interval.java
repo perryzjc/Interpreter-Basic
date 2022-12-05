@@ -1,4 +1,4 @@
-package App.Commands.Challenge2.Prep;
+package App.Commands.Challenge2.Prep.NInterlval1BitAddition;
 
 import App.*;
 import App.Commands.Basic.Command;
@@ -11,36 +11,22 @@ import java.util.ArrayList;
  * modification to challenge 1's BruceFindSolution
  * want to get a possible series commands for 1-bit addition that has no side effect for challenge2&3
  *
- * this version focus on 1bit addition that can work correctly for A at 0, and B at 6, produce result at 12-18
- * solution found for this method:
+ * this version focus on 1bit addition that can work correctly for A at 0, and B at 2, produce result at 4-6
+ * solution found for this method: 15 commands
  */
-public class BAdd6Interval extends ChallengeSetup {
+public class BAdd2Interval extends ChallengeSetup {
     protected int starter_num_cmd;
     private int loopTimes;
-    private static final int INPUT_A_INDEX = 0;
-    private static final int INPUT_B_INDEX = 6;
-    private static final int RESULT_INDEX_1 = 12;
-    private static final int RESULT_INDEX_2 = 13;
 
     /**
      * INV
      * LOAD
      * INC
      * INC
-     * INC
-     * INC
-     * INC
-     * INC
      * INV
      * CDEC
      * LOAD
      * INV
-     * INC
-     * CDEC
-     * LOAD
-     * INC
-     * INC
-     * INC
      * INC
      * CDEC
      * LOAD
@@ -49,28 +35,22 @@ public class BAdd6Interval extends ChallengeSetup {
      * CDEC
      * INV
      *
-     * Found a solution during recursion! Number of commands used: 25
+     * 15 commands
      */
     public static void main(String[] args) {
         boolean found;
-        for (int i = 25; i < 28; i++) {
-            try {
-                BAdd6Interval bruceLoop = new BAdd6Interval(i);
-                found = bruceLoop.exhaustivelyFindSolution();
-            } catch (Exception e) {
-                System.out.println("Exception: " + e.getMessage());
-                break;
-            }
+        for (int i = 15; i < 20; i++) {
+            BAdd2Interval bruceLoop = new BAdd2Interval(i);
+            found = bruceLoop.exhaustivelyFindSolution();
             System.out.println("target command: " + i);
             if (found) break;
         }
     }
 
-
-    public BAdd6Interval(int max_commands_used) {
+    public BAdd2Interval(int max_commands_used) {
         super(max_commands_used);
         //TODO: test code for verify the correctness of the GuessForNBitsAddition class
-        cmdAllocateStrategy = new GuessForNBitsAddition(6, max_commands_used, new CmdHelper(pointer, memorySpace, store));
+        cmdAllocateStrategy = new GuessForNBitsAddition(2, max_commands_used, new CmdHelper(pointer, memorySpace, store));
         starter_num_cmd = 1;
         loopTimes = 0;
     }
@@ -140,8 +120,8 @@ public class BAdd6Interval extends ChallengeSetup {
 
     private Branch initBranch(boolean firstBit, boolean secondBit) {
         MemorySpace memorySpace = memorySpaceForChallenge1();
-        memorySpace.setBit(INPUT_A_INDEX, firstBit);
-        memorySpace.setBit(INPUT_B_INDEX, secondBit);
+        memorySpace.setBit(0, firstBit);
+        memorySpace.setBit(2, secondBit);
         Pointer pointer = new Pointer(0);
         Store store = new Store();
         return new Branch(memorySpace, pointer, store);
@@ -215,12 +195,12 @@ public class BAdd6Interval extends ChallengeSetup {
 
     private boolean test0000(Branch b00) {
         MemorySpace mem = b00.getMemorySpace();
-        return !mem.getBitForTestOnly(RESULT_INDEX_1) && !mem.getBitForTestOnly(RESULT_INDEX_2);
+        return !mem.getBitForTestOnly(4) && !mem.getBitForTestOnly(5);
     }
 
     private boolean test0110(Branch b01) {
         MemorySpace mem = b01.getMemorySpace();
-        return mem.getBitForTestOnly(RESULT_INDEX_1) && !mem.getBitForTestOnly(RESULT_INDEX_2);
+        return mem.getBitForTestOnly(4) && !mem.getBitForTestOnly(5);
     }
 
     /**
@@ -232,6 +212,6 @@ public class BAdd6Interval extends ChallengeSetup {
 
     protected boolean test1101(Branch b11) {
         MemorySpace mem = b11.getMemorySpace();
-        return !mem.getBitForTestOnly(RESULT_INDEX_1) && mem.getBitForTestOnly(RESULT_INDEX_2);
+        return !mem.getBitForTestOnly(4) && mem.getBitForTestOnly(5);
     }
 }

@@ -34,10 +34,10 @@ public class AdditionPattern {
     }
 
     public static ArrayList<Command> getFixedMiddleCmd(CmdHelper cmdHelper, int bitInterval) {
-        if (bitInterval< 3) {
-            return null;
-        }
         ArrayList<Command> middleCmd = new ArrayList<>();
+        if (bitInterval< 3) {
+            return middleCmd;
+        }
         middleCmd.add(cmdHelper.getCmdINC());
         middleCmd.add(cmdHelper.getCmdCDEC());
         middleCmd.add(cmdHelper.getCmdLOAD());
