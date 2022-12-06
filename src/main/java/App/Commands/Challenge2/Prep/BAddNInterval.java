@@ -5,6 +5,8 @@ import App.Branch.BranchForAddition;
 import App.ChallengeSetup;
 import App.Commands.Basic.Command;
 import App.Commands.CmdHelper;
+import App.Commands.Strategy.CmdAllocateStrategy;
+import App.Commands.Strategy.ExtraStrategyFor1bitAddition;
 import App.Commands.Strategy.GuessForNInterval1BitAddition;
 import App.Commands.Strategy.InitBranchGenerator;
 import App.MemorySpace;
@@ -22,7 +24,7 @@ public class BAddNInterval extends ChallengeSetup {
     public static void main(String[] args) {
         boolean found;
         int nInterval = 16;
-        for (int i = 14; i < 100; i++) {
+        for (int i = 3; i < 100; i++) {
             try {
                 BAddNInterval bruceLoop = new BAddNInterval(i, nInterval);
                 found = bruceLoop.exhaustivelyFindSolution();
@@ -40,7 +42,9 @@ public class BAddNInterval extends ChallengeSetup {
     public BAddNInterval(int max_commands_used, int nInterval) {
         super(max_commands_used);
         //TODO: test code for verify the correctness of the GuessForNBitsAddition class
-        cmdAllocateStrategy = new GuessForNInterval1BitAddition(nInterval, max_commands_used, new CmdHelper(pointer, memorySpace, store));
+//        cmdAllocateStrategy = new GuessForNInterval1BitAddition(nInterval, max_commands_used, new CmdHelper(pointer, memorySpace, store));
+//        cmdAllocateStrategy = new ExtraStrategyFor1bitAddition(max_commands_used, new CmdHelper(pointer, memorySpace, store));
+        cmdAllocateStrategy = new CmdAllocateStrategy(max_commands_used, new CmdHelper(pointer, memorySpace, store));
         _nInterval = nInterval;
         starter_num_cmd = 1;
         loopTimes = 0;

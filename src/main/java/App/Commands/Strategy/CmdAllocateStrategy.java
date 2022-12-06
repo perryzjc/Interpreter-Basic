@@ -24,8 +24,6 @@ public class CmdAllocateStrategy {
      */
     protected boolean INVMeaningful;
     protected boolean LOADMeaningful;
-    protected boolean INCMeaningful;
-    protected boolean CDECMeaningful;
     protected Stack<CurrMeaningfulStatus> statusStack;
 
     protected CmdHelper _cmdHelper;
@@ -39,8 +37,6 @@ public class CmdAllocateStrategy {
     public CmdAllocateStrategy(int max_cmd_used, CmdHelper cmdHelper) {
         INVMeaningful = true;
         LOADMeaningful = true;
-        INCMeaningful = true;
-        CDECMeaningful = true;
         _cmdHelper = cmdHelper;
         statusStack = new Stack<>();
         _max_cmd_used = max_cmd_used;
@@ -77,26 +73,18 @@ public class CmdAllocateStrategy {
 
         if (lastCmdUsed == _cmdHelper.getCmdLOAD()) {
             LOADMeaningful = false;
-            INCMeaningful = true;
-            CDECMeaningful = true;
             //1. if INV not meaningful, then keep it not meaningful
             //since after using load, pointer does not change
             //2. if INV already meaningful, then keep it meaningful
         } else if (lastCmdUsed == _cmdHelper.getCmdINV()) {
             INVMeaningful = false;
             LOADMeaningful = true;
-            INCMeaningful = true;
-            CDECMeaningful = true;
         } else if (lastCmdUsed == _cmdHelper.getCmdINC()) {
             INVMeaningful = true;
             LOADMeaningful = true;
-            INCMeaningful = true;
-            CDECMeaningful = false; //CEDC immediately after INC is meaningless
         } else {
             INVMeaningful = true;
             LOADMeaningful = true;
-            INCMeaningful = false; //INC immediately after CDEC is meaningless
-            CDECMeaningful = true;
         }
     }
 
@@ -147,8 +135,6 @@ public class CmdAllocateStrategy {
     private class CurrMeaningfulStatus {
         private boolean INV;
         private boolean LOAD;
-        private boolean INC;
-        private boolean CDEC;
 
         public CurrMeaningfulStatus() {
             storeCurrStatus();
@@ -157,15 +143,11 @@ public class CmdAllocateStrategy {
         private void storeCurrStatus() {
             INV = INVMeaningful;
             LOAD = LOADMeaningful;
-            INC = INCMeaningful;
-            CDEC = CDECMeaningful;
         }
 
         private void recoverStatus() {
             INVMeaningful = INV;
             LOADMeaningful = LOAD;
-            INCMeaningful = INC;
-            CDECMeaningful = CDEC;
         }
     }
 }
