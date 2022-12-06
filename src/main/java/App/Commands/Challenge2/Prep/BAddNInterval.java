@@ -4,9 +4,8 @@ import App.Branch.Branch;
 import App.Branch.BranchForAddition;
 import App.ChallengeSetup;
 import App.Commands.Basic.Command;
-import App.Commands.Challenge2.Prep.Ninterval2BitAddition.BAdd2Interval;
 import App.Commands.CmdHelper;
-import App.Commands.Strategy.GuessForNBitsAddition;
+import App.Commands.Strategy.GuessForNInterval1BitAddition;
 import App.Commands.Strategy.InitBranchGenerator;
 import App.MemorySpace;
 import App.Pointer;
@@ -41,7 +40,7 @@ public class BAddNInterval extends ChallengeSetup {
     public BAddNInterval(int max_commands_used, int nInterval) {
         super(max_commands_used);
         //TODO: test code for verify the correctness of the GuessForNBitsAddition class
-        cmdAllocateStrategy = new GuessForNBitsAddition(nInterval, max_commands_used, new CmdHelper(pointer, memorySpace, store));
+        cmdAllocateStrategy = new GuessForNInterval1BitAddition(nInterval, max_commands_used, new CmdHelper(pointer, memorySpace, store));
         _nInterval = nInterval;
         starter_num_cmd = 1;
         loopTimes = 0;

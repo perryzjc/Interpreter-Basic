@@ -4,7 +4,7 @@ import App.ChallengeSetup;
 import App.Commands.Basic.Command;
 import App.Branch.Branch;
 import App.Commands.CmdHelper;
-import App.Commands.Strategy.GuessForNBitsAddition;
+import App.Commands.Strategy.GuessForNInterval1BitAddition;
 import App.MemorySpace;
 import App.Pointer;
 import App.Store;
@@ -32,7 +32,7 @@ public class BruceLoop2 extends ChallengeSetup {
     public BruceLoop2(int max_commands_used) {
         super(max_commands_used);
         //TODO: test code for verify the correctness of the GuessForNBitsAddition class
-        cmdAllocateStrategy = new GuessForNBitsAddition(1, max_commands_used, new CmdHelper(pointer, memorySpace, store));
+        cmdAllocateStrategy = new GuessForNInterval1BitAddition(1, max_commands_used, new CmdHelper(pointer, memorySpace, store));
         starter_num_cmd = 1;
         loopTimes = 0;
     }

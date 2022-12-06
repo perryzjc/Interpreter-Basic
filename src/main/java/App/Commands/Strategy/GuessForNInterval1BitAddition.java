@@ -6,7 +6,7 @@ import App.Commands.Strategy.PatternGuess.AdditionPattern;
 
 import java.util.ArrayList;
 
-public class GuessForNBitsAddition extends ExtraStrategyFor1bitAddition {
+public class GuessForNInterval1BitAddition extends ExtraStrategyFor1bitAddition {
     private ArrayList<Command> firstnCmdAsStart;
     private ArrayList<Command> midCmd;
     private ArrayList<ArrayList<Command>> firstnCmdAsStartList;
@@ -14,7 +14,7 @@ public class GuessForNBitsAddition extends ExtraStrategyFor1bitAddition {
     private int _bitInterval;
     private int NUM_START_CMD;
 
-    public GuessForNBitsAddition(int bitInterval, int max_cmd_used, CmdHelper cmdHelper) {
+    public GuessForNInterval1BitAddition(int bitInterval, int max_cmd_used, CmdHelper cmdHelper) {
         super(max_cmd_used, cmdHelper);
         NUM_START_CMD = bitInterval + 6;
         int requireCmd = NUM_START_CMD + NUM_END_CMD;
