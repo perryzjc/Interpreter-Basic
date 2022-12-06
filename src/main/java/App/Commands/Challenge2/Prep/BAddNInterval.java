@@ -52,6 +52,9 @@ public class BAddNInterval extends ChallengeSetup {
 
     public BAddNInterval(int max_commands_used, int nInterval, int numBitsForAddition) {
         this(max_commands_used, nInterval);
+        if (nInterval < numBitsForAddition) {
+            throw new IllegalArgumentException("nInterval must be greater than or equal to numBitsForAddition");
+        }
         _numBitsForAddition = numBitsForAddition;
     }
 
