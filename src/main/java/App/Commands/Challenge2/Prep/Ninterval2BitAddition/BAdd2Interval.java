@@ -13,10 +13,10 @@ import App.Commands.Challenge2.Prep.BAddNInterval;
 public class BAdd2Interval {
     public static void main(String[] args) {
         boolean found;
-        int nInterval = 16;
-        for (int i = 14; i < 100; i++) {
+        int nInterval = 2;
+        for (int i = 15; i < 100; i++) {
             try {
-                BAddNInterval bruceLoop = new BAddNInterval(i, nInterval);
+                BAddNInterval bruceLoop = new BAddNInterval(i, nInterval, 2);
                 found = bruceLoop.exhaustivelyFindSolution();
             } catch (Exception e) {
                 System.out.println("target command number: " + i + " is impossible to find solution based on my formula");

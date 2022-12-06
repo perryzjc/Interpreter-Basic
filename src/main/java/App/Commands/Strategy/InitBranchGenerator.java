@@ -26,7 +26,7 @@ public class InitBranchGenerator {
     public static ArrayList<BranchForAddition> getInitAdditionBranches(int startA, int bitInterval, int nBitsAddition, int max_cmd_used) {
         _max_cmd_used = max_cmd_used;
         _startA = startA;
-        _startB = startA + bitInterval;
+        _startB = startA + bitInterval - 1;
         _bitInterval = bitInterval;
         _nBitsAddition = nBitsAddition;
         initMmeCombinations();
@@ -72,8 +72,8 @@ public class InitBranchGenerator {
                 memorySpace.setBit(i, mem.get(count));
                 count++;
             }
-            for(int i = _nBitsAddition; i < 2 * _nBitsAddition; i++) {
-                memorySpace.setBit(i + _bitInterval - 1, mem.get(count));
+            for(int i = 0; i < _nBitsAddition; i++) {
+                memorySpace.setBit(i + _bitInterval, mem.get(count));
                 count++;
             }
             memCombinations.add(memorySpace);
