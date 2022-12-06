@@ -1,6 +1,7 @@
 package App.Commands.Strategy;
 
 import App.Branch.Branch;
+import App.Branch.BranchForAddition;
 import App.MemorySpace;
 import App.Pointer;
 import App.Store;
@@ -22,14 +23,14 @@ public class InitBranchGenerator {
     private static int numCombination;
     private static ArrayList<MemorySpace> memCombinations;
 
-    public static ArrayList<Branch> getInitBranches(int startA, int bitInterval, int nBitsAddition, int max_cmd_used) {
+    public static ArrayList<BranchForAddition> getInitAdditionBranches(int startA, int bitInterval, int nBitsAddition, int max_cmd_used) {
         _max_cmd_used = max_cmd_used;
         _startA = startA;
         _startB = startA + bitInterval;
         _bitInterval = bitInterval;
         _nBitsAddition = nBitsAddition;
         initMmeCombinations();
-        ArrayList<Branch> branches = new ArrayList<>();
+        ArrayList<BranchForAddition> branches = new ArrayList<>();
         for (int i = 0; i < numCombination; i++) {
             branches.add(nextBranch());
         }
@@ -97,12 +98,12 @@ public class InitBranchGenerator {
         return memCombinations;
     }
 
-    private static Branch nextBranch() {
+    private static BranchForAddition nextBranch() {
         MemorySpace memorySpace = memCombinations.get(combinationIndex);
         combinationIndex++;
         Pointer pointer = new Pointer(0);
         Store store = new Store();
-        return new Branch(memorySpace, pointer, store);
+        return new BranchForAddition(memorySpace, pointer, store, _startA, _bitInterval, _nBitsAddition);
     }
 
     /**

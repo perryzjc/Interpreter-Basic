@@ -2,9 +2,11 @@ package App.Commands.Challenge2.Prep.NInterlval1BitAddition;
 
 import App.*;
 import App.Branch.Branch;
+import App.Branch.BranchForAddition;
 import App.Commands.Basic.Command;
 import App.Commands.CmdHelper;
 import App.Commands.Strategy.GuessForNBitsAddition;
+import App.Commands.Strategy.InitBranchGenerator;
 
 import java.util.ArrayList;
 
@@ -102,10 +104,11 @@ public class BAdd16Interval extends ChallengeSetup {
         }
         initResult();
         boolean found;
-        Branch b00 = initBranch(false, false);
-        Branch b01 = initBranch(false, true);
-        Branch b10 = initBranch(true, false);
-        Branch b11 = initBranch(true, true);
+        ArrayList<BranchForAddition> branches = InitBranchGenerator.getInitAdditionBranches(0, 16, 1,  _max_commands_used);
+        Branch b00 = branches.get(0);
+        Branch b01 = branches.get(1);
+        Branch b10 = branches.get(2);
+        Branch b11 = branches.get(3);
         ArrayList<Command> initUsableCmd = cmdAllocateStrategy.getInitStarterCmd();
         found = deepFirstSearch(starter_num_cmd, initUsableCmd, b00, b01, b10, b11);
         if (!found) {

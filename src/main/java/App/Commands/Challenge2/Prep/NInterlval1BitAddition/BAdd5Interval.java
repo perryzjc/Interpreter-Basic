@@ -2,6 +2,7 @@ package App.Commands.Challenge2.Prep.NInterlval1BitAddition;
 
 import App.*;
 import App.Branch.Branch;
+import App.Branch.BranchForAddition;
 import App.Commands.Basic.Command;
 import App.Commands.CmdHelper;
 import App.Commands.Strategy.GuessForNBitsAddition;
@@ -72,7 +73,7 @@ public class BAdd5Interval extends ChallengeSetup {
         }
         initResult();
         boolean found;
-        ArrayList<Branch> branches = InitBranchGenerator.getInitBranches(0, 5, 1,  _max_commands_used);
+        ArrayList<BranchForAddition> branches = InitBranchGenerator.getInitAdditionBranches(0, 5, 1,  _max_commands_used);
         Branch b00 = branches.get(0);
         Branch b01 = branches.get(1);
         Branch b10 = branches.get(2);
