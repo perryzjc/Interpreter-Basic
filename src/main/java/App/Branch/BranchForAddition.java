@@ -18,6 +18,20 @@ public class BranchForAddition extends Branch {
 
     public BranchForAddition(MemorySpace memorySpace, Pointer pointer, Store store, int startA, int bitInterval, int nBitsAddition) {
         super(memorySpace, pointer, store);
+        init(startA, bitInterval, nBitsAddition);
+    }
+
+    public BranchForAddition(BranchForAddition branch) {
+        super(branch);
+        _startA = branch._startA;
+        _bitInterval = branch._bitInterval;
+        _nBitsAddition = branch._nBitsAddition;
+        //for a branch for addition, the target result is the same, so use shallow copy
+        targetAdditionResult = branch.targetAdditionResult;
+        //init(branch._startA, branch._bitInterval, branch._nBitsAddition);
+    }
+
+    private void init(int startA, int bitInterval, int nBitsAddition) {
         _startA = startA;
         _bitInterval = bitInterval;
         _nBitsAddition = nBitsAddition;
@@ -57,6 +71,11 @@ public class BranchForAddition extends Branch {
             }
             indexA++;
             indexB++;
+        }
+        if (carry == 1) {
+            targetAdditionResult.add(true);
+        } else {
+            targetAdditionResult.add(false);
         }
     }
 
