@@ -2,7 +2,7 @@ package App.Commands.Challenge0;
 
 import App.ChallengeSetup;
 import App.Commands.Basic.Command;
-import App.Branch;
+import App.Branch.Branch;
 import App.Commands.CmdHelper;
 import App.Commands.Strategy.GuessForNBitsAddition;
 import App.MemorySpace;

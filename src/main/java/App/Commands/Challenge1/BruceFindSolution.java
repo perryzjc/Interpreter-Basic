@@ -1,7 +1,7 @@
 package App.Commands.Challenge1;
 
 import App.ChallengeSetup;
-import App.Branch;
+import App.Branch.Branch;
 import App.Commands.Basic.Command;
 import App.Commands.CmdHelper;
 import App.Commands.Strategy.ExtraStrategyFor1bitAddition;

@@ -1,6 +1,6 @@
 package Utils;
 
-import App.Branch;
+import App.Branch.Branch;
 import App.MemorySpace;
 import App.Pointer;
 import App.Store;

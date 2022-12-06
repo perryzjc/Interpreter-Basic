@@ -1,4 +1,8 @@
-package App;
+package App.Branch;
+
+import App.MemorySpace;
+import App.Pointer;
+import App.Store;
 
 import java.io.Serializable;
 
@@ -7,9 +11,9 @@ import java.io.Serializable;
  */
 public class Branch implements Serializable {
 
-    private MemorySpace memorySpace;
-    private Pointer pointer;
-    private Store store;
+    protected MemorySpace memorySpace;
+    protected Pointer pointer;
+    protected Store store;
 
     public Branch(MemorySpace memorySpace, Pointer pointer, Store store) {
         this.memorySpace = new MemorySpace(memorySpace);

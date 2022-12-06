@@ -1,6 +1,7 @@
 package App.Commands.Challenge2.Prep.Ninterval2BitAddition;
 
 import App.*;
+import App.Branch.Branch;
 import App.Commands.Basic.Command;
 import App.Commands.CmdHelper;
 import App.Commands.Strategy.GuessForNBitsAddition;

@@ -1,5 +1,6 @@
 package App;
 
+import App.Branch.Branch;
 import App.Commands.Basic.Command;
 import App.Commands.Strategy.CmdAllocateStrategy;
 import App.Commands.CmdHelper;
