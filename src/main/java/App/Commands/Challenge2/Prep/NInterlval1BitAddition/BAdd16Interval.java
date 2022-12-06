@@ -1,5 +1,7 @@
 package App.Commands.Challenge2.Prep.NInterlval1BitAddition;
 
+import App.Commands.Challenge2.Prep.BAddNInterval;
+
 /**
  * modification to challenge 1's BruceFindSolution
  * want to get a possible series commands for 1-bit addition that has no side effect for challenge2&3

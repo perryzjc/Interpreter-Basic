@@ -1,9 +1,10 @@
-package App.Commands.Challenge2.Prep.NInterlval1BitAddition;
+package App.Commands.Challenge2.Prep;
 
 import App.Branch.Branch;
 import App.Branch.BranchForAddition;
 import App.ChallengeSetup;
 import App.Commands.Basic.Command;
+import App.Commands.Challenge2.Prep.Ninterval2BitAddition.BAdd2Interval;
 import App.Commands.CmdHelper;
 import App.Commands.Strategy.GuessForNBitsAddition;
 import App.Commands.Strategy.InitBranchGenerator;
@@ -17,35 +18,8 @@ public class BAddNInterval extends ChallengeSetup {
     private final int _nInterval;
     protected int starter_num_cmd;
     private int loopTimes;
+    private int _numBitsForAddition;
 
-    public BAddNInterval(int max_commands_used, int nInterval) {
-        super(max_commands_used);
-        //TODO: test code for verify the correctness of the GuessForNBitsAddition class
-        cmdAllocateStrategy = new GuessForNBitsAddition(nInterval, max_commands_used, new CmdHelper(pointer, memorySpace, store));
-        _nInterval = nInterval;
-        starter_num_cmd = 1;
-        loopTimes = 0;
-    }
-
-    /**
-     * INV
-     * LOAD
-     * INC
-     * INC
-     * INV
-     * CDEC
-     * LOAD
-     * INV
-     * INC
-     * CDEC
-     * LOAD
-     * INC
-     * INC
-     * CDEC
-     * INV
-     * <p>
-     * 15 commands
-     */
     public static void main(String[] args) {
         boolean found;
         int nInterval = 16;
@@ -64,13 +38,31 @@ public class BAddNInterval extends ChallengeSetup {
         }
     }
 
+    public BAddNInterval(int max_commands_used, int nInterval) {
+        super(max_commands_used);
+        //TODO: test code for verify the correctness of the GuessForNBitsAddition class
+        cmdAllocateStrategy = new GuessForNBitsAddition(nInterval, max_commands_used, new CmdHelper(pointer, memorySpace, store));
+        _nInterval = nInterval;
+        starter_num_cmd = 1;
+        loopTimes = 0;
+        //by default, I set the number of bits for addition is 1
+        //e.g. A: 0 1, B: 0 1, at different interval, total 2^1 * 2^1 = 4 possible inputs
+        _numBitsForAddition = 1;
+    }
+
+    public BAddNInterval(int max_commands_used, int nInterval, int numBitsForAddition) {
+        this(max_commands_used, nInterval);
+        _numBitsForAddition = numBitsForAddition;
+    }
+
     public boolean exhaustivelyFindSolution() {
         if (starter_num_cmd < 1 || starter_num_cmd > _max_commands_used) {
             throw new RuntimeException("curr_commands_used should be in range [1, _max_commands_used]");
         }
         initResult();
         boolean found;
-        ArrayList<BranchForAddition> branches = InitBranchGenerator.getInitAdditionBranches(0, _nInterval, 1, _max_commands_used);
+        ArrayList<BranchForAddition> branches =
+                InitBranchGenerator.getInitAdditionBranches(0, _nInterval, _numBitsForAddition, _max_commands_used);
         ArrayList<Command> initUsableCmd = cmdAllocateStrategy.getInitStarterCmd();
         found = deepFirstSearch(starter_num_cmd, initUsableCmd, branches);
         if (!found) {
