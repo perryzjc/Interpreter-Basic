@@ -14,7 +14,7 @@ public class BAdd2Interval {
     public static void main(String[] args) {
         boolean found;
         int nInterval = 2;
-        for (int i = 15; i < 100; i++) {
+        for (int i = 3; i < 100; i++) {
             try {
                 BAddNInterval bruceLoop = new BAddNInterval(i, nInterval, 2);
                 found = bruceLoop.exhaustivelyFindSolution();
