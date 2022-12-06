@@ -15,7 +15,6 @@ erDiagram
         string o-lastName
         string m-phoneNumber
     }
-
 }
 ```
 
