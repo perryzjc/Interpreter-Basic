@@ -37,4 +37,7 @@ flowchart TD
     AdjustPointersToParent --> InsertValue
     IsLeafEmpty -->|No| InsertValue
 
+    subgraph Assign Children To Parent
+        AssignChildrenToParent --> code["parent->left = left;\nparent->right = right;"]
+    end
 ```
