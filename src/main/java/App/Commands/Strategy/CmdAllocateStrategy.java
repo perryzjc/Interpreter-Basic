@@ -88,18 +88,43 @@ public class CmdAllocateStrategy {
         }
     }
 
+    /**
+     * INV
+     * LOAD
+     * INC
+     * INC
+     * INV
+     * CDEC
+     * LOAD
+     * INV
+     * INC
+     * CDEC
+     * LOAD
+     * INC
+     * INC
+     * CDEC
+     * INV
+     */
     protected ArrayList<Command> getMeaningfulCmd(int curr_cmd_used) {
-        if (curr_cmd_used == _max_cmd_used - 1) {
-            return INVOnlyAsFinalCmd;
-        } else if (!INVMeaningful && !LOADMeaningful) {
-            return allBasicCmdWithoutINVAndLOAD;
-        } else if (!INVMeaningful) {
-            return allBasicCmdWithoutINV;
-        } else if (!LOADMeaningful) {
-            return allBasicCmdWithoutLOAD;
-        } else {
-            return allBasicCmd;
-        }
+        ArrayList<Command> ret = new ArrayList<>();
+        ret.add(_cmdHelper.getCmdINV());
+        ret.add(_cmdHelper.getCmdLOAD());
+        ret.add(_cmdHelper.getCmdINC());
+        ret.add(_cmdHelper.getCmdINC());
+        ret.add(_cmdHelper.getCmdINV());
+        ret.add(_cmdHelper.getCmdCDEC());
+        ret.add(_cmdHelper.getCmdLOAD());
+        ret.add(_cmdHelper.getCmdINV());
+        ret.add(_cmdHelper.getCmdINC());
+        ret.add(_cmdHelper.getCmdCDEC());
+        ret.add(_cmdHelper.getCmdLOAD());
+        ret.add(_cmdHelper.getCmdINC());
+        ret.add(_cmdHelper.getCmdINC());
+        ret.add(_cmdHelper.getCmdCDEC());
+        ret.add(_cmdHelper.getCmdINV());
+        ArrayList<Command> result = new ArrayList<>();
+        result.add(ret.get(curr_cmd_used - 1));
+        return result;
     }
 
     /**
